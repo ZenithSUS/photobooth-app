@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+
+/* Add Tailwind utility classes for custom fonts */
+@layer utilities {
+  .font-custom-1 {
+    font-family: "Custom-1", serif;
+  }
+  .font-custom-2 {
+    font-family: "Custom-2", cursive;
+  }
+  .font-aesthetic-1 {
+    font-family: "Playfair Display", serif;
+  }
+  .font-aesthetic-2 {
+    font-family: "Lobster", cursive;
+  }
+  .font-aesthetic-3 {
+    font-family: "Raleway", sans-serif;
+  }
+  .font-aesthetic-4 {
+    font-family: "Dancing Script", cursive;
+  }
+  .font-aesthetic-5 {
+    font-family: "Merriweather", serif;
+  }
+}
