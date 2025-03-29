@@ -81,3 +81,18 @@ export const contrasts = [
     value: 200,
   },
 ];
+
+export const inverts = [
+  {
+    style: "invert-0",
+    value: 0,
+  },
+  {
+    style: "invert-50",
+    value: 20,
+  },
+  {
+    style: "invert",
+    value: 100,
+  },
+];

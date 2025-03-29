@@ -33,7 +33,7 @@ export default function PhotoBooth() {
 
             if (index === capturedImage.length - 1) {
               const link = document.createElement("a");
-              link.download = "captured-images.png";
+              link.download = "photobooth.png";
               link.href = canvas.toDataURL();
               link.click();
             }

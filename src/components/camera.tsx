@@ -34,7 +34,7 @@ export default function Camera() {
 
   const videoConstraints = {
     width: 480,
-    height: 270,
+    height: 300,
     facingMode: "user",
   };
 
@@ -63,7 +63,7 @@ export default function Camera() {
 
             if (index === capturedImage.length - 1) {
               const link = document.createElement("a");
-              link.download = "captured-images.png";
+              link.download = "photobooth.png";
               link.href = canvas.toDataURL();
               link.click();
             }
@@ -75,7 +75,7 @@ export default function Camera() {
 
   return (
     <main className="flex flex-col justify-center items-center gap-4">
-      <div className="flex justify-center items-center bg-yellow-300 h-[270px] w-[480px] p-5 rounded-2xl">
+      <div className="flex justify-center items-center bg-yellow-300 h-[300px] w-[480px] p-5 rounded-2xl">
         <Webcam
           ref={webcamRef}
           screenshotFormat="image/jpeg"
