@@ -1,6 +1,7 @@
 import { useBoothContext } from "../context/booth-provider";
-import { grayscales } from "../utils/filter-values";
+import { grayscales } from "../utils/filter-values.ts";
 import { filtersType, filterValues } from "../utils/types";
+import { SelectionColor } from "../utils/selection-colors.ts";
 
 export default function GrayscaleSelection() {
   const { filter, setFilter } = useBoothContext();
@@ -8,14 +9,11 @@ export default function GrayscaleSelection() {
     <div className="flex items-center gap-5">
       <h2 className="text-md font-bold">Grayscale</h2>
       <div className="flex gap-2">
-        {grayscales.map((level: filterValues) => (
+        {grayscales.map((level: filterValues, index: number) => (
           <div
             key={level.value}
-            className={`w-8 h-8 rounded-full cursor-pointer`}
+            className={`w-8 h-8 rounded-full cursor-pointer ${SelectionColor[index]}`}
             style={{
-              backgroundColor: `hsl(${level.value * 3.6}, ${
-                50 + level.value / 2
-              }%, ${40 + level.value / 3}%)`,
               border: filter.grayscale === level.value ? "2px solid" : "none",
             }}
             onClick={() =>

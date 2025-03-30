@@ -85,14 +85,41 @@ export const contrasts = [
 export const inverts = [
   {
     style: "invert-0",
-    value: 0,
+    value: "-0",
   },
   {
-    style: "invert-50",
-    value: 20,
+    style: "invert-20",
+    value: "-20",
   },
   {
     style: "invert",
-    value: 100,
+    value: "",
+  },
+];
+
+export const hues = [
+  {
+    style: "hue-rotate-0",
+    value: 0,
+  },
+  {
+    style: "hue-rotate-15",
+    value: 15,
+  },
+  {
+    style: "hue-rotate-30",
+    value: 30,
+  },
+  {
+    style: "hue-rotate-60",
+    value: 60,
+  },
+  {
+    style: "hue-rotate-90",
+    value: 90,
+  },
+  {
+    style: "hue-rotate-180",
+    value: 180,
   },
 ];

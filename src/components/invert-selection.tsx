@@ -1,6 +1,7 @@
 import { useBoothContext } from "../context/booth-provider";
 import { filtersType, filterValues } from "../utils/types";
-import { inverts } from "../utils/filter-values";
+import { inverts } from "../utils/filter-values.ts";
+import { SelectionColor } from "../utils/selection-colors.ts";
 
 export default function InvertSelection() {
   const { filter, setFilter } = useBoothContext();
@@ -9,14 +10,11 @@ export default function InvertSelection() {
     <div className="flex items-center gap-5">
       <h2 className="text-md font-bold">Invert</h2>
       <div className="flex gap-2">
-        {inverts.map((level: filterValues) => (
+        {inverts.map((level: filterValues, index: number) => (
           <div
             key={level.value}
-            className={`w-8 h-8 rounded-full cursor-pointer`}
+            className={`w-8 h-8 rounded-full cursor-pointer ${SelectionColor[index]}`}
             style={{
-              backgroundColor: `hsl(${level.value * 3.6}, ${
-                50 + level.value / 2
-              }%, ${40 + level.value / 3}%)`,
               border: filter.invert === level.value ? "2px solid" : "none",
             }}
             onClick={() =>

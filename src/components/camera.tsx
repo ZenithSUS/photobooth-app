@@ -1,6 +1,6 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import Webcam from "react-webcam";
-import filters from "../utils/filters";
+import filters from "../utils/filters.ts";
 import { useBoothContext } from "../context/booth-provider";
 
 export default function Camera() {
@@ -16,6 +16,7 @@ export default function Camera() {
     brightnessFilter,
     contrastFilter,
   } = filters;
+  const [timer, setTimer] = useState<number | null>(null);
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
@@ -26,6 +27,20 @@ export default function Camera() {
       console.error("Failed to capture image. Ensure webcam is active.");
     }
   }, [webcamRef, filter, setPrevFilter, setCapturedImage]);
+
+  const startTimer = useCallback(() => {
+    let countdown = 3;
+    setTimer(countdown);
+    const interval = setInterval(() => {
+      countdown -= 1;
+      setTimer(countdown);
+      if (countdown === 0) {
+        clearInterval(interval);
+        setTimer(null);
+        capture();
+      }
+    }, 1000);
+  }, [capture]);
 
   const resetImage = useCallback(() => {
     setCapturedImage([]);
@@ -81,20 +96,23 @@ export default function Camera() {
           screenshotFormat="image/jpeg"
           audio={false}
           videoConstraints={videoConstraints}
-          className={`${brightnessFilter(filter.brightness)} ${sepiaFilter(
-            filter.sepia
-          )} ${grayscaleFilter(filter.grayscale)} ${hueRotateFilter(
-            filter.hueRotate
-          )} ${invertFilter(filter.invert)} ${contrastFilter(filter.contrast)}`}
+          className={` ${invertFilter(filter.invert)} ${brightnessFilter(
+            filter.brightness
+          )} ${sepiaFilter(filter.sepia)} ${grayscaleFilter(
+            filter.grayscale
+          )} ${hueRotateFilter(filter.hueRotate)} ${contrastFilter(
+            filter.contrast
+          )}`}
         />
       </div>
 
       {capturedImage.length !== 3 ? (
         <button
-          className="bg-blue-500 hover:bg-blue-700 hover:scale-90 text-white font-bold py-2 px-4 rounded disabled:bg-gray-500 cursor-pointer transition ease-in-out duration-300"
-          onClick={capture}
+          className="bg-blue-500 text-lg hover:bg-blue-700 hover:scale-90 text-white font-bold py-2 px-4 rounded disabled:bg-gray-500 cursor-pointer transition ease-in-out duration-300"
+          onClick={startTimer}
+          disabled={timer !== null}
         >
-          Capture
+          {timer !== null ? `📸 Capturing in ${timer}s` : "📸"}
         </button>
       ) : (
         <div className="flex items-center justify-center gap-4">

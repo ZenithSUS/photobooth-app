@@ -3,6 +3,7 @@ import SepiaSelection from "./sepia-selection";
 import BrightnessSelection from "./brightness-selection";
 import ContrastSelection from "./contrast-selection";
 import InvertSelection from "./invert-selection";
+import HueSelection from "./hue-selection";
 
 export default function Filters() {
   return (
@@ -13,6 +14,7 @@ export default function Filters() {
       <BrightnessSelection />
       <GrayscaleSelection />
       <ContrastSelection />
+      <HueSelection />
     </main>
   );
 }

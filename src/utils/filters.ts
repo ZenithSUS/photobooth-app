@@ -4,7 +4,7 @@ const sepiaFilter = (value: number) => `sepia-${value}`;
 
 const hueRotateFilter = (value: number) => `hue-rotate-${value}`;
 
-const invertFilter = (value: number) => `invert-${value}`;
+const invertFilter = (value: number) => `invert${value}`;
 
 const brightnessFilter = (value: number) => `brightness-${value}`;
 
