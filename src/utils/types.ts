@@ -11,3 +11,10 @@ export type filterValues = {
   style: string;
   value: number | string;
 };
+
+export type Images = {
+  userID: string;
+  image1Url: string | File;
+  image2Url: string | File;
+  image3Url: string | File;
+};

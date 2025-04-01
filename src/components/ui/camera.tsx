@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import filters from "../../utils/filters.ts";
 import { useBoothContext } from "../../context/booth-provider.tsx";
+import shareImages from "../../lib/functions/share.ts";
+import downloadAllImages from "../../lib/functions/download.ts";
 
 export default function Camera() {
   const navigate = useNavigate();
@@ -37,6 +39,14 @@ export default function Camera() {
     });
   };
 
+  const handleDownload = () => {
+    downloadAllImages(
+      canvasRef as React.RefObject<HTMLCanvasElement>,
+      capturedImage,
+      prevFilter
+    );
+  };
+
   const GoBack = () => {
     if (capturedImage.length > 0) {
       if (!window.confirm("Are you sure you want to go back?")) return;
@@ -50,8 +60,15 @@ export default function Camera() {
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
     if (imageSrc) {
+      const byteString = atob(imageSrc.split(",")[1]);
+      const arrayBuffer = new Uint8Array(byteString.length);
+      for (let i = 0; i < byteString.length; i++) {
+        arrayBuffer[i] = byteString.charCodeAt(i);
+      }
+      const blob = new Blob([arrayBuffer], { type: "image/jpeg" });
+
       setPrevFilter((prev) => [...prev, { ...filter }]);
-      setCapturedImage((prev) => [...prev, imageSrc]);
+      setCapturedImage((prev) => [...prev, blob]);
     } else {
       console.error("Failed to capture image. Ensure webcam is active.");
     }
@@ -80,41 +97,6 @@ export default function Camera() {
     width: 480,
     height: 300,
     facingMode: "user",
-  };
-
-  const downloadAllImages = () => {
-    if (canvasRef.current && capturedImage.length === 3) {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        canvas.width = 900;
-        canvas.height = 300;
-        capturedImage.forEach((image, index) => {
-          const img = new Image();
-          img.src = image as string;
-
-          img.onload = () => {
-            const filter = prevFilter[index];
-            ctx.filter = `
-              grayscale(${filter.grayscale}%)
-              sepia(${filter.sepia}%)
-              hue-rotate(${filter.hueRotate}deg)
-              invert(${filter.invert}%)
-              brightness(${filter.brightness}%)
-              contrast(${filter.contrast}%)
-            `;
-            ctx.drawImage(img, index * 300, 0, 300, 300);
-
-            if (index === capturedImage.length - 1) {
-              const link = document.createElement("a");
-              link.download = "photobooth.png";
-              link.href = canvas.toDataURL();
-              link.click();
-            }
-          };
-        });
-      }
-    }
   };
 
   return (
@@ -161,8 +143,16 @@ export default function Camera() {
               Try Again
             </button>
             <button
+              className="text-lg text-center bg-yellow-500 hover:bg-yellow-300 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
+              onClick={() =>
+                shareImages(capturedImage as Blob[], setCapturedImage)
+              }
+            >
+              Share
+            </button>
+            <button
               className="text-lg text-center bg-blue-500 hover:bg-blue-300 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
-              onClick={downloadAllImages}
+              onClick={handleDownload}
             >
               Download
             </button>

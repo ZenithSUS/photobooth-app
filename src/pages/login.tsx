@@ -16,6 +16,7 @@ export default function Login() {
       const session = await account.createEmailPasswordSession(email, password);
       localStorage.setItem("session", JSON.stringify(session.current));
       const data = await account.get();
+      localStorage.setItem("id", JSON.stringify(data.$id));
       localStorage.setItem("name", JSON.stringify(data.name));
       localStorage.setItem("email", JSON.stringify(data.email));
       toast.success("Logged in Successfully!");

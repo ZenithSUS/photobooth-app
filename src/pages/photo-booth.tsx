@@ -13,17 +13,20 @@ export default function PhotoBooth() {
           <h2 className="text-2xl font-bold text-center">Captured Image</h2>
           {capturedImage.length > 0 ? (
             <div className="flex flex-col gap-0.5 bg-amber-400 p-2">
-              {capturedImage.map((image, index) => (
-                <img
-                  key={index}
-                  src={image as string}
-                  alt={`Captured Image ${index}`}
-                  height={"300px"}
-                  width={"300px"}
-                  className={`p-2 grayscale-${prevFilter[index].grayscale} sepia-${prevFilter[index].sepia} hue-rotate-${prevFilter[index].hueRotate} invert-${prevFilter[index].invert} brightness-${prevFilter[index].brightness} contrast-${prevFilter[index].contrast}
-                  `}
-                />
-              ))}
+              {capturedImage.map((image, index) => {
+                const imageUrl = URL.createObjectURL(image as Blob);
+                return (
+                  <img
+                    key={index}
+                    src={imageUrl}
+                    alt={`Captured Image ${index}`}
+                    height={"300px"}
+                    width={"300px"}
+                    className={`p-2 grayscale-${prevFilter[index].grayscale} sepia-${prevFilter[index].sepia} hue-rotate-${prevFilter[index].hueRotate} invert-${prevFilter[index].invert} brightness-${prevFilter[index].brightness} contrast-${prevFilter[index].contrast}`}
+                    onLoad={() => URL.revokeObjectURL(imageUrl)}
+                  />
+                );
+              })}
             </div>
           ) : (
             <p className="text-lg text-center">No images captured yet.</p>

@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createNewUser } from "../actions/users";
 
 const registerSchema = z
   .object({
@@ -15,7 +16,10 @@ const registerSchema = z
       .min(6, { message: "Password must be at least 6 characters" }),
     confirmPassword: z.string(),
     firstName: z.string().min(1, { message: "First name is required" }),
-    middleInitial: z.string().optional(),
+    middleInitial: z
+      .string()
+      .max(3, { message: "Middle initial is too long" })
+      .optional(),
     lastName: z.string().min(1, { message: "Last name is required" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -53,12 +57,21 @@ export default function Register() {
         data.email,
         data.password
       );
+
+      await createNewUser(
+        {
+          name: name,
+          email: data.email,
+        },
+        session.$id
+      );
+
       localStorage.setItem("session", JSON.stringify(session.current));
       const userData = await account.get();
       localStorage.setItem("name", JSON.stringify(userData.name));
 
       toast.success("Registered Successfully!");
-      navigate("/");
+      // navigate("/");
     } catch (error) {
       console.log(error);
       toast.error("There was an error registering");
