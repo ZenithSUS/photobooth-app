@@ -1,13 +1,13 @@
 export type filtersType = {
-  sepia: number;
-  grayscale: number;
-  hueRotate: number;
-  invert: number;
-  brightness: number;
-  contrast: number;
+  sepia: number | string;
+  grayscale: number | string;
+  hueRotate: number | string;
+  invert: number | string;
+  brightness: number | string;
+  contrast: number | string;
 };
 
 export type filterValues = {
   style: string;
-  value: number;
+  value: number | string;
 };

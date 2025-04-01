@@ -4,4 +4,5 @@ export const SelectionColor = [
   "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400",
   "bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400",
   "bg-gradient-to-br from-fuchsia-400 via-purple-400 to-violet-400",
+  "bg-gradient-to-br from-rose-400 via-pink-400 to-fuchsia-400",
 ];

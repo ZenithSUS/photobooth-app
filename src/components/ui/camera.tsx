@@ -1,13 +1,22 @@
 import { useCallback, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
-import filters from "../utils/filters.ts";
-import { useBoothContext } from "../context/booth-provider";
+import filters from "../../utils/filters.ts";
+import { useBoothContext } from "../../context/booth-provider.tsx";
 
 export default function Camera() {
+  const navigate = useNavigate();
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { capturedImage, setCapturedImage, filter, prevFilter, setPrevFilter } =
-    useBoothContext();
+  const [timer, setTimer] = useState<number | null>(null);
+  const {
+    capturedImage,
+    setCapturedImage,
+    filter,
+    prevFilter,
+    setPrevFilter,
+    setFilter,
+  } = useBoothContext();
   const {
     sepiaFilter,
     grayscaleFilter,
@@ -16,7 +25,27 @@ export default function Camera() {
     brightnessFilter,
     contrastFilter,
   } = filters;
-  const [timer, setTimer] = useState<number | null>(null);
+
+  const resetFilter = () => {
+    setFilter({
+      sepia: 0,
+      grayscale: 0,
+      hueRotate: 0,
+      invert: 0,
+      brightness: 100,
+      contrast: 100,
+    });
+  };
+
+  const GoBack = () => {
+    if (capturedImage.length > 0) {
+      if (!window.confirm("Are you sure you want to go back?")) return;
+    }
+
+    setCapturedImage([]);
+    setPrevFilter([]);
+    navigate("/");
+  };
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
@@ -98,39 +127,55 @@ export default function Camera() {
           videoConstraints={videoConstraints}
           className={` ${invertFilter(filter.invert)} ${brightnessFilter(
             filter.brightness
-          )} ${sepiaFilter(filter.sepia)} ${grayscaleFilter(
-            filter.grayscale
-          )} ${hueRotateFilter(filter.hueRotate)} ${contrastFilter(
+          )} ${sepiaFilter(filter.sepia)} ${hueRotateFilter(
+            filter.hueRotate
+          )} ${grayscaleFilter(filter.grayscale)} ${contrastFilter(
             filter.contrast
           )}`}
         />
       </div>
 
-      {capturedImage.length !== 3 ? (
+      <div className="flex items-center justify-center gap-4">
+        {capturedImage.length !== 3 ? (
+          <>
+            <button
+              className="bg-blue-500 text-lg hover:bg-blue-700 hover:scale-90 text-white font-bold py-2 px-4 rounded disabled:bg-gray-500 cursor-pointer transition ease-in-out duration-300"
+              onClick={startTimer}
+              disabled={timer !== null}
+            >
+              {timer !== null ? `📸 Capturing in ${timer}s` : "📸"}
+            </button>
+            <button
+              className="text-lg text-center bg-red-500 hover:bg-red-600 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
+              onClick={resetFilter}
+            >
+              Reset Filter
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              className="text-lg text-center bg-green-500 hover:bg-green-300 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
+              onClick={resetImage}
+            >
+              Try Again
+            </button>
+            <button
+              className="text-lg text-center bg-blue-500 hover:bg-blue-300 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
+              onClick={downloadAllImages}
+            >
+              Download
+            </button>
+            <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
+          </>
+        )}
         <button
-          className="bg-blue-500 text-lg hover:bg-blue-700 hover:scale-90 text-white font-bold py-2 px-4 rounded disabled:bg-gray-500 cursor-pointer transition ease-in-out duration-300"
-          onClick={startTimer}
-          disabled={timer !== null}
+          className="p-2 text-lg text-white bg-red-500 hover:bg-red-600 hover:scale-95 transition duration-300 ease-in-out rounded cursor-pointer"
+          onClick={() => GoBack()}
         >
-          {timer !== null ? `📸 Capturing in ${timer}s` : "📸"}
+          Go Back
         </button>
-      ) : (
-        <div className="flex items-center justify-center gap-4">
-          <button
-            className="text-lg text-center bg-green-500 hover:bg-green-300 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
-            onClick={resetImage}
-          >
-            Try Again
-          </button>
-          <button
-            className="text-lg text-center bg-blue-500 hover:bg-blue-300 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
-            onClick={downloadAllImages}
-          >
-            Download
-          </button>
-          <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
-        </div>
-      )}
+      </div>
       <span className="text-lg text-center">
         Images Captured: {capturedImage.length}/3
       </span>

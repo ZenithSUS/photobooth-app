@@ -1,7 +1,7 @@
-import { useBoothContext } from "../context/booth-provider";
-import { filtersType, filterValues } from "../utils/types";
-import { inverts } from "../utils/filter-values.ts";
-import { SelectionColor } from "../utils/selection-colors.ts";
+import { useBoothContext } from "../../context/booth-provider.tsx";
+import { filtersType, filterValues } from "../../utils/types.ts";
+import { inverts } from "../../utils/filter-values.ts";
+import { SelectionColor } from "../../utils/selection-colors.ts";
 
 export default function InvertSelection() {
   const { filter, setFilter } = useBoothContext();

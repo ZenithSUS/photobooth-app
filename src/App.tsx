@@ -1,15 +1,45 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainLayout from "./layout/main-layout";
-import PhotoBooth from "./pages/photo-booth";
+import { lazy } from "react";
+import { ToastContainer } from "react-toastify";
+import { BoothProvider } from "./context/booth-provider.tsx";
+
+const Login = lazy(() => import("./pages/login"));
+const Register = lazy(() => import("./pages/register"));
+const PhotoBoothLayout = lazy(() => import("./layout/photobooth.tsx"));
+const UserLayout = lazy(() => import("./layout/user.tsx"));
+const Dashboard = lazy(() => import("./pages/dashboard"));
+const PhotoBooth = lazy(() => import("./pages/photo-booth"));
+const NotFound = lazy(() => import("./pages/not-found"));
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<PhotoBooth />} />
+        <Route
+          element={
+            <BoothProvider>
+              <PhotoBoothLayout />
+            </BoothProvider>
+          }
+        >
+          <Route path="/photo-booth" element={<PhotoBooth />} />
         </Route>
+
+        <Route
+          element={
+            <BoothProvider>
+              <UserLayout />
+            </BoothProvider>
+          }
+        >
+          <Route path="/" element={<Dashboard />} />
+        </Route>
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
+      <ToastContainer className={"z-50"} />
     </Router>
   );
 }

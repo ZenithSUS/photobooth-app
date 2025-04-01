@@ -1,7 +1,7 @@
-import { useBoothContext } from "../context/booth-provider";
-import { brightnesses } from "../utils/filter-values.ts";
-import { filtersType, filterValues } from "../utils/types";
-import { SelectionColor } from "../utils/selection-colors.ts";
+import { useBoothContext } from "../../context/booth-provider";
+import { brightnesses } from "../../utils/filter-values.ts";
+import { filtersType, filterValues } from "../../utils/types";
+import { SelectionColor } from "../../utils/selection-colors.ts";
 
 export default function BrightnessSelection() {
   const { filter, setFilter } = useBoothContext();

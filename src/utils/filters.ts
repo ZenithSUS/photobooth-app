@@ -1,14 +1,14 @@
-const grayscaleFilter = (value: number) => `grayscale-${value}`;
+const grayscaleFilter = (value: number | string) => `grayscale-${value}`;
 
-const sepiaFilter = (value: number) => `sepia-${value}`;
+const sepiaFilter = (value: number | string) => `sepia-${value}`;
 
-const hueRotateFilter = (value: number) => `hue-rotate-${value}`;
+const hueRotateFilter = (value: number | string) => `hue-rotate-${value}`;
 
-const invertFilter = (value: number) => `invert${value}`;
+const invertFilter = (value: number | string) => `invert${value}`;
 
-const brightnessFilter = (value: number) => `brightness-${value}`;
+const brightnessFilter = (value: number | string) => `brightness-${value}`;
 
-const contrastFilter = (value: number) => `contrast-${value}`;
+const contrastFilter = (value: number | string) => `contrast-${value}`;
 
 export default {
   grayscaleFilter,

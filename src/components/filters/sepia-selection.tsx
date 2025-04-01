@@ -1,7 +1,7 @@
-import { useBoothContext } from "../context/booth-provider";
-import { sepias } from "../utils/filter-values.ts";
-import { filtersType, filterValues } from "../utils/types";
-import { SelectionColor } from "../utils/selection-colors.ts";
+import { useBoothContext } from "../../context/booth-provider.tsx";
+import { sepias } from "../../utils/filter-values.ts";
+import { filtersType, filterValues } from "../../utils/types.ts";
+import { SelectionColor } from "../../utils/selection-colors.ts";
 
 export default function SepiaSelection() {
   const { filter, setFilter } = useBoothContext();

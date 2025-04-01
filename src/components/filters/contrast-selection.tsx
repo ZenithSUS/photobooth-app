@@ -1,7 +1,7 @@
-import { useBoothContext } from "../context/booth-provider";
-import { contrasts } from "../utils/filter-values.ts";
-import { filtersType, filterValues } from "../utils/types";
-import { SelectionColor } from "../utils/selection-colors.ts";
+import { useBoothContext } from "../../context/booth-provider";
+import { contrasts } from "../../utils/filter-values.ts";
+import { filtersType, filterValues } from "../../utils/types";
+import { SelectionColor } from "../../utils/selection-colors.ts";
 
 export default function ContrastSelection() {
   const { filter, setFilter } = useBoothContext();
@@ -12,7 +12,7 @@ export default function ContrastSelection() {
         {contrasts.map((level: filterValues, index: number) => (
           <div
             key={level.value}
-            className={`w-8 h-8 rounded-full cursor-pointer, ${SelectionColor[index]}`}
+            className={`w-8 h-8 rounded-full cursor-pointer ${SelectionColor[index]}`}
             style={{
               border: filter.contrast === level.value ? "2px solid" : "none",
             }}
