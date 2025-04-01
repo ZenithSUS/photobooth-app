@@ -1,0 +1,6 @@
+staticSites:
+  - name: photobooth-app
+    buildCommand: npm run build
+    routes:
+      - source: /*
+        destination: /index.html
