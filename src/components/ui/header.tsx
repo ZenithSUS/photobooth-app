@@ -1,5 +1,5 @@
 export default function Header() {
-  const name = JSON.parse(localStorage.getItem("name") || "N/A");
+  const name = JSON.parse(localStorage.getItem("name") as string);
 
   return (
     <header className="flex flex-col gap-1.5 md:flex-row items-center md:justify-between md:gap-0 p-4 bg-gradient-to-br from-sky-300 via-blue-300 to-indigo-400 text-black z-10">
