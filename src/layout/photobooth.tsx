@@ -11,6 +11,7 @@ export default function MainLayout() {
       const data = await account.get();
       if (!data) {
         localStorage.clear();
+        account.deleteSession("current");
         return;
       }
       localStorage.setItem("id", JSON.stringify(data.$id));

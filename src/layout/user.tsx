@@ -13,6 +13,7 @@ export default function UserLayout() {
       const data = await account.get();
       if (!data) {
         localStorage.clear();
+        account.deleteSession("current");
         return;
       }
 
