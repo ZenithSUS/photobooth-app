@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { account } from "../../appwrite";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import cameraIcon from "../../assets/camera.png";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -37,9 +38,9 @@ export default function Sidebar() {
         </Link>
         <Link
           to="/photo-booth"
-          className="rounded hover:bg-amber-400 hover:scale-105 p-2 transition-all duration-300 ease-in-out"
+          className="flex gap-2 items-center rounded hover:bg-amber-400 hover:scale-105 p-2 transition-all duration-300 ease-in-out"
         >
-          Photo Booth
+          <img src={cameraIcon} alt="camera" className="w-8 h-8" /> Photo Booth
         </Link>
         <Link
           to="/account"

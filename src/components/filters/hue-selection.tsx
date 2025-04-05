@@ -1,7 +1,7 @@
 import { filterValues, filtersType } from "../../utils/types";
-import { hues } from "../../utils/values/filter-values";
+import { hues } from "../../utils/constants/filter-values";
 import { useBoothContext } from "../../lib/context/booth";
-import { SelectionColor } from "../../utils/values/selection-colors";
+import { SelectionColor } from "../../utils/constants/selection-colors";
 
 export default function HueSelection() {
   const { filter, setFilter } = useBoothContext();

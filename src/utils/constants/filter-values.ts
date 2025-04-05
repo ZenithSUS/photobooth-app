@@ -85,15 +85,15 @@ export const contrasts = [
 export const inverts = [
   {
     style: "invert-0",
-    value: "-0",
+    value: "0",
   },
   {
     style: "invert-20",
-    value: "-20",
+    value: "20",
   },
   {
     style: "invert",
-    value: "",
+    value: "100",
   },
 ];
 

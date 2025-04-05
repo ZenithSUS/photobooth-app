@@ -9,6 +9,7 @@ const PhotoBoothLayout = lazy(() => import("./layout/photobooth.tsx"));
 const UserLayout = lazy(() => import("./layout/user.tsx"));
 const Dashboard = lazy(() => import("./pages/dashboard"));
 const PhotoBooth = lazy(() => import("./pages/photo-booth"));
+const Account = lazy(() => import("./pages/account"));
 const NotFound = lazy(() => import("./pages/not-found"));
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           }
         >
           <Route path="/" element={<Dashboard />} />
+          <Route path="/account" element={<Account />} />
         </Route>
 
         <Route path="/login" element={<Login />} />

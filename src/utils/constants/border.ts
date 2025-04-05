@@ -1,0 +1,17 @@
+export const borders = [
+  { border: "border-sky-400", background: "bg-sky-400", value: 0 },
+  { border: "border-amber-400", background: "bg-amber-400", value: 1 },
+  { border: "border-green-400", background: "bg-green-400", value: 2 },
+  { border: "border-fuchsia-400", background: "bg-fuchsia-400", value: 3 },
+  { border: "border-rose-400", background: "bg-rose-400", value: 4 },
+  { border: "border-cyan-400", background: "bg-cyan-400", value: 5 },
+  { border: "border-yellow-400", background: "bg-yellow-400", value: 6 },
+  { border: "border-indigo-400", background: "bg-indigo-400", value: 7 },
+  { border: "border-red-400", background: "bg-red-400", value: 8 },
+  { border: "border-gray-800", background: "bg-gray-800", value: 9 },
+  { border: "border-black", background: "bg-black", value: 10 },
+  { border: "border-indigo-900", background: "bg-indigo-900", value: 11 },
+  { border: "border-blue-900", background: "bg-blue-900", value: 12 },
+  { border: "border-red-900", background: "bg-red-900", value: 13 },
+  { border: "border-white", background: "bg-white", value: 14 },
+];

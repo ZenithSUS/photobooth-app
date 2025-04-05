@@ -12,6 +12,17 @@ export type filterValues = {
   value: number | string;
 };
 
+export type background = {
+  background: string;
+  value: number;
+};
+
+export type border = {
+  border: string;
+  background: string;
+  value: number;
+};
+
 export type Images = {
   userID: string;
   image1Url: string | File;
@@ -21,4 +32,18 @@ export type Images = {
 
 export type downloadType = {
   photoBoothRef: React.RefObject<HTMLDivElement>;
+};
+
+export type User = {
+  $id: string;
+  $createdAt: string;
+  $updatedAt: string;
+  name: string;
+  email: string;
+  photo: string;
+};
+
+export type userData = {
+  name: string;
+  email: string;
 };

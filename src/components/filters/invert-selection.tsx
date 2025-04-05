@@ -1,10 +1,20 @@
 import { useBoothContext } from "../../lib/context/booth.tsx";
 import { filtersType, filterValues } from "../../utils/types.ts";
-import { inverts } from "../../utils/values/filter-values.ts";
-import { SelectionColor } from "../../utils/values/selection-colors.ts";
+import { inverts } from "../../utils/constants/filter-values.ts";
+import { SelectionColor } from "../../utils/constants/selection-colors.ts";
+import { useEffect } from "react";
 
 export default function InvertSelection() {
   const { filter, setFilter } = useBoothContext();
+
+  useEffect(() => {
+    if (!filter.invert) {
+      setFilter((prevFilter: filtersType) => ({
+        ...prevFilter,
+        invert: inverts[0].value,
+      }));
+    }
+  }, [filter.invert, setFilter]);
 
   return (
     <div className="flex items-center gap-5">

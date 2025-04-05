@@ -8,6 +8,10 @@ type BoothContextType = {
   setFilter: React.Dispatch<React.SetStateAction<filtersType>>;
   prevFilter: filtersType[];
   setPrevFilter: React.Dispatch<React.SetStateAction<filtersType[]>>;
+  backgroundColor: string;
+  setBackgroundColor: React.Dispatch<React.SetStateAction<string>>;
+  borderColor: string;
+  setBorderColor: React.Dispatch<React.SetStateAction<string>>;
 };
 
 type Props = {
@@ -37,11 +41,18 @@ export const BoothContext = createContext<BoothContextType>({
     },
   ],
   setPrevFilter: () => {},
+  backgroundColor: "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400",
+  setBackgroundColor: () => {},
+  borderColor: "border-sky-400",
+  setBorderColor: () => {},
 });
 
 export const BoothProvider = ({ children }: Props) => {
   const [capturedImage, setCapturedImage] = useState<Object[]>([]);
-
+  const [backgroundColor, setBackgroundColor] = useState<string>(
+    "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400"
+  );
+  const [borderColor, setBorderColor] = useState<string>("border-sky-400");
   const [filter, setFilter] = useState<filtersType>({
     sepia: 0,
     grayscale: 0,
@@ -62,6 +73,10 @@ export const BoothProvider = ({ children }: Props) => {
         setFilter,
         prevFilter,
         setPrevFilter,
+        backgroundColor,
+        setBackgroundColor,
+        borderColor,
+        setBorderColor,
       }}
     >
       {children}

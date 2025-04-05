@@ -1,10 +1,12 @@
 import { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
-import filters from "../../utils/values/filters.ts";
+import filters from "../../utils/functions/filters.ts";
 import { useBoothContext } from "../../lib/context/booth.tsx";
 import shareImages from "../../utils/functions/share.ts";
 import downloadAllImages from "../../utils/functions/download.ts";
+import resetPic from "../../assets/reset.png";
+import backPic from "../../assets/back-arrow-svgrepo-com.svg";
 
 export default function Camera({
   photoBoothRef,
@@ -17,8 +19,17 @@ export default function Camera({
   const [timer, setTimer] = useState<number | null>(null);
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
 
-  const { capturedImage, setCapturedImage, filter, setPrevFilter, setFilter } =
-    useBoothContext();
+  const {
+    capturedImage,
+    setCapturedImage,
+    filter,
+    setPrevFilter,
+    setFilter,
+    backgroundColor,
+    setBackgroundColor,
+    borderColor,
+    setBorderColor,
+  } = useBoothContext();
   const {
     sepiaFilter,
     grayscaleFilter,
@@ -37,6 +48,11 @@ export default function Camera({
       brightness: 100,
       contrast: 100,
     });
+    setPrevFilter([]);
+    setBackgroundColor(
+      "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400"
+    );
+    setBorderColor("border-sky-400");
   };
 
   const handleDownload = () => {
@@ -111,13 +127,15 @@ export default function Camera({
 
   return (
     <main className="flex flex-col justify-center items-center gap-4">
-      <div className="flex justify-center items-center bg-yellow-300 h-[300px] w-[480px] p-5 rounded-2xl">
+      <div
+        className={`flex justify-center items-center ${backgroundColor} border-5 ${borderColor} h-[300px] w-[480px] p-5 rounded-2xl`}
+      >
         <Webcam
           ref={webcamRef}
           screenshotFormat="image/jpeg"
           audio={false}
           videoConstraints={videoConstraints}
-          className={` ${invertFilter(filter.invert)} ${brightnessFilter(
+          className={`${invertFilter(filter.invert)} ${brightnessFilter(
             filter.brightness
           )} ${sepiaFilter(filter.sepia)} ${hueRotateFilter(
             filter.hueRotate
@@ -142,7 +160,7 @@ export default function Camera({
               onClick={resetFilter}
               disabled={isCapturing}
             >
-              Reset Filter
+              <img src={resetPic} alt="reset" className="w-7 h-7" />
             </button>
           </>
         ) : (
@@ -175,7 +193,7 @@ export default function Camera({
           disabled={isCapturing}
           onClick={() => GoBack()}
         >
-          Go Back
+          <img src={backPic} alt="back" className="w-7 h-7" />
         </button>
       </div>
       <span className="text-lg text-center">

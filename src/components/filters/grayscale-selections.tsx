@@ -1,7 +1,7 @@
 import { useBoothContext } from "../../lib/context/booth.tsx";
-import { grayscales } from "../../utils/values/filter-values.ts";
+import { grayscales } from "../../utils/constants/filter-values.ts";
 import { filtersType, filterValues } from "../../utils/types.ts";
-import { SelectionColor } from "../../utils/values/selection-colors.ts";
+import { SelectionColor } from "../../utils/constants/selection-colors.ts";
 
 export default function GrayscaleSelection() {
   const { filter, setFilter } = useBoothContext();

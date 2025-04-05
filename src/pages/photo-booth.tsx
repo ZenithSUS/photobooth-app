@@ -1,10 +1,12 @@
 import Camera from "../components/ui/camera";
 import Filters from "../components/filters/filters";
+import Backgrounds from "../components/backgrounds/backgound";
 import { useBoothContext } from "../lib/context/booth";
 import { useRef } from "react";
 
 export default function PhotoBooth() {
-  const { capturedImage, prevFilter } = useBoothContext();
+  const { capturedImage, prevFilter, backgroundColor, borderColor } =
+    useBoothContext();
   const photoBoothRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -16,7 +18,7 @@ export default function PhotoBooth() {
 
           {capturedImage.length > 0 ? (
             <div
-              className="flex flex-col gap-0.5 bg-amber-400 p-2"
+              className={`flex flex-col gap-0.5 p-2 items-center justify-center ${backgroundColor} border-5 ${borderColor}`}
               ref={photoBoothRef}
             >
               {capturedImage.map((image, index) => {
@@ -28,7 +30,7 @@ export default function PhotoBooth() {
                     alt={`Captured Image ${index}`}
                     height={"300px"}
                     width={"300px"}
-                    className={`p-2 grayscale-${prevFilter[index].grayscale} sepia-${prevFilter[index].sepia} hue-rotate-${prevFilter[index].hueRotate} invert-${prevFilter[index].invert} brightness-${prevFilter[index].brightness} contrast-${prevFilter[index].contrast}`}
+                    className={`p-0.5 grayscale-${prevFilter[index].grayscale} sepia-${prevFilter[index].sepia} hue-rotate-${prevFilter[index].hueRotate} invert-${prevFilter[index].invert} brightness-${prevFilter[index].brightness} contrast-${prevFilter[index].contrast}`}
                   />
                 );
               })}
@@ -38,12 +40,19 @@ export default function PhotoBooth() {
           )}
         </div>
 
-        <div className="flex flex-col items-center md:flex-row md:items-start gap-2">
+        <div className="flex flex-col items-center md:flex-row md:items-start gap-2.5">
           <div className="flex flex-col gap-2 items-center">
             <h1 className="text-3xl">Take a selfie</h1>
             <Camera photoBoothRef={photoBoothRef} />
           </div>
-          <Filters />
+
+          <div className="flex flex-col gap-2">
+            <h1 className="text-2xl font-bold text-center">
+              Photo Booth Customization
+            </h1>
+            <Filters />
+            <Backgrounds />
+          </div>
         </div>
       </main>
     </>

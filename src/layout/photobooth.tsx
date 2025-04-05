@@ -13,8 +13,10 @@ export default function MainLayout() {
         localStorage.clear();
         return;
       }
-      localStorage.setItem("user-department", JSON.stringify(data.labels[1]));
+      localStorage.setItem("id", JSON.stringify(data.$id));
       localStorage.setItem("name", JSON.stringify(data.name));
+      localStorage.setItem("email", JSON.stringify(data.email));
+      localStorage.setItem("joined", JSON.stringify(data.$createdAt));
     };
 
     fetchAuthUser();
