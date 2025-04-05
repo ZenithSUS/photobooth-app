@@ -41,6 +41,7 @@ export const BoothContext = createContext<BoothContextType>({
 
 export const BoothProvider = ({ children }: Props) => {
   const [capturedImage, setCapturedImage] = useState<Object[]>([]);
+
   const [filter, setFilter] = useState<filtersType>({
     sepia: 0,
     grayscale: 0,

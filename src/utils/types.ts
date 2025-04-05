@@ -18,3 +18,7 @@ export type Images = {
   image2Url: string | File;
   image3Url: string | File;
 };
+
+export type downloadType = {
+  photoBoothRef: React.RefObject<HTMLDivElement>;
+};

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy } from "react";
 import { ToastContainer } from "react-toastify";
-import { BoothProvider } from "./context/booth-provider.tsx";
+import { BoothProvider } from "./lib/context/booth";
 
 const Login = lazy(() => import("./pages/login"));
 const Register = lazy(() => import("./pages/register"));

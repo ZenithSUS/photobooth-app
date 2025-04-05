@@ -1,24 +1,24 @@
 import { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
-import filters from "../../utils/filters.ts";
-import { useBoothContext } from "../../context/booth-provider.tsx";
-import shareImages from "../../lib/functions/share.ts";
-import downloadAllImages from "../../lib/functions/download.ts";
+import filters from "../../utils/values/filters.ts";
+import { useBoothContext } from "../../lib/context/booth.tsx";
+import shareImages from "../../utils/functions/share.ts";
+import downloadAllImages from "../../utils/functions/download.ts";
 
-export default function Camera() {
+export default function Camera({
+  photoBoothRef,
+}: {
+  photoBoothRef: React.RefObject<HTMLDivElement | null>;
+}) {
   const navigate = useNavigate();
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [timer, setTimer] = useState<number | null>(null);
-  const {
-    capturedImage,
-    setCapturedImage,
-    filter,
-    prevFilter,
-    setPrevFilter,
-    setFilter,
-  } = useBoothContext();
+  const [isCapturing, setIsCapturing] = useState<boolean>(false);
+
+  const { capturedImage, setCapturedImage, filter, setPrevFilter, setFilter } =
+    useBoothContext();
   const {
     sepiaFilter,
     grayscaleFilter,
@@ -40,11 +40,9 @@ export default function Camera() {
   };
 
   const handleDownload = () => {
-    downloadAllImages(
-      canvasRef as React.RefObject<HTMLCanvasElement>,
-      capturedImage,
-      prevFilter
-    );
+    downloadAllImages({
+      photoBoothRef: photoBoothRef as React.RefObject<HTMLDivElement>,
+    });
   };
 
   const GoBack = () => {
@@ -76,14 +74,26 @@ export default function Camera() {
 
   const startTimer = useCallback(() => {
     let countdown = 3;
+    let capturesRemaining = 3;
     setTimer(countdown);
+    setIsCapturing(true);
+
     const interval = setInterval(() => {
       countdown -= 1;
       setTimer(countdown);
+
       if (countdown === 0) {
-        clearInterval(interval);
-        setTimer(null);
         capture();
+        capturesRemaining -= 1;
+
+        if (capturesRemaining > 0) {
+          countdown = 3;
+          setTimer(countdown);
+        } else {
+          clearInterval(interval);
+          setTimer(null);
+          setIsCapturing(false);
+        }
       }
     }, 1000);
   }, [capture]);
@@ -128,8 +138,9 @@ export default function Camera() {
               {timer !== null ? `📸 Capturing in ${timer}s` : "📸"}
             </button>
             <button
-              className="text-lg text-center bg-red-500 hover:bg-red-600 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
+              className="text-lg text-center bg-red-500 hover:bg-red-600 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300 disabled:bg-gray-500"
               onClick={resetFilter}
+              disabled={isCapturing}
             >
               Reset Filter
             </button>
@@ -160,7 +171,8 @@ export default function Camera() {
           </>
         )}
         <button
-          className="p-2 text-lg text-white bg-red-500 hover:bg-red-600 hover:scale-95 transition duration-300 ease-in-out rounded cursor-pointer"
+          className="p-2 text-lg text-white bg-red-500 hover:bg-red-600 hover:scale-95 transition duration-300 ease-in-out rounded cursor-pointer disabled:bg-gray-500"
+          disabled={isCapturing}
           onClick={() => GoBack()}
         >
           Go Back

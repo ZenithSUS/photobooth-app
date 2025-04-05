@@ -6,22 +6,23 @@ import { Navigate } from "react-router-dom";
 export default function MainLayout() {
   const user = localStorage.getItem("session");
 
-  async function getAuthUser() {
-    try {
-      const authUser = await account.get();
-      console.log(authUser);
-      return authUser.$id || null;
-    } catch (error) {
-      console.log("Could not get auth user", error);
-      return null;
-    }
-  }
-
   useEffect(() => {
-    if (!getAuthUser()) {
-      localStorage.clear();
-    }
+    const fetchAuthUser = async () => {
+      const data = await account.get();
+      if (!data) {
+        localStorage.clear();
+        return;
+      }
+      localStorage.setItem("user-department", JSON.stringify(data.labels[1]));
+      localStorage.setItem("name", JSON.stringify(data.name));
+    };
+
+    fetchAuthUser();
   }, []);
+
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
 
   if (!user) {
     return <Navigate to="/login" />;
