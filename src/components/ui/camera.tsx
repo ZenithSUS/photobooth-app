@@ -7,6 +7,8 @@ import shareImages from "../../utils/functions/share.ts";
 import downloadAllImages from "../../utils/functions/download.ts";
 import resetPic from "../../assets/reset.png";
 import backPic from "../../assets/back-arrow-svgrepo-com.svg";
+import { messages } from "../../utils/constants/message.ts";
+import { axlot } from "../../utils/stickers/axlot.ts";
 
 export default function Camera({
   photoBoothRef,
@@ -17,7 +19,6 @@ export default function Camera({
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [timer, setTimer] = useState<number | null>(null);
-  const [isCapturing, setIsCapturing] = useState<boolean>(false);
 
   const {
     capturedImage,
@@ -29,6 +30,8 @@ export default function Camera({
     setBackgroundColor,
     borderColor,
     setBorderColor,
+    isCapturing,
+    setIsCapturing,
   } = useBoothContext();
   const {
     sepiaFilter,
@@ -128,21 +131,50 @@ export default function Camera({
   return (
     <main className="flex flex-col justify-center items-center gap-4">
       <div
-        className={`flex justify-center items-center ${backgroundColor} border-5 ${borderColor} h-[300px] w-[480px] p-5 rounded-2xl`}
+        className={`relative flex justify-center items-center ${backgroundColor} border-5 ${borderColor} h-[300px] w-[480px] p-5 rounded-2xl`}
       >
-        <Webcam
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          audio={false}
-          videoConstraints={videoConstraints}
-          className={`${invertFilter(filter.invert)} ${brightnessFilter(
-            filter.brightness
-          )} ${sepiaFilter(filter.sepia)} ${hueRotateFilter(
-            filter.hueRotate
-          )} ${grayscaleFilter(filter.grayscale)} ${contrastFilter(
-            filter.contrast
-          )}`}
-        />
+        {capturedImage.length < 3 ? (
+          <>
+            {isCapturing && timer !== null && (
+              <div
+                className="absolute inset-0 z-50 grid place-items-center text-3xl bg-black/35 font-bold gap-4 text-white
+              opacity-90"
+              >
+                {timer}
+              </div>
+            )}
+
+            <img
+              src={axlot[0]}
+              alt="axlot"
+              className="z-10 absolute top-0 left-0 w-20 h-20 object-fit"
+            />
+
+            <img
+              src={axlot[1]}
+              alt="axlot"
+              className="z-10 absolute top-0 right-0 w-20 h-20 object-fit"
+            />
+
+            <Webcam
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              audio={false}
+              videoConstraints={videoConstraints}
+              className={`${invertFilter(filter.invert)} ${brightnessFilter(
+                filter.brightness
+              )} ${sepiaFilter(filter.sepia)} ${hueRotateFilter(
+                filter.hueRotate
+              )} ${grayscaleFilter(filter.grayscale)} ${contrastFilter(
+                filter.contrast
+              )}`}
+            />
+          </>
+        ) : (
+          <div className="grid w-full h-full inset-0 place-items-center text-3xl bg-black font-bold gap-4 text-white">
+            {messages[Math.floor(Math.random() * messages.length)]}
+          </div>
+        )}
       </div>
 
       <div className="flex items-center justify-center gap-4">
@@ -153,7 +185,7 @@ export default function Camera({
               onClick={startTimer}
               disabled={timer !== null}
             >
-              {timer !== null ? `📸 Capturing in ${timer}s` : "📸"}
+              📸
             </button>
             <button
               className="text-lg text-center bg-red-500 hover:bg-red-600 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300 disabled:bg-gray-500"
@@ -169,7 +201,7 @@ export default function Camera({
               className="text-lg text-center bg-green-500 hover:bg-green-300 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
               onClick={resetImage}
             >
-              Try Again
+              Retake
             </button>
             <button
               className="text-lg text-center bg-yellow-500 hover:bg-yellow-300 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
