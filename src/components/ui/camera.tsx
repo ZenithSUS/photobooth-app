@@ -8,7 +8,7 @@ import downloadAllImages from "../../utils/functions/download.ts";
 import resetPic from "../../assets/reset.png";
 import backPic from "../../assets/back-arrow-svgrepo-com.svg";
 import { messages } from "../../utils/constants/message.ts";
-import { axlot } from "../../utils/stickers/axlot.ts";
+import Axlot from "../stickers/axlot.tsx";
 
 export default function Camera({
   photoBoothRef,
@@ -129,9 +129,9 @@ export default function Camera({
   };
 
   return (
-    <main className="flex flex-col justify-center items-center gap-4">
+    <div className="flex flex-col justify-center items-center gap-4">
       <div
-        className={`relative flex justify-center items-center ${backgroundColor} border-5 ${borderColor} h-[300px] w-[480px] p-5 rounded-2xl`}
+        className={`relative flex flex-1 justify-center items-center ${backgroundColor} border-5 ${borderColor}  p-5 rounded-2xl`}
       >
         {capturedImage.length < 3 ? (
           <>
@@ -144,17 +144,7 @@ export default function Camera({
               </div>
             )}
 
-            <img
-              src={axlot[0]}
-              alt="axlot"
-              className="z-10 absolute top-0 left-0 w-20 h-20 object-fit"
-            />
-
-            <img
-              src={axlot[1]}
-              alt="axlot"
-              className="z-10 absolute top-0 right-0 w-20 h-20 object-fit"
-            />
+            <Axlot />
 
             <Webcam
               ref={webcamRef}
@@ -231,6 +221,6 @@ export default function Camera({
       <span className="text-lg text-center">
         Images Captured: {capturedImage.length}/3
       </span>
-    </main>
+    </div>
   );
 }

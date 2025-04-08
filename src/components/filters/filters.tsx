@@ -18,7 +18,7 @@ export default function Filters() {
   }, [capturedImage, isCapturing]);
 
   return (
-    <main className="flex flex-col gap-2 justify-center">
+    <div className="flex flex-col gap-2 justify-center">
       <button
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         className="bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 hover:scale-105 hover:bg-gradient-to-br hover:from-amber-400 hover:via-orange-400 hover:to-red-400 text-white px-4 py-2 rounded cursor-pointer transition-all duration-300 ease-in-out
@@ -39,6 +39,6 @@ export default function Filters() {
         <ContrastSelection />
         <HueSelection />
       </div>
-    </main>
+    </div>
   );
 }

@@ -12,7 +12,23 @@ export default function PhotoBooth() {
   return (
     <>
       <h1 className="text-3xl font-bold text-center mt-4">Photo Booth</h1>
-      <main className="flex flex-col-reverse items-center md:items-start md:grid md:grid-cols-[500px_1fr] md:gap-2">
+      <div className="place-self-center mx-4">
+      
+        <div className="grid lg:grid-cols-2 gap-10">
+          <div className="flex flex-col gap-2 items-center self-center">
+            <h1 className="text-3xl">Take a selfie</h1>
+            <Camera photoBoothRef={photoBoothRef} />
+          </div>
+
+          <div className="self-center">
+            <h1 className="text-2xl font-bold text-center">
+              Photo Booth Customization
+            </h1>
+            <Filters />
+            <Backgrounds />
+          </div>
+        </div>
+
         <div className="flex flex-col gap-2 p-4 items-center">
           <h2 className="text-2xl font-bold text-center">Captured Image</h2>
 
@@ -38,23 +54,8 @@ export default function PhotoBooth() {
           ) : (
             <p className="text-lg text-center">No images captured yet.</p>
           )}
-        </div>
-
-        <div className="flex flex-col items-center md:flex-row md:items-start gap-2.5">
-          <div className="flex flex-col gap-2 items-center">
-            <h1 className="text-3xl">Take a selfie</h1>
-            <Camera photoBoothRef={photoBoothRef} />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <h1 className="text-2xl font-bold text-center">
-              Photo Booth Customization
-            </h1>
-            <Filters />
-            <Backgrounds />
-          </div>
-        </div>
-      </main>
+        </div> 
+      </div>
     </>
   );
 }

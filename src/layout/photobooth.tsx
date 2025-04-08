@@ -32,7 +32,7 @@ export default function MainLayout() {
   }
 
   return (
-    <main className="flex flex-col h-screen w-screen gap-5 items-center">
+    <main className="grid min-h-dvh grid-rows-[auto_1fr]">
       <Outlet />
     </main>
   );

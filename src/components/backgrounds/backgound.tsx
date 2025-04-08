@@ -16,7 +16,7 @@ export default function Backgrounds() {
   }, [capturedImage, isCapturing]);
 
   return (
-    <main className="flex flex-col gap-2 justify-center">
+    <div className="flex flex-col gap-2 justify-center">
       <button
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         disabled={isCapturing || capturedImage.length > 0}
@@ -49,6 +49,6 @@ export default function Backgrounds() {
       >
         <BorderSelection />
       </div>
-    </main>
+    </div>
   );
 }

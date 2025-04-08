@@ -14,8 +14,8 @@ type BoothContextType = {
   setBorderColor: React.Dispatch<React.SetStateAction<string>>;
   isCapturing: boolean;
   setIsCapturing: React.Dispatch<React.SetStateAction<boolean>>;
-  stickers: Object[];
-  setStickers: React.Dispatch<React.SetStateAction<Object[]>>;
+  sticker: string;
+  setSticker: React.Dispatch<React.SetStateAction<string>>;
 };
 
 type Props = {
@@ -51,8 +51,8 @@ export const BoothContext = createContext<BoothContextType>({
   setBorderColor: () => {},
   isCapturing: false,
   setIsCapturing: () => {},
-  stickers: [],
-  setStickers: () => {},
+  sticker: "",
+  setSticker: () => {},
 });
 
 export const BoothProvider = ({ children }: Props) => {
@@ -70,7 +70,7 @@ export const BoothProvider = ({ children }: Props) => {
     brightness: 100,
     contrast: 100,
   });
-  const [stickers, setStickers] = useState<Object[]>([]);
+  const [sticker, setSticker] = useState<string>("");
   const [prevFilter, setPrevFilter] = useState<filtersType[]>([]);
 
   return (
@@ -88,8 +88,8 @@ export const BoothProvider = ({ children }: Props) => {
         setBorderColor,
         isCapturing,
         setIsCapturing,
-        stickers,
-        setStickers,
+        sticker,
+        setSticker,
       }}
     >
       {children}

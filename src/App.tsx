@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import { BoothProvider } from "./lib/context/booth";
 
@@ -19,7 +19,9 @@ function App() {
         <Route
           element={
             <BoothProvider>
-              <PhotoBoothLayout />
+                <Suspense fallback={<div>loading...</div>}>
+                  <PhotoBoothLayout />
+                </Suspense>
             </BoothProvider>
           }
         >
@@ -33,8 +35,16 @@ function App() {
             </BoothProvider>
           }
         >
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/account" element={<Account />} />
+          <Route path="/" element={
+            <Suspense fallback={<div>loading...</div>}>
+              <Dashboard />
+            </Suspense>
+          } />
+          <Route path="/account" element={
+            <Suspense fallback={<div>loading...</div>}>
+              <Account />
+            </Suspense>
+          } />
         </Route>
 
         <Route path="/login" element={<Login />} />
