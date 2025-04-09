@@ -33,6 +33,7 @@ export default function Camera({
     isCapturing,
     setIsCapturing,
     sticker,
+    setSticker,
   } = useBoothContext();
   const {
     sepiaFilter,
@@ -121,6 +122,8 @@ export default function Camera({
   const resetImage = useCallback(() => {
     setCapturedImage([]);
     setPrevFilter([]);
+    resetFilter();
+    setSticker("N/A");
   }, [setCapturedImage]);
 
   const videoConstraints = {
