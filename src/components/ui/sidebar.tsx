@@ -2,7 +2,12 @@ import { Link } from "react-router-dom";
 import { account } from "../../appwrite";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import accountIcon from "../../assets/ui/account.png";
 import cameraIcon from "../../assets/ui/camera.png";
+import logoutIcon from "../../assets/ui/logout.png";
+import socialIcon from "../../assets/ui/social.png";
+import saveIcon from "../../assets/ui/save.png";
+import dashboardIcon from "../../assets/ui/dashboard.png";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -20,38 +25,44 @@ export default function Sidebar() {
       <div className="flex flex-col gap-6 text-2xl ml-4 items-start">
         <Link
           to="/"
-          className="rounded hover:bg-amber-400 hover:scale-105 p-2 transition-all duration-300 ease-in-out"
+          className="flex gap-2 items-center rounded hover:bg-amber-400 hover:scale-105 p-2 transition-all duration-300 ease-in-out"
         >
+          <img src={dashboardIcon} alt="photos" className="w-8 h-8" />
           Dashboard
         </Link>
         <Link
           to="/social"
-          className="rounded hover:bg-amber-400 hover:scale-105 p-2 transition-all duration-300 ease-in-out"
+          className="flex gap-2 items-center rounded hover:bg-amber-400 hover:scale-105 p-2 transition-all duration-300 ease-in-out"
         >
+          <img src={socialIcon} alt="social" className="w-8 h-8" />
           Social
         </Link>
         <Link
           to="/photos"
-          className="rounded hover:bg-amber-400 hover:scale-105 p-2 transition-all duration-300 ease-in-out"
+          className="flex gap-2 items-center rounded hover:bg-amber-400 hover:scale-105 p-2 transition-all duration-300 ease-in-out"
         >
+          <img src={saveIcon} alt="photos" className="w-8 h-8" />
           Save Photos
         </Link>
         <Link
           to="/photo-booth"
           className="flex gap-2 items-center rounded hover:bg-amber-400 hover:scale-105 p-2 transition-all duration-300 ease-in-out"
         >
-          <img src={cameraIcon} alt="camera" className="w-8 h-8" /> Photo Booth
+          <img src={cameraIcon} alt="camera" className="w-8 h-8" />
+          Photo Booth
         </Link>
         <Link
           to="/account"
-          className="rounded hover:bg-amber-400 hover:scale-105 p-2 transition-all duration-300 ease-in-out"
+          className="flex gap-2 items-center rounded hover:bg-amber-400 hover:scale-105 p-2 transition-all duration-300 ease-in-out"
         >
+          <img src={accountIcon} alt="account" className="w-8 h-8" />
           Account
         </Link>
         <button
           onClick={logout}
-          className="rounded hover:bg-amber-400 hover:scale-105 p-2 transition-all duration-300 ease-in-out cursor-pointer"
+          className="flex gap-2 items-center rounded hover:bg-amber-400 hover:scale-105 p-2 transition-all duration-300 ease-in-out cursor-pointer"
         >
+          <img src={logoutIcon} alt="logout" className="w-8 h-8" />
           Logout
         </button>
       </div>

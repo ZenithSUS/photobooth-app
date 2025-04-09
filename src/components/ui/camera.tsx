@@ -1,13 +1,13 @@
 import { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useBoothContext } from "../../lib/context/booth.tsx";
+import { messages } from "../../utils/constants/message.ts";
 import Webcam from "react-webcam";
 import filters from "../../utils/functions/filters.ts";
 import shareImages from "../../utils/functions/share.ts";
 import downloadAllImages from "../../utils/functions/download.ts";
 import resetPic from "../../assets/ui/reset.png";
-import backPic from "../../assets/ui/back-arrow-svgrepo-com.svg";
-import { messages } from "../../utils/constants/message.ts";
+import backPic from "../../assets/ui/back.svg";
 import Axlot from "../stickers/axlot-cam.tsx";
 
 export default function Camera({
