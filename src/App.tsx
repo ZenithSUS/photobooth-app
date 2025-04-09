@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import { BoothProvider } from "./lib/context/booth";
-
+import Loading from "./components/ui/loading.tsx";
 const Login = lazy(() => import("./pages/login"));
 const Register = lazy(() => import("./pages/register"));
 const PhotoBoothLayout = lazy(() => import("./layout/photobooth.tsx"));
@@ -19,9 +19,9 @@ function App() {
         <Route
           element={
             <BoothProvider>
-                <Suspense fallback={<div>loading...</div>}>
-                  <PhotoBoothLayout />
-                </Suspense>
+              <Suspense fallback={<Loading />}>
+                <PhotoBoothLayout />
+              </Suspense>
             </BoothProvider>
           }
         >
@@ -35,20 +35,41 @@ function App() {
             </BoothProvider>
           }
         >
-          <Route path="/" element={
-            <Suspense fallback={<div>loading...</div>}>
-              <Dashboard />
-            </Suspense>
-          } />
-          <Route path="/account" element={
-            <Suspense fallback={<div>loading...</div>}>
-              <Account />
-            </Suspense>
-          } />
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Dashboard />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/account"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Account />
+              </Suspense>
+            }
+          />
         </Route>
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/login"
+          element={
+            <Suspense fallback={<Loading />}>
+              <Login />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <Suspense fallback={<Loading />}>
+              <Register />
+            </Suspense>
+          }
+        />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer className={"z-50"} />

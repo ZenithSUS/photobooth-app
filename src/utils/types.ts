@@ -47,3 +47,9 @@ export type userData = {
   name: string;
   email: string;
 };
+
+export type Sticker = {
+  name: string;
+  value: string;
+  image: string;
+};

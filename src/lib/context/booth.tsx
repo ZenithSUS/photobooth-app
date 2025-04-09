@@ -51,7 +51,7 @@ export const BoothContext = createContext<BoothContextType>({
   setBorderColor: () => {},
   isCapturing: false,
   setIsCapturing: () => {},
-  sticker: "",
+  sticker: "N/A",
   setSticker: () => {},
 });
 
@@ -70,7 +70,7 @@ export const BoothProvider = ({ children }: Props) => {
     brightness: 100,
     contrast: 100,
   });
-  const [sticker, setSticker] = useState<string>("");
+  const [sticker, setSticker] = useState<string>("N/A");
   const [prevFilter, setPrevFilter] = useState<filtersType[]>([]);
 
   return (

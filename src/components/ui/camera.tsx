@@ -1,14 +1,14 @@
 import { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useBoothContext } from "../../lib/context/booth.tsx";
 import Webcam from "react-webcam";
 import filters from "../../utils/functions/filters.ts";
-import { useBoothContext } from "../../lib/context/booth.tsx";
 import shareImages from "../../utils/functions/share.ts";
 import downloadAllImages from "../../utils/functions/download.ts";
-import resetPic from "../../assets/reset.png";
-import backPic from "../../assets/back-arrow-svgrepo-com.svg";
+import resetPic from "../../assets/ui/reset.png";
+import backPic from "../../assets/ui/back-arrow-svgrepo-com.svg";
 import { messages } from "../../utils/constants/message.ts";
-import Axlot from "../stickers/axlot.tsx";
+import Axlot from "../stickers/axlot-cam.tsx";
 
 export default function Camera({
   photoBoothRef,
@@ -32,6 +32,7 @@ export default function Camera({
     setBorderColor,
     isCapturing,
     setIsCapturing,
+    sticker,
   } = useBoothContext();
   const {
     sepiaFilter,
@@ -131,7 +132,7 @@ export default function Camera({
   return (
     <div className="flex flex-col justify-center items-center gap-4">
       <div
-        className={`relative flex flex-1 justify-center items-center ${backgroundColor} border-5 ${borderColor}  p-5 rounded-2xl`}
+        className={`relative flex flex-1 justify-center items-center ${backgroundColor} border-5 ${borderColor} p-5 rounded-2xl`}
       >
         {capturedImage.length < 3 ? (
           <>
@@ -144,13 +145,15 @@ export default function Camera({
               </div>
             )}
 
-            <Axlot />
+            {sticker === "Axlot" && <Axlot />}
+            {sticker === "N/A" && <></>}
 
             <Webcam
               ref={webcamRef}
               screenshotFormat="image/jpeg"
               audio={false}
               videoConstraints={videoConstraints}
+              mirrored={true}
               className={`${invertFilter(filter.invert)} ${brightnessFilter(
                 filter.brightness
               )} ${sepiaFilter(filter.sepia)} ${hueRotateFilter(
@@ -161,7 +164,7 @@ export default function Camera({
             />
           </>
         ) : (
-          <div className="grid w-full h-full inset-0 place-items-center text-3xl bg-black font-bold gap-4 text-white">
+          <div className="grid w-[480px] h-[300px] inset-0 place-items-center text-3xl bg-black font-bold gap-4 text-white">
             {messages[Math.floor(Math.random() * messages.length)]}
           </div>
         )}
