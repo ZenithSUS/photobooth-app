@@ -8,7 +8,8 @@ import shareImages from "../../utils/functions/share.ts";
 import downloadAllImages from "../../utils/functions/download.ts";
 import resetPic from "../../assets/ui/reset.png";
 import backPic from "../../assets/ui/back.svg";
-import Axlot from "../stickers/axlot-cam.tsx";
+import Axlot from "../stickers/axlot/cam.tsx";
+import Minecraft from "../stickers/minecraft/cam.tsx";
 
 export default function Camera({
   photoBoothRef,
@@ -146,11 +147,12 @@ export default function Camera({
                 className="absolute inset-0 z-50 grid place-items-center text-3xl bg-black/35 font-bold gap-4 text-white
               opacity-90"
               >
-                {timer}
+                <div className="text-6xl animate-ping">{timer}</div>
               </div>
             )}
 
             {sticker === "Axlot" && <Axlot />}
+            {sticker === "Minecraft" && <Minecraft />}
             {sticker === "N/A" && <></>}
 
             <Webcam

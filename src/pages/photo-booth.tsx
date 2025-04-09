@@ -2,7 +2,8 @@ import Camera from "../components/ui/camera";
 import Customization from "../components/ui/customization";
 import { useBoothContext } from "../lib/context/booth";
 import { useRef } from "react";
-import AxlotStickers from "../components/stickers/axlot-img";
+import AxlotStickers from "../components/stickers/axlot/img";
+import MinecraftStickers from "../components/stickers/minecraft/img";
 
 export default function PhotoBooth() {
   const { capturedImage, prevFilter, backgroundColor, borderColor, sticker } =
@@ -42,6 +43,9 @@ export default function PhotoBooth() {
                     {sticker === "N/A" && <></>}
                     {sticker === "Axlot" && (
                       <AxlotStickers set={(index + 1) as number} />
+                    )}
+                    {sticker === "Minecraft" && (
+                      <MinecraftStickers set={(index + 1) as number} />
                     )}
                     <img
                       key={index}

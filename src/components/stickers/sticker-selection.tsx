@@ -5,15 +5,15 @@ import { Sticker } from "../../utils/types";
 export default function StickerSelection() {
   const { setSticker } = useBoothContext();
   return (
-    <div className="flex flex-col items-center gap-5">
-      <div className="grid grid-cols-2 gap-2">
+    <div className="grid place-items-center gap-5">
+      <div className="flex flex-wrap gap-5">
         {stickerPack.map((sticker: Sticker) => (
           <img
             onClick={() => setSticker(sticker.value)}
             key={sticker.name}
             src={sticker.image}
             alt={sticker.name}
-            className="w-20 cursor-pointer object-cover"
+            className="w-20 cursor-pointer object-fit"
           />
         ))}
       </div>
