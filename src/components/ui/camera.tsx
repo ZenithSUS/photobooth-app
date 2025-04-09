@@ -73,6 +73,8 @@ export default function Camera({
 
     setCapturedImage([]);
     setPrevFilter([]);
+    resetFilter();
+    setSticker("N/A");
     navigate("/");
   };
 
