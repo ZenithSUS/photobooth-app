@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useBoothContext } from "../../lib/context/booth.tsx";
 import { messages } from "../../utils/constants/message.ts";
+import { BlinkBlur } from "react-loading-indicators";
 import Webcam from "react-webcam";
 import filters from "../../utils/functions/filters.ts";
 import shareImages from "../../utils/functions/share.ts";
@@ -19,6 +20,7 @@ export default function Camera({
   const navigate = useNavigate();
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [webCamReady, setWebCamReady] = useState(false);
   const [timer, setTimer] = useState<number | null>(null);
 
   const {
@@ -138,7 +140,7 @@ export default function Camera({
   return (
     <div className="flex flex-col justify-center items-center gap-4">
       <div
-        className={`relative flex flex-1 justify-center items-center ${backgroundColor} border-5 ${borderColor} p-5 rounded-2xl`}
+        className={`relative flex flex-1 justify-center items-center ${backgroundColor} border-10 ${borderColor} p-3.5 rounded-2xl`}
       >
         {capturedImage.length < 3 ? (
           <>
@@ -148,6 +150,17 @@ export default function Camera({
               opacity-90"
               >
                 <div className="text-6xl animate-ping">{timer}</div>
+              </div>
+            )}
+
+            {!webCamReady && (
+              <div className="absolute inset-0 z-50 grid place-items-center text-3xl bg-black font-bold gap-4">
+                <BlinkBlur
+                  color="#2e9bb5"
+                  size="medium"
+                  text="Loading Webcam"
+                  textColor="white"
+                />
               </div>
             )}
 
@@ -161,6 +174,7 @@ export default function Camera({
               audio={false}
               videoConstraints={videoConstraints}
               mirrored={true}
+              onUserMedia={() => setWebCamReady(true)}
               className={`${invertFilter(filter.invert)} ${brightnessFilter(
                 filter.brightness
               )} ${sepiaFilter(filter.sepia)} ${hueRotateFilter(

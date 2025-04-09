@@ -33,7 +33,7 @@ export default function PhotoBooth() {
 
           {capturedImage.length > 0 ? (
             <div
-              className={`flex flex-col gap-0.5 p-2 items-center justify-center ${backgroundColor} border-5 ${borderColor}`}
+              className={`flex flex-col gap-0.5 p-2 items-center justify-center ${backgroundColor} border-10 ${borderColor}`}
               ref={photoBoothRef}
             >
               {capturedImage.map((image, index) => {

@@ -10,7 +10,10 @@ import axlot9 from "../../../assets/stickers/axlot/sing.png";
 import axlot10 from "../../../assets/stickers/axlot/happy.png";
 import axlot11 from "../../../assets/stickers/axlot/laugh.png";
 import axlot12 from "../../../assets/stickers/axlot/hug.png";
-import { positionsCam } from "../../../utils/constants/image-position";
+import {
+  positionsCam,
+  imageFlipCam,
+} from "../../../utils/constants/image-position";
 
 export default function AxlotStickers({ set }: { set: number }) {
   const stickers = [
@@ -36,6 +39,7 @@ export default function AxlotStickers({ set }: { set: number }) {
             className={`absolute w-14 md:w-12 object-fit z-10`}
             style={{
               ...positionsCam[index],
+              ...imageFlipCam[index],
             }}
           />
         ))}
