@@ -30,7 +30,7 @@ export type Images = {
   image3Url: string | File;
 };
 
-export type downloadType = {
+export type DownloadType = {
   photoBoothRef: React.RefObject<HTMLDivElement>;
 };
 
