@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useBoothContext } from "../../lib/context/booth.tsx";
 import { messages } from "../../utils/constants/message.ts";
 import { BlinkBlur } from "react-loading-indicators";
+import Modal from "react-modal";
 import Webcam from "react-webcam";
 import filters from "../../utils/functions/filters.ts";
 import shareImages from "../../utils/functions/share.ts";
@@ -13,16 +14,21 @@ import Axlot from "../stickers/axlot/cam.tsx";
 import Minecraft from "../stickers/minecraft/cam.tsx";
 import Cat from "../stickers/cat/cam.tsx";
 
+Modal.setAppElement("#root");
+
 export default function Camera({
   photoBoothRef,
 }: {
   photoBoothRef: React.RefObject<HTMLDivElement | null>;
 }) {
+  const name = JSON.parse(localStorage.getItem("name") as string);
   const navigate = useNavigate();
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [webCamReady, setWebCamReady] = useState(false);
   const [timer, setTimer] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [title, setTitle] = useState("");
 
   const {
     capturedImage,
@@ -132,6 +138,30 @@ export default function Camera({
     setSticker("N/A");
   }, [setCapturedImage]);
 
+  const handleShare = async () => {
+    try {
+      setIsModalOpen(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const shareImage = async (e: React.FormEvent, title: string) => {
+    try {
+      e.preventDefault();
+      await shareImages(
+        capturedImage as Blob[],
+        setCapturedImage,
+        setIsModalOpen,
+        name,
+        title,
+        sticker
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const videoConstraints = {
     width: 480,
     height: 300,
@@ -140,6 +170,49 @@ export default function Camera({
 
   return (
     <div className="flex flex-col justify-center items-center gap-4">
+      <Modal
+        isOpen={isModalOpen}
+        parentSelector={() => document.querySelector("#root") as HTMLElement}
+        className={
+          "grid absolute inset-x-4 top-1/8 place-items-center z-50 max-w-lg w-full mx-auto p-4 sm:inset-x-8 sm:top-1/4 sm:max-w-md md:max-w-lg lg:max-w-xl"
+        }
+      >
+        <div className="flex flex-col w-full">
+          <form
+            onSubmit={(e) => shareImage(e, title)}
+            className="grid grid-cols-1 place-items-center bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4 rounded-2xl"
+          >
+            <h2 className="text-lg font-bold text-center">Share PhotoBooth</h2>
+            <div className="flex flex-col gap-2 w-full">
+              <label htmlFor="title" className="text-lg font-bold">
+                Title
+              </label>
+              <input
+                type="text"
+                name="title"
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
+                className="bg-white rounded-sm p-2 w-full"
+              />
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="submit"
+                  className="p-2 rounded-xl bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 hover:from-green-500 hover:via-emerald-500 hover:to-teal-500 transition duration-300 ease-in-out cursor-pointer"
+                >
+                  Share
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="p-2 rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 hover:from-amber-500 hover:via-orange-500 hover:to-red-500 transition duration-300 ease-in-out cursor-pointer"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </Modal>
       <div
         className={`relative flex flex-1 justify-center items-center ${backgroundColor} border-10 ${borderColor} p-3.5 rounded-2xl`}
       >
@@ -221,9 +294,7 @@ export default function Camera({
             </button>
             <button
               className="text-lg text-center bg-yellow-500 hover:bg-yellow-300 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
-              onClick={() =>
-                shareImages(capturedImage as Blob[], setCapturedImage)
-              }
+              onClick={handleShare}
             >
               Share
             </button>

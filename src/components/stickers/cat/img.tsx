@@ -13,35 +13,34 @@ import cat12 from "../../../assets/stickers/cat/love.webp";
 import { positionsCam } from "../../../utils/constants/image-position";
 
 export default function CatStickers({ set }: { set: number }) {
+  const stickers = [
+    [cat1, cat2, cat3, cat4],
+    [cat5, cat6, cat7, cat8],
+    [cat9, cat10, cat11, cat12],
+  ];
+  const stickerNames = [
+    ["smile", "family", "friends", "in-love"],
+    ["eat", "reading", "eat2", "smile2"],
+    ["taco", "cat", "hungry", "love"],
+  ];
 
-    const stickers = [
-        [cat1, cat2, cat3, cat4],
-        [cat5, cat6, cat7, cat8],
-        [cat9, cat10, cat11, cat12],
-    ];
-    const stickerNames = [
-        ["smile", "family", "friends", "in-love"],
-        ["eat", "reading", "eat2", "smile2"],
-        ["taco", "cat", "hungry", "love"],
-    ];
-    
-    if (set >= 1 && set <= stickers.length) {
-        return (
-        <div>
-            {stickers[set - 1].map((sticker, index) => (
-            <img
-                key={index}
-                src={sticker}
-                alt={stickerNames[set - 1][index]}
-                className={`absolute w-14 md:w-12 object-fit z-10`}
-                style={{
-                ...positionsCam[index],
-                }}
-            />
-            ))}
-        </div>
-        );
-    }
-    
-    return null;
+  if (set >= 1 && set <= stickers.length) {
+    return (
+      <div>
+        {stickers[set - 1].map((sticker, index) => (
+          <img
+            key={index}
+            src={sticker}
+            alt={stickerNames[set - 1][index]}
+            className={`absolute w-14 md:w-12 object-fit z-10`}
+            style={{
+              ...positionsCam[index],
+            }}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  return null;
 }

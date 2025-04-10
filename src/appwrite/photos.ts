@@ -1,10 +1,15 @@
 import { databases, PHOTO_COLLECTION_ID, DATABASE_ID } from "../appwrite";
 import { Query } from "appwrite";
-import { Photos } from "../utils/types";
+import { ShowPhotos } from "../utils/types";
 
 export const createNewPhoto = async (urls: Object, id: string) => {
   try {
-    return await databases.createDocument(DATABASE_ID, PHOTO_COLLECTION_ID, id, urls);
+    return await databases.createDocument(
+      DATABASE_ID,
+      PHOTO_COLLECTION_ID,
+      id,
+      urls
+    );
   } catch (error) {
     console.log("Error creating photo document:", error);
   }
@@ -12,7 +17,7 @@ export const createNewPhoto = async (urls: Object, id: string) => {
 
 export const getAllPhotos = async () => {
   try {
-    let allPhotos: Photos[] = [];
+    let allPhotos: ShowPhotos[] = [];
     let offset = 0;
     const limit = 100;
 
@@ -30,25 +35,26 @@ export const getAllPhotos = async () => {
           $createdAt: doc.$createdAt,
           $updatedAt: doc.$updatedAt,
           userID: doc.userID,
+          title: doc.title,
+          author: doc.author,
+          sticker: doc.sticker,
           image1Url: doc.image1Url,
           image2Url: doc.image2Url,
           image3Url: doc.image3Url,
         })),
       ];
 
-      if (documents.length === 0) break; 
+      if (documents.length === 0) break;
 
       offset += limit;
     }
 
-
     return allPhotos;
   } catch (error) {
     console.error("Error fetching all photos:", error);
-    return []; 
+    return [];
   }
 };
-
 
 export const getPhoto = async (id: string) => {
   try {
@@ -57,11 +63,10 @@ export const getPhoto = async (id: string) => {
       PHOTO_COLLECTION_ID,
       id
     );
-    
+
     return result;
   } catch (error) {
     console.error("Error fetching photos:", error);
     throw error;
   }
-
-}
+};

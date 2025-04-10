@@ -23,8 +23,11 @@ export type border = {
   value: number;
 };
 
-export type Images = {
+export type CreatePhoto = {
+  author: string;
+  title: string;
   userID: string;
+  sticker: string;
   image1Url: string | File;
   image2Url: string | File;
   image3Url: string | File;
@@ -48,15 +51,11 @@ export type userData = {
   email: string;
 };
 
-export type Photos = {
+export type ShowPhotos = CreatePhoto & {
   $id: string;
   $createdAt: string;
   $updatedAt: string;
-  userID: string;
-  image1Url: string | File;
-  image2Url: string | File;
-  image3Url: string | File;
-}
+};
 
 export type Sticker = {
   name: string;

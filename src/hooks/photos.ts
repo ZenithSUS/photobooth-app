@@ -1,12 +1,9 @@
 import { fetchAllPhotos, fetchPhoto } from "../actions/photos";
-import {
-  QueryObserverResult,
-  useQuery,
-} from "@tanstack/react-query";
-import { Photos } from "../utils/types";
+import { QueryObserverResult, useQuery } from "@tanstack/react-query";
+import { ShowPhotos } from "../utils/types";
 
-export const getAllPhotos = (): QueryObserverResult<Photos[]> => {
-  return useQuery<Photos[]>({
+export const getAllPhotos = (): QueryObserverResult<ShowPhotos[]> => {
+  return useQuery<ShowPhotos[]>({
     queryFn: async () => {
       const result = await fetchAllPhotos();
 
@@ -19,8 +16,10 @@ export const getAllPhotos = (): QueryObserverResult<Photos[]> => {
   });
 };
 
-export const getPhoto = (id: string): QueryObserverResult<Partial<Photos>> => {
-  return useQuery<Partial<Photos>>({
+export const getPhoto = (
+  id: string
+): QueryObserverResult<Partial<ShowPhotos>> => {
+  return useQuery<Partial<ShowPhotos>>({
     queryFn: async () => {
       const result = await fetchPhoto(id);
       if (!result) {
