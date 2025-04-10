@@ -1,15 +1,15 @@
-import minecraft1 from "../../../assets/stickers/minecraft/steve.png";
-import minecraft2 from "../../../assets/stickers/minecraft/pig.png";
-import minecraft3 from "../../../assets/stickers/minecraft/game.png";
-import minecraft4 from "../../../assets/stickers/minecraft/tnt.png";
-import minecraft5 from "../../../assets/stickers/minecraft/creeper.png";
-import minecraft6 from "../../../assets/stickers/minecraft/m-logo.png";
-import minecraft7 from "../../../assets/stickers/minecraft/heart.png";
-import minecraft8 from "../../../assets/stickers/minecraft/poisonous.png";
-import minecraft9 from "../../../assets/stickers/minecraft/wolf.png";
-import minecraft10 from "../../../assets/stickers/minecraft/zombie.png";
-import minecraft11 from "../../../assets/stickers/minecraft/sword.png";
-import minecraft12 from "../../../assets/stickers/minecraft/mining.png";
+import minecraft1 from "../../../assets/stickers/minecraft/steve.webp";
+import minecraft2 from "../../../assets/stickers/minecraft/pig.webp";
+import minecraft3 from "../../../assets/stickers/minecraft/game.webp";
+import minecraft4 from "../../../assets/stickers/minecraft/tnt.webp";
+import minecraft5 from "../../../assets/stickers/minecraft/creeper.webp";
+import minecraft6 from "../../../assets/stickers/minecraft/m-logo.webp";
+import minecraft7 from "../../../assets/stickers/minecraft/heart.webp";
+import minecraft8 from "../../../assets/stickers/minecraft/poisonous.webp";
+import minecraft9 from "../../../assets/stickers/minecraft/wolf.webp";
+import minecraft10 from "../../../assets/stickers/minecraft/zombie.webp";
+import minecraft11 from "../../../assets/stickers/minecraft/sword.webp";
+import minecraft12 from "../../../assets/stickers/minecraft/mining.webp";
 import { positionsCam } from "../../../utils/constants/image-position";
 
 export default function MinecraftStickers({ set }: { set: number }) {

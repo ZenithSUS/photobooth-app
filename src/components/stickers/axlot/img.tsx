@@ -1,15 +1,15 @@
-import axlot1 from "../../../assets/stickers/axlot/amazed.png";
-import axlot2 from "../../../assets/stickers/axlot/flowers.png";
-import axlot3 from "../../../assets/stickers/axlot/yes.png";
-import axlot4 from "../../../assets/stickers/axlot/read.png";
-import axlot5 from "../../../assets/stickers/axlot/amazed2.png";
-import axlot6 from "../../../assets/stickers/axlot/hi.png";
-import axlot7 from "../../../assets/stickers/axlot/love.png";
-import axlot8 from "../../../assets/stickers/axlot/love2.png";
-import axlot9 from "../../../assets/stickers/axlot/sing.png";
-import axlot10 from "../../../assets/stickers/axlot/happy.png";
-import axlot11 from "../../../assets/stickers/axlot/laugh.png";
-import axlot12 from "../../../assets/stickers/axlot/hug.png";
+import axlot1 from "../../../assets/stickers/axlot/amazed.webp";
+import axlot2 from "../../../assets/stickers/axlot/flowers.webp";
+import axlot3 from "../../../assets/stickers/axlot/yes.webp";
+import axlot4 from "../../../assets/stickers/axlot/read.webp";
+import axlot5 from "../../../assets/stickers/axlot/amazed2.webp";
+import axlot6 from "../../../assets/stickers/axlot/hi.webp";
+import axlot7 from "../../../assets/stickers/axlot/love.webp";
+import axlot8 from "../../../assets/stickers/axlot/love2.webp";
+import axlot9 from "../../../assets/stickers/axlot/sing.webp";
+import axlot10 from "../../../assets/stickers/axlot/happy.webp";
+import axlot11 from "../../../assets/stickers/axlot/laugh.webp";
+import axlot12 from "../../../assets/stickers/axlot/hug.webp";
 import {
   positionsCam,
   imageFlipCam,
