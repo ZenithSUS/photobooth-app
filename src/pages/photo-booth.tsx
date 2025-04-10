@@ -4,6 +4,7 @@ import { useBoothContext } from "../lib/context/booth";
 import { useRef } from "react";
 import AxlotStickers from "../components/stickers/axlot/img";
 import MinecraftStickers from "../components/stickers/minecraft/img";
+import CatStickers from "../components/stickers/cat/img";
 
 export default function PhotoBooth() {
   const { capturedImage, prevFilter, backgroundColor, borderColor, sticker } =
@@ -46,6 +47,9 @@ export default function PhotoBooth() {
                     )}
                     {sticker === "Minecraft" && (
                       <MinecraftStickers set={(index + 1) as number} />
+                    )}
+                    {sticker === "Cat" && (
+                      <CatStickers set={(index + 1) as number} />
                     )}
                     <img
                       key={index}
