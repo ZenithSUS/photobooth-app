@@ -1,13 +1,13 @@
 import { databases, PHOTO_COLLECTION_ID, DATABASE_ID } from "../appwrite";
-import { Query } from "appwrite";
+import { Query, ID } from "appwrite";
 import { ShowPhotos } from "../utils/types";
 
-export const createNewPhoto = async (urls: Object, id: string) => {
+export const createNewPhoto = async (urls: Object) => {
   try {
     return await databases.createDocument(
       DATABASE_ID,
       PHOTO_COLLECTION_ID,
-      id,
+      ID.unique(),
       urls
     );
   } catch (error) {

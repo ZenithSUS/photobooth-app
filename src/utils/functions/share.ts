@@ -73,18 +73,15 @@ export default async function shareImages(
         file3
       );
 
-      const response = await createPhoto(
-        {
-          userID: JSON.parse(localStorage.getItem("id") || '""') as string,
-          author: name,
-          title: title,
-          sticker: sticker,
-          image1Url: `${endpointUrl}/storage/buckets/${imageData1.bucketId}/files/${imageData1.$id}/view?project=${projectId}&mode=admin`,
-          image2Url: `${endpointUrl}/storage/buckets/${imageData2.bucketId}/files/${imageData2.$id}/view?project=${projectId}&mode=admin`,
-          image3Url: `${endpointUrl}/storage/buckets/${imageData3.bucketId}/files/${imageData3.$id}/view?project=${projectId}&mode=admin`,
-        },
-        JSON.parse(localStorage.getItem("id") || '""') as string
-      );
+      const response = await createPhoto({
+        userID: JSON.parse(localStorage.getItem("id") || '""') as string,
+        author: name,
+        title: title,
+        sticker: sticker,
+        image1Url: `${endpointUrl}/storage/buckets/${imageData1.bucketId}/files/${imageData1.$id}/view?project=${projectId}&mode=admin`,
+        image2Url: `${endpointUrl}/storage/buckets/${imageData2.bucketId}/files/${imageData2.$id}/view?project=${projectId}&mode=admin`,
+        image3Url: `${endpointUrl}/storage/buckets/${imageData3.bucketId}/files/${imageData3.$id}/view?project=${projectId}&mode=admin`,
+      });
 
       navigator.clipboard.writeText(
         import.meta.env.PROD

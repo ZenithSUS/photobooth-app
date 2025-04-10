@@ -1,9 +1,9 @@
 import { createNewPhoto, getAllPhotos, getPhoto } from "../appwrite/photos";
 import { CreatePhoto } from "../utils/types";
 
-export const createPhoto = async (data: CreatePhoto, id: string) => {
+export const createPhoto = async (data: CreatePhoto) => {
   try {
-    return await createNewPhoto(data, id);
+    return await createNewPhoto(data);
   } catch (error) {
     console.log(error);
   }
