@@ -48,6 +48,16 @@ export type userData = {
   email: string;
 };
 
+export type Photos = {
+  $id: string;
+  $createdAt: string;
+  $updatedAt: string;
+  userID: string;
+  image1Url: string | File;
+  image2Url: string | File;
+  image3Url: string | File;
+}
+
 export type Sticker = {
   name: string;
   value: string;

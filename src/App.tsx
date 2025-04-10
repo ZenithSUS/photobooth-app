@@ -8,7 +8,9 @@ const Register = lazy(() => import("./pages/register"));
 const PhotoBoothLayout = lazy(() => import("./layout/photobooth.tsx"));
 const UserLayout = lazy(() => import("./layout/user.tsx"));
 const Dashboard = lazy(() => import("./pages/dashboard"));
-const PhotoBooth = lazy(() => import("./pages/photo-booth"));
+const Social = lazy(() => import("./pages/social"));
+const PhotoBooth = lazy(() => import("./pages/photo-booth/index.tsx"));
+const PhotoUser = lazy(() => import("./pages/photo-booth/photo-user.tsx"));
 const Account = lazy(() => import("./pages/account"));
 const NotFound = lazy(() => import("./pages/not-found"));
 
@@ -26,6 +28,7 @@ function App() {
           }
         >
           <Route path="/photo-booth" element={<PhotoBooth />} />
+          <Route path="/photo-booth/:id" element={<PhotoUser />} />
         </Route>
 
         <Route
@@ -43,6 +46,25 @@ function App() {
               </Suspense>
             }
           />
+
+          <Route
+            path="/social"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Social />
+              </Suspense>
+            }
+          />
+
+          <Route 
+            path="/social/:id"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Social />
+              </Suspense>
+            }
+          />
+          
           <Route
             path="/account"
             element={

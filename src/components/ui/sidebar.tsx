@@ -20,7 +20,7 @@ export default function Sidebar() {
     }
   };
   return (
-    <div className="absolute hidden md:block top-0 left-0 bottom-0 flex-col pt-20 pl-4 w-[300px] h-screen bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 border-r-2 border-amber-400 overflow-y-auto">
+    <div className="absolute hidden md:block top-0 left-0 bottom-0 flex-col pt-20 pl-4 w-[300px] min-h-screen bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 border-r-2 border-amber-400 overflow-y-auto">
       <h1 className="text-3xl font-bold pb-4">Navigation</h1>
       <div className="flex flex-col gap-6 text-2xl ml-4 items-start">
         <Link

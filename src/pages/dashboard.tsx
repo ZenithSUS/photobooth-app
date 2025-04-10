@@ -12,7 +12,7 @@ export default function Dashboard() {
   }, [user]);
 
   return (
-    <main className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5">
       <h1 className="text-3xl font-bold">Dashboard</h1>
 
       <div className="flex flex-col gap-1.5 md:grid md:grid-cols-2 md:gap-4 w-full">
@@ -53,6 +53,6 @@ export default function Dashboard() {
           <h2 className="text-2xl font-bold">0</h2>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

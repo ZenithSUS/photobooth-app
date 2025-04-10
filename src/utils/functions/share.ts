@@ -57,7 +57,7 @@ export default async function shareImages(
         file3
       );
 
-      createPhoto(
+      const response = await createPhoto(
         {
           userID: JSON.parse(localStorage.getItem("id") || '""') as string,
           image1Url: `${endpointUrl}/storage/buckets/${imageData1.bucketId}/files/${imageData1.$id}/view?project=${projectId}&mode=admin`,
@@ -65,6 +65,10 @@ export default async function shareImages(
           image3Url: `${endpointUrl}/storage/buckets/${imageData3.bucketId}/files/${imageData3.$id}/view?project=${projectId}&mode=admin`,
         },
         JSON.parse(localStorage.getItem("id") || '""') as string
+      );
+
+      navigator.clipboard.writeText(
+        import.meta.env.PROD ? "" : import.meta.env.VITE_WEBSITE_URL_DEV + `/photo-booth/${response?.$id}`
       );
 
       setCapturedImage([]);

@@ -1,10 +1,10 @@
-import Camera from "../components/ui/camera";
-import Customization from "../components/ui/customization";
-import { useBoothContext } from "../lib/context/booth";
+import Camera from "../../components/ui/camera";
+import Customization from "../../components/ui/customization";
+import { useBoothContext } from "../../lib/context/booth";
 import { useRef } from "react";
-import AxlotStickers from "../components/stickers/axlot/img";
-import MinecraftStickers from "../components/stickers/minecraft/img";
-import CatStickers from "../components/stickers/cat/img";
+import AxlotStickers from "../../components/stickers/axlot/img";
+import MinecraftStickers from "../../components/stickers/minecraft/img";
+import CatStickers from "../../components/stickers/cat/img";
 
 export default function PhotoBooth() {
   const { capturedImage, prevFilter, backgroundColor, borderColor, sticker } =
