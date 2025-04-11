@@ -28,6 +28,8 @@ export type CreatePhoto = {
   title: string;
   userID: string;
   sticker: string;
+  background: string;
+  border: string;
   image1Url: string | File;
   image2Url: string | File;
   image3Url: string | File;

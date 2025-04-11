@@ -28,7 +28,7 @@ export default function Camera({
   const [webCamReady, setWebCamReady] = useState(false);
   const [timer, setTimer] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [title, setTitle] = useState("");
+  const title = useRef<HTMLInputElement>(null);
 
   const {
     capturedImage,
@@ -38,8 +38,12 @@ export default function Camera({
     setFilter,
     backgroundColor,
     setBackgroundColor,
+    backgroundValue,
+    setBackgroundValue,
     borderColor,
     setBorderColor,
+    borderValue,
+    setBorderValue,
     isCapturing,
     setIsCapturing,
     sticker,
@@ -81,6 +85,8 @@ export default function Camera({
       if (!window.confirm("Are you sure you want to go back?")) return;
     }
 
+    setBorderValue("");
+    setBackgroundValue("");
     setCapturedImage([]);
     setPrevFilter([]);
     resetFilter();
@@ -132,6 +138,10 @@ export default function Camera({
   }, [capture]);
 
   const resetImage = useCallback(() => {
+    if (capturedImage.length === 0) return;
+
+    setBorderValue("");
+    setBackgroundValue("");
     setCapturedImage([]);
     setPrevFilter([]);
     resetFilter();
@@ -156,6 +166,8 @@ export default function Camera({
         name,
         title,
         sticker,
+        backgroundValue,
+        borderValue,
       );
     } catch (error) {
       console.log(error);
@@ -174,12 +186,12 @@ export default function Camera({
         isOpen={isModalOpen}
         parentSelector={() => document.querySelector("#root") as HTMLElement}
         className={
-          "absolute inset-x-4 top-1/8 z-50 mx-auto grid w-full max-w-lg place-items-center p-4 sm:inset-x-8 sm:top-1/4 sm:max-w-md md:max-w-lg lg:max-w-xl"
+          "absolute top-1/8 z-50 mx-auto grid w-full max-w-lg place-items-center p-4 sm:inset-x-8 sm:top-1/4 sm:max-w-md md:max-w-lg lg:max-w-xl"
         }
       >
         <div className="flex w-full flex-col">
           <form
-            onSubmit={(e) => shareImage(e, title)}
+            onSubmit={(e) => shareImage(e, title.current?.value as string)}
             className="grid grid-cols-1 place-items-center rounded-2xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4"
           >
             <h2 className="text-center text-lg font-bold">Share PhotoBooth</h2>
@@ -190,8 +202,7 @@ export default function Camera({
               <input
                 type="text"
                 name="title"
-                onChange={(e) => setTitle(e.target.value)}
-                value={title}
+                ref={title}
                 className="w-full rounded-sm bg-white p-2"
               />
               <div className="grid grid-cols-2 gap-2">
@@ -257,13 +268,15 @@ export default function Camera({
             />
           </>
         ) : (
-          <div className="inset-0 grid place-items-center gap-4 bg-black text-3xl font-bold text-white">
-            {messages[Math.floor(Math.random() * messages.length)]}
+          <div className="inset-0 grid h-[200px] place-items-center gap-4 bg-black text-center text-3xl font-bold text-white md:h-[300px] md:w-[480px]">
+            <div className="p-3">
+              {messages[Math.floor(Math.random() * messages.length)]}
+            </div>
           </div>
         )}
       </div>
 
-      <div className="flex items-center justify-center gap-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {capturedImage.length !== 3 ? (
           <>
             <button
@@ -305,11 +318,11 @@ export default function Camera({
           </>
         )}
         <button
-          className="cursor-pointer rounded bg-red-500 p-2 text-lg text-white transition duration-300 ease-in-out hover:scale-95 hover:bg-red-600 disabled:bg-gray-500"
+          className="cursor-pointer rounded bg-red-500 p-2 text-center text-lg text-white transition duration-300 ease-in-out hover:scale-95 hover:bg-red-600 disabled:bg-gray-500"
           disabled={isCapturing}
           onClick={() => GoBack()}
         >
-          <img src={backPic} alt="back" className="h-7 w-7" />
+          <img src={backPic} alt="back" className="mx-auto h-7 w-7" />
         </button>
       </div>
       <span className="text-center text-lg">

@@ -3,8 +3,12 @@ import { useBoothContext } from "../../lib/context/booth";
 import { borders } from "../../utils/constants/border";
 
 export default function BorderSelection() {
-  const { borderColor, setBorderColor } = useBoothContext();
+  const { borderColor, setBorderColor, setBorderValue } = useBoothContext();
 
+  const handleBorderChange = (border: border) => {
+    setBorderValue(String(border.value));
+    setBorderColor(border.border as string);
+  };
   return (
     <div className="flex flex-col items-center gap-5">
       <div className="grid grid-cols-5 gap-2">
@@ -15,7 +19,7 @@ export default function BorderSelection() {
             style={{
               border: border.border === borderColor ? "2px solid" : "none",
             }}
-            onClick={() => setBorderColor(border.border as string)}
+            onClick={() => handleBorderChange(border)}
           ></div>
         ))}
       </div>

@@ -10,8 +10,12 @@ type BoothContextType = {
   setPrevFilter: React.Dispatch<React.SetStateAction<filtersType[]>>;
   backgroundColor: string;
   setBackgroundColor: React.Dispatch<React.SetStateAction<string>>;
+  backgroundValue: string;
+  setBackgroundValue: React.Dispatch<React.SetStateAction<string>>;
   borderColor: string;
   setBorderColor: React.Dispatch<React.SetStateAction<string>>;
+  borderValue: string;
+  setBorderValue: React.Dispatch<React.SetStateAction<string>>;
   isCapturing: boolean;
   setIsCapturing: React.Dispatch<React.SetStateAction<boolean>>;
   sticker: string;
@@ -53,6 +57,10 @@ export const BoothContext = createContext<BoothContextType>({
   setIsCapturing: () => {},
   sticker: "N/A",
   setSticker: () => {},
+  backgroundValue: "",
+  setBackgroundValue: () => {},
+  borderValue: "",
+  setBorderValue: () => {},
 });
 
 export const BoothProvider = ({ children }: Props) => {
@@ -60,7 +68,9 @@ export const BoothProvider = ({ children }: Props) => {
   const [backgroundColor, setBackgroundColor] = useState<string>(
     "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400",
   );
+  const [backgroundValue, setBackgroundValue] = useState<string>("");
   const [borderColor, setBorderColor] = useState<string>("border-sky-400");
+  const [borderValue, setBorderValue] = useState<string>("");
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
   const [filter, setFilter] = useState<filtersType>({
     sepia: 0,
@@ -84,8 +94,12 @@ export const BoothProvider = ({ children }: Props) => {
         setPrevFilter,
         backgroundColor,
         setBackgroundColor,
+        backgroundValue,
+        setBackgroundValue,
         borderColor,
         setBorderColor,
+        borderValue,
+        setBorderValue,
         isCapturing,
         setIsCapturing,
         sticker,

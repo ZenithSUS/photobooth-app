@@ -15,7 +15,9 @@ export default async function shareImages(
   setIsModalOpen: (isOpen: boolean) => void,
   name: string,
   title: string,
-  sticker: string
+  sticker: string,
+  background: string,
+  border: string,
 ) {
   try {
     if (capturedImage.length === 3) {
@@ -40,37 +42,37 @@ export default async function shareImages(
         "zenithbooth" + uuidv4() + ".jpg",
         {
           type: "image/jpeg",
-        }
+        },
       );
       const file2 = new File(
         [images.image2],
         "zenthibooth" + uuidv4() + ".jpg",
         {
           type: "image/jpeg",
-        }
+        },
       );
       const file3 = new File(
         [images.image3],
         "zenthibooth" + uuidv4() + ".jpg",
         {
           type: "image/jpeg",
-        }
+        },
       );
 
       const imageData1 = await storage.createFile(
         BUCKET_ID,
         ID.unique(),
-        file1
+        file1,
       );
       const imageData2 = await storage.createFile(
         BUCKET_ID,
         ID.unique(),
-        file2
+        file2,
       );
       const imageData3 = await storage.createFile(
         BUCKET_ID,
         ID.unique(),
-        file3
+        file3,
       );
 
       const response = await createPhoto({
@@ -78,6 +80,8 @@ export default async function shareImages(
         author: name,
         title: title,
         sticker: sticker,
+        background: background,
+        border: border,
         image1Url: `${endpointUrl}/storage/buckets/${imageData1.bucketId}/files/${imageData1.$id}/view?project=${projectId}&mode=admin`,
         image2Url: `${endpointUrl}/storage/buckets/${imageData2.bucketId}/files/${imageData2.$id}/view?project=${projectId}&mode=admin`,
         image3Url: `${endpointUrl}/storage/buckets/${imageData3.bucketId}/files/${imageData3.$id}/view?project=${projectId}&mode=admin`,
@@ -87,7 +91,7 @@ export default async function shareImages(
         import.meta.env.PROD
           ? ""
           : import.meta.env.VITE_WEBSITE_URL_DEV +
-              `/photo-booth/${response?.$id}`
+              `/photo-booth/${response?.$id}`,
       );
 
       setCapturedImage([]);

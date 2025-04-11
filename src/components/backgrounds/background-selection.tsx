@@ -3,7 +3,13 @@ import { useBoothContext } from "../../lib/context/booth";
 import { backgrounds } from "../../utils/constants/background";
 
 export default function BackgroundSelection() {
-  const { setBackgroundColor, backgroundColor } = useBoothContext();
+  const { setBackgroundColor, backgroundColor, setBackgroundValue } =
+    useBoothContext();
+
+  const handleBackgroundChange = (bg: background) => {
+    setBackgroundValue(String(bg.value));
+    setBackgroundColor(bg.background as string);
+  };
   return (
     <div className="flex flex-col items-center gap-5">
       <div className="grid grid-cols-5 gap-2">
@@ -14,7 +20,7 @@ export default function BackgroundSelection() {
             style={{
               border: bg.background === backgroundColor ? "2px solid" : "none",
             }}
-            onClick={() => setBackgroundColor(bg.background as string)}
+            onClick={() => handleBackgroundChange(bg)}
           ></div>
         ))}
       </div>
