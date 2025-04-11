@@ -8,7 +8,7 @@ export const createNewPhoto = async (urls: Object) => {
       DATABASE_ID,
       PHOTO_COLLECTION_ID,
       ID.unique(),
-      urls
+      urls,
     );
   } catch (error) {
     console.log("Error creating photo document:", error);
@@ -25,7 +25,7 @@ export const getAllPhotos = async () => {
       const { documents } = await databases.listDocuments(
         DATABASE_ID,
         PHOTO_COLLECTION_ID,
-        [Query.limit(limit), Query.offset(offset)]
+        [Query.limit(limit), Query.offset(offset)],
       );
 
       allPhotos = [
@@ -61,7 +61,7 @@ export const getPhoto = async (id: string) => {
     const result = await databases.getDocument(
       DATABASE_ID,
       PHOTO_COLLECTION_ID,
-      id
+      id,
     );
 
     return result;

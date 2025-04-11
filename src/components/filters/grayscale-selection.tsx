@@ -12,7 +12,7 @@ export default function GrayscaleSelection() {
         {grayscales.map((level: filterValues, index: number) => (
           <div
             key={level.value}
-            className={`w-8 h-8 rounded-full cursor-pointer ${SelectionColor[index]}`}
+            className={`h-8 w-8 cursor-pointer rounded-full ${SelectionColor[index]}`}
             style={{
               border: filter.grayscale === level.value ? "2px solid" : "none",
             }}

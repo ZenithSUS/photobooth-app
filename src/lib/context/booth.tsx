@@ -58,7 +58,7 @@ export const BoothContext = createContext<BoothContextType>({
 export const BoothProvider = ({ children }: Props) => {
   const [capturedImage, setCapturedImage] = useState<Object[]>([]);
   const [backgroundColor, setBackgroundColor] = useState<string>(
-    "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400"
+    "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400",
   );
   const [borderColor, setBorderColor] = useState<string>("border-sky-400");
   const [isCapturing, setIsCapturing] = useState<boolean>(false);

@@ -28,12 +28,14 @@ export default function Social() {
 
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="text-3xl font-bold text-center mb-4 lg:text-start">Socials</h1>
-      <div className="grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3 md:gap-4">
+      <h1 className="mb-4 text-center text-3xl font-bold lg:text-start">
+        Socials
+      </h1>
+      <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4 xl:grid-cols-3">
         {photos?.map((photo) => (
           <div
             key={photo.$id}
-            className="flex flex-col items-center gap-2.5 bg-white p-4 rounded shadow-md border border-gray-200"
+            className="flex flex-col items-center gap-2.5 rounded border border-gray-200 bg-white p-4 shadow-md"
           >
             <div className="relative p-0.5">
               {photo.sticker === "Axlot" && <Axlot />}
@@ -42,7 +44,7 @@ export default function Social() {
               <img
                 src={photo.image1Url as string}
                 alt={photo.title}
-                className="w-full h-52 object-cover rounded"
+                className="h-52 w-full rounded object-cover"
               />
             </div>
             <h1 className="text-center font-bold">{photo.title}</h1>
@@ -52,7 +54,7 @@ export default function Social() {
             </p>
             <button
               onClick={() => handleView(photo.$id)}
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer transition duration-300 ease-in-out"
+              className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
             >
               See Photo
             </button>

@@ -40,7 +40,7 @@ export default function Customization() {
   }, [capturedImage, isCapturing]);
 
   return (
-    <div className="flex flex-col gap-2 justify-center">
+    <div className="flex flex-col justify-center gap-2">
       <button
         onClick={() =>
           setIsDropdownOpen({
@@ -51,14 +51,13 @@ export default function Customization() {
           })
         }
         disabled={isCapturing || capturedImage.length > 0}
-        className="bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 hover:scale-105 hover:bg-gradient-to-br hover:from-amber-400 hover:via-orange-400 hover:to-red-400 text-white px-4 py-2 rounded cursor-pointer transition-all duration-300 ease-in-out
-        disabled:cursor-not-allowed disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+        className="cursor-pointer rounded bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 px-4 py-2 text-white transition-all duration-300 ease-in-out hover:scale-105 hover:bg-gradient-to-br hover:from-amber-400 hover:via-orange-400 hover:to-red-400 disabled:cursor-not-allowed disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
       >
         Filters
       </button>
 
       <div
-        className={`transition-all duration-300 overflow-hidden flex flex-col gap-3 ${
+        className={`flex flex-col gap-3 overflow-hidden transition-all duration-300 ${
           isDropdownOpen.dropdown1 ? "max-h-screen" : "max-h-0"
         }`}
       >
@@ -80,14 +79,13 @@ export default function Customization() {
           })
         }
         disabled={isCapturing || capturedImage.length > 0}
-        className="bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 hover:scale-105 hover:bg-gradient-to-br hover:from-amber-400 hover:via-orange-400 hover:to-red-400 text-white px-4 py-2 rounded cursor-pointer transition-all duration-300 ease-in-out
-        disabled:cursor-not-allowed disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+        className="cursor-pointer rounded bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 px-4 py-2 text-white transition-all duration-300 ease-in-out hover:scale-105 hover:bg-gradient-to-br hover:from-amber-400 hover:via-orange-400 hover:to-red-400 disabled:cursor-not-allowed disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
       >
         Backgrounds
       </button>
 
       <div
-        className={`transition-all duration-300 overflow-hidden flex flex-col gap-3 ${
+        className={`flex flex-col gap-3 overflow-hidden transition-all duration-300 ${
           isDropdownOpen.dropdown2 ? "max-h-screen" : "max-h-0"
         }`}
       >
@@ -104,14 +102,13 @@ export default function Customization() {
           })
         }
         disabled={isCapturing || capturedImage.length > 0}
-        className="bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 hover:scale-105 hover:bg-gradient-to-br hover:from-amber-400 hover:via-orange-400 hover:to-red-400 text-white px-4 py-2 rounded cursor-pointer transition-all duration-300 ease-in-out
-        disabled:cursor-not-allowed disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+        className="cursor-pointer rounded bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 px-4 py-2 text-white transition-all duration-300 ease-in-out hover:scale-105 hover:bg-gradient-to-br hover:from-amber-400 hover:via-orange-400 hover:to-red-400 disabled:cursor-not-allowed disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
       >
         Borders
       </button>
 
       <div
-        className={`transition-all duration-300 overflow-hidden flex flex-col gap-3 ${
+        className={`flex flex-col gap-3 overflow-hidden transition-all duration-300 ${
           isDropdownOpen.dropdown3 ? "max-h-screen" : "max-h-0"
         }`}
       >
@@ -128,14 +125,13 @@ export default function Customization() {
           })
         }
         disabled={isCapturing || capturedImage.length > 0}
-        className="bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 hover:scale-105 hover:bg-gradient-to-br hover:from-amber-400 hover:via-orange-400 hover:to-red-400 text-white px-4 py-2 rounded cursor-pointer transition-all duration-300 ease-in-out
-        disabled:cursor-not-allowed disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+        className="cursor-pointer rounded bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 px-4 py-2 text-white transition-all duration-300 ease-in-out hover:scale-105 hover:bg-gradient-to-br hover:from-amber-400 hover:via-orange-400 hover:to-red-400 disabled:cursor-not-allowed disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
       >
         Stickers
       </button>
 
       <div
-        className={`transition-all duration-300 overflow-hidden flex flex-col gap-3 ${
+        className={`flex flex-col gap-3 overflow-hidden transition-all duration-300 ${
           isDropdownOpen.dropdown4 ? "max-h-screen" : "max-h-0"
         }`}
       >

@@ -10,7 +10,6 @@ export default function UserLayout() {
   const [isMobile, setIsMobile] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -44,7 +43,7 @@ export default function UserLayout() {
 
     fetchAuthUser();
     handleResize();
-    window.addEventListener("resize", handleResize); 
+    window.addEventListener("resize", handleResize);
   }, []);
 
   if (!user) {
@@ -53,19 +52,22 @@ export default function UserLayout() {
 
   return (
     <div className="flex">
-      <Sidebar isMobileMenuOpen={isMobileMenuOpen} closeMobileMenu={closeMobileMenu} isMobile={isMobile} />
-      <div className="flex flex-col w-full">
+      <Sidebar
+        isMobileMenuOpen={isMobileMenuOpen}
+        closeMobileMenu={closeMobileMenu}
+        isMobile={isMobile}
+      />
+      <div className="flex w-full flex-col">
         <Header />
-        <div className="flex flex-col md:ml-[calc(300px+2rem)] p-4">
-          
+        <div className="flex flex-col p-4 md:ml-[calc(300px+2rem)]">
           {isMobile && (
             <div className="ml-auto">
-            <button
-              className="md:hidden text-2xl mb-4"
-              onClick={toggleMobileMenu}
-            >
-              {isMobileMenuOpen ? "Close Menu" : "Open Menu"}
-            </button>
+              <button
+                className="mb-4 text-2xl md:hidden"
+                onClick={toggleMobileMenu}
+              >
+                {isMobileMenuOpen ? "Close Menu" : "Open Menu"}
+              </button>
             </div>
           )}
           <Outlet />

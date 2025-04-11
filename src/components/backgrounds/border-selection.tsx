@@ -11,7 +11,7 @@ export default function BorderSelection() {
         {borders.map((border: border) => (
           <div
             key={border.value}
-            className={`w-8 h-8 rounded-full cursor-pointer ${border.background}`}
+            className={`h-8 w-8 cursor-pointer rounded-full ${border.background}`}
             style={{
               border: border.border === borderColor ? "2px solid" : "none",
             }}

@@ -55,7 +55,7 @@ export default function Register() {
 
       const session = await account.createEmailPasswordSession(
         data.email,
-        data.password
+        data.password,
       );
 
       await createNewUser(
@@ -63,7 +63,7 @@ export default function Register() {
           name: name,
           email: data.email,
         },
-        session.$id
+        session.$id,
       );
 
       localStorage.setItem("session", JSON.stringify(session.current));
@@ -83,26 +83,26 @@ export default function Register() {
   }, [user]);
 
   return (
-    <main className="flex flex-col items-center justify-center w-screen md:h-screen">
+    <main className="flex w-screen flex-col items-center justify-center md:h-screen">
       <form
-        className="flex flex-col justify-center gap-5 p-4 rounded-md ring-2 bg-sky-400 ring-amber-400"
+        className="flex flex-col justify-center gap-5 rounded-md bg-sky-400 p-4 ring-2 ring-amber-400"
         onSubmit={form.handleSubmit(register)}
       >
-        <h1 className="text-3xl font-bold text-center">Register</h1>
+        <h1 className="text-center text-3xl font-bold">Register</h1>
 
         <div className="flex flex-col gap-2 md:grid md:grid-cols-3 md:gap-5">
           <div className="flex flex-col gap-1">
-            <label htmlFor="firstname" className="font-bold text-xl">
+            <label htmlFor="firstname" className="text-xl font-bold">
               First Name
             </label>
             <input
-              className="p-2 bg-white rounded-md ring-2 ring-amber-400 w-full"
+              className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
               type="text"
               {...form.register("firstName")}
               placeholder="First Name"
             />
             {form.formState.errors.firstName ? (
-              <span className="text-red-500 h-10">
+              <span className="h-10 text-red-500">
                 {form.formState.errors.firstName.message}
               </span>
             ) : (
@@ -110,17 +110,17 @@ export default function Register() {
             )}
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="middleIntial" className="font-bold text-xl">
+            <label htmlFor="middleIntial" className="text-xl font-bold">
               Middle Intial
             </label>
             <input
-              className="p-2 bg-white rounded-md ring-2 ring-amber-400 w-full"
+              className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
               type="text"
               {...form.register("middleInitial")}
               placeholder="Middle Initial"
             />
             {form.formState.errors.middleInitial ? (
-              <span className="text-red-500 h-10">
+              <span className="h-10 text-red-500">
                 {form.formState.errors.middleInitial.message}
               </span>
             ) : (
@@ -129,17 +129,17 @@ export default function Register() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="lastname" className="font-bold text-xl">
+            <label htmlFor="lastname" className="text-xl font-bold">
               Last Name
             </label>
             <input
-              className="p-2 bg-white rounded-md ring-2 ring-amber-400 w-full"
+              className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
               type="text"
               {...form.register("lastName")}
               placeholder="Last Name"
             />
             {form.formState.errors.lastName ? (
-              <span className="text-red-500 h-10">
+              <span className="h-10 text-red-500">
                 {form.formState.errors.lastName.message}
               </span>
             ) : (
@@ -148,17 +148,17 @@ export default function Register() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="font-bold text-xl">
+            <label htmlFor="email" className="text-xl font-bold">
               Email
             </label>
             <input
-              className="p-2 bg-white rounded-md ring-2 ring-amber-400 w-full"
+              className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
               type="text"
               {...form.register("email")}
               placeholder="Email"
             />
             {form.formState.errors.email ? (
-              <span className="text-red-500 h-10">
+              <span className="h-10 text-red-500">
                 {form.formState.errors.email.message}
               </span>
             ) : (
@@ -166,17 +166,17 @@ export default function Register() {
             )}
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="font-bold text-xl">
+            <label htmlFor="password" className="text-xl font-bold">
               Password
             </label>
             <input
-              className="p-2 bg-white rounded-md ring-2 ring-amber-400 w-full"
+              className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
               type="password"
               {...form.register("password")}
               placeholder="Password"
             />
             {form.formState.errors.password ? (
-              <span className="text-red-500 h-10">
+              <span className="h-10 text-red-500">
                 {form.formState.errors.password.message}
               </span>
             ) : (
@@ -185,17 +185,17 @@ export default function Register() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="confirmpassword" className="font-bold text-xl">
+            <label htmlFor="confirmpassword" className="text-xl font-bold">
               Confirm Password
             </label>
             <input
-              className="p-2 bg-white rounded-md ring-2 ring-amber-400 w-full"
+              className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
               type="password"
               {...form.register("confirmPassword")}
               placeholder="Confirm Password"
             />
             {form.formState.errors.confirmPassword ? (
-              <span className="text-red-500 h-10">
+              <span className="h-10 text-red-500">
                 {form.formState.errors.confirmPassword.message}
               </span>
             ) : (
@@ -204,7 +204,7 @@ export default function Register() {
           </div>
         </div>
         <button
-          className="p-2 text-lg cursor-pointer bg-amber-200 rounded hover:bg-amber-300 hover:scale-95 transition duration-300 ease-in-out"
+          className="cursor-pointer rounded bg-amber-200 p-2 text-lg transition duration-300 ease-in-out hover:scale-95 hover:bg-amber-300"
           type="submit"
         >
           Submit
@@ -212,7 +212,7 @@ export default function Register() {
         <p className="text-center">
           Already have an account?{" "}
           <span
-            className="underline cursor-pointer hover:text-blue-500"
+            className="cursor-pointer underline hover:text-blue-500"
             onClick={() => navigate("/login")}
           >
             Login

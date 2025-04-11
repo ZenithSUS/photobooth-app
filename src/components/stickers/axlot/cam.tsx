@@ -18,7 +18,7 @@ export default function Axlot() {
           key={index}
           src={sticker}
           alt={stickerNames[index]}
-          className={`absolute w-15 md:w-20 object-fit z-10`}
+          className={`object-fit absolute z-10 w-15 md:w-20`}
           style={{
             ...positionsCam[index],
             ...imageFlipCam[index],

@@ -17,7 +17,7 @@ export const getAllPhotos = (): QueryObserverResult<ShowPhotos[]> => {
 };
 
 export const getPhoto = (
-  id: string
+  id: string,
 ): QueryObserverResult<Partial<ShowPhotos>> => {
   return useQuery<Partial<ShowPhotos>>({
     queryFn: async () => {

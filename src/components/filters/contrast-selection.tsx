@@ -12,7 +12,7 @@ export default function ContrastSelection() {
         {contrasts.map((level: filterValues, index: number) => (
           <div
             key={level.value}
-            className={`w-8 h-8 rounded-full cursor-pointer ${SelectionColor[index]}`}
+            className={`h-8 w-8 cursor-pointer rounded-full ${SelectionColor[index]}`}
             style={{
               border: filter.contrast === level.value ? "2px solid" : "none",
             }}

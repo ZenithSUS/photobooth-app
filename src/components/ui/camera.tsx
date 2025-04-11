@@ -65,7 +65,7 @@ export default function Camera({
     });
     setPrevFilter([]);
     setBackgroundColor(
-      "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400"
+      "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400",
     );
     setBorderColor("border-sky-400");
   };
@@ -155,7 +155,7 @@ export default function Camera({
         setIsModalOpen,
         name,
         title,
-        sticker
+        sticker,
       );
     } catch (error) {
       console.log(error);
@@ -169,21 +169,21 @@ export default function Camera({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-4">
+    <div className="flex flex-col items-center justify-center gap-4">
       <Modal
         isOpen={isModalOpen}
         parentSelector={() => document.querySelector("#root") as HTMLElement}
         className={
-          "grid absolute inset-x-4 top-1/8 place-items-center z-50 max-w-lg w-full mx-auto p-4 sm:inset-x-8 sm:top-1/4 sm:max-w-md md:max-w-lg lg:max-w-xl"
+          "absolute inset-x-4 top-1/8 z-50 mx-auto grid w-full max-w-lg place-items-center p-4 sm:inset-x-8 sm:top-1/4 sm:max-w-md md:max-w-lg lg:max-w-xl"
         }
       >
-        <div className="flex flex-col w-full">
+        <div className="flex w-full flex-col">
           <form
             onSubmit={(e) => shareImage(e, title)}
-            className="grid grid-cols-1 place-items-center bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4 rounded-2xl"
+            className="grid grid-cols-1 place-items-center rounded-2xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4"
           >
-            <h2 className="text-lg font-bold text-center">Share PhotoBooth</h2>
-            <div className="flex flex-col gap-2 w-full">
+            <h2 className="text-center text-lg font-bold">Share PhotoBooth</h2>
+            <div className="flex w-full flex-col gap-2">
               <label htmlFor="title" className="text-lg font-bold">
                 Title
               </label>
@@ -192,19 +192,19 @@ export default function Camera({
                 name="title"
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
-                className="bg-white rounded-sm p-2 w-full"
+                className="w-full rounded-sm bg-white p-2"
               />
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="submit"
-                  className="p-2 rounded-xl bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 hover:from-green-500 hover:via-emerald-500 hover:to-teal-500 transition duration-300 ease-in-out cursor-pointer"
+                  className="cursor-pointer rounded-xl bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 p-2 transition duration-300 ease-in-out hover:from-green-500 hover:via-emerald-500 hover:to-teal-500"
                 >
                   Share
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="p-2 rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 hover:from-amber-500 hover:via-orange-500 hover:to-red-500 transition duration-300 ease-in-out cursor-pointer"
+                  className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 transition duration-300 ease-in-out hover:from-amber-500 hover:via-orange-500 hover:to-red-500"
                 >
                   Cancel
                 </button>
@@ -214,21 +214,18 @@ export default function Camera({
         </div>
       </Modal>
       <div
-        className={`relative flex flex-1 justify-center items-center ${backgroundColor} border-10 ${borderColor} p-3.5 rounded-2xl`}
+        className={`relative flex flex-1 items-center justify-center ${backgroundColor} border-10 ${borderColor} rounded-2xl p-3.5`}
       >
         {capturedImage.length < 3 ? (
           <>
             {isCapturing && timer !== null && (
-              <div
-                className="absolute inset-0 z-50 grid place-items-center text-3xl bg-black/35 font-bold gap-4 text-white
-              opacity-90"
-              >
-                <div className="text-6xl animate-ping">{timer}</div>
+              <div className="absolute inset-0 z-50 grid place-items-center gap-4 bg-black/35 text-3xl font-bold text-white opacity-90">
+                <div className="animate-ping text-6xl">{timer}</div>
               </div>
             )}
 
             {!webCamReady && (
-              <div className="absolute inset-0 z-50 grid place-items-center text-3xl bg-black font-bold gap-4">
+              <div className="absolute inset-0 z-50 grid place-items-center gap-4 bg-black text-3xl font-bold">
                 <BlinkBlur
                   color="#2e9bb5"
                   size="medium"
@@ -251,16 +248,16 @@ export default function Camera({
               mirrored={true}
               onUserMedia={() => setWebCamReady(true)}
               className={`${invertFilter(filter.invert)} ${brightnessFilter(
-                filter.brightness
+                filter.brightness,
               )} ${sepiaFilter(filter.sepia)} ${hueRotateFilter(
-                filter.hueRotate
+                filter.hueRotate,
               )} ${grayscaleFilter(filter.grayscale)} ${contrastFilter(
-                filter.contrast
+                filter.contrast,
               )}`}
             />
           </>
         ) : (
-          <div className="grid inset-0 place-items-center text-3xl bg-black font-bold gap-4 text-white">
+          <div className="inset-0 grid place-items-center gap-4 bg-black text-3xl font-bold text-white">
             {messages[Math.floor(Math.random() * messages.length)]}
           </div>
         )}
@@ -270,36 +267,36 @@ export default function Camera({
         {capturedImage.length !== 3 ? (
           <>
             <button
-              className="bg-blue-500 text-lg hover:bg-blue-700 hover:scale-90 text-white font-bold py-2 px-4 rounded disabled:bg-gray-500 cursor-pointer transition ease-in-out duration-300"
+              className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-blue-700 disabled:bg-gray-500"
               onClick={startTimer}
               disabled={timer !== null}
             >
               📸
             </button>
             <button
-              className="text-lg text-center bg-red-500 hover:bg-red-600 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300 disabled:bg-gray-500"
+              className="cursor-pointer rounded bg-red-500 px-4 py-2 text-center text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-red-600 disabled:bg-gray-500"
               onClick={resetFilter}
               disabled={isCapturing}
             >
-              <img src={resetPic} alt="reset" className="w-7 h-7" />
+              <img src={resetPic} alt="reset" className="h-7 w-7" />
             </button>
           </>
         ) : (
           <>
             <button
-              className="text-lg text-center bg-green-500 hover:bg-green-300 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
+              className="cursor-pointer rounded bg-green-500 px-4 py-2 text-center text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-green-300"
               onClick={resetImage}
             >
               Retake
             </button>
             <button
-              className="text-lg text-center bg-yellow-500 hover:bg-yellow-300 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
+              className="cursor-pointer rounded bg-yellow-500 px-4 py-2 text-center text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-yellow-300"
               onClick={handleShare}
             >
               Share
             </button>
             <button
-              className="text-lg text-center bg-blue-500 hover:bg-blue-300 hover:scale-90 text-white font-bold py-2 px-4 rounded cursor-pointer transition ease-in-out duration-300"
+              className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-center text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-blue-300"
               onClick={handleDownload}
             >
               Download
@@ -308,14 +305,14 @@ export default function Camera({
           </>
         )}
         <button
-          className="p-2 text-lg text-white bg-red-500 hover:bg-red-600 hover:scale-95 transition duration-300 ease-in-out rounded cursor-pointer disabled:bg-gray-500"
+          className="cursor-pointer rounded bg-red-500 p-2 text-lg text-white transition duration-300 ease-in-out hover:scale-95 hover:bg-red-600 disabled:bg-gray-500"
           disabled={isCapturing}
           onClick={() => GoBack()}
         >
-          <img src={backPic} alt="back" className="w-7 h-7" />
+          <img src={backPic} alt="back" className="h-7 w-7" />
         </button>
       </div>
-      <span className="text-lg text-center">
+      <span className="text-center text-lg">
         Images Captured: {capturedImage.length}/3
       </span>
     </div>

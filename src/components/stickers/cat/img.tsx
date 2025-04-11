@@ -32,7 +32,7 @@ export default function CatStickers({ set }: { set: number }) {
             key={index}
             src={sticker}
             alt={stickerNames[set - 1][index]}
-            className={`absolute w-14 md:w-12 object-fit z-10`}
+            className={`object-fit absolute z-10 w-14 md:w-12`}
             style={{
               ...positionsCam[index],
             }}

@@ -13,7 +13,7 @@ export default function StickerSelection() {
             key={sticker.name}
             src={sticker.image}
             alt={sticker.name}
-            className="w-20 cursor-pointer object-fit"
+            className="object-fit w-20 cursor-pointer"
           />
         ))}
       </div>

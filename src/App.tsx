@@ -56,7 +56,7 @@ function App() {
             }
           />
 
-          <Route 
+          <Route
             path="/social/:id"
             element={
               <Suspense fallback={<Loading />}>
@@ -64,7 +64,7 @@ function App() {
               </Suspense>
             }
           />
-          
+
           <Route
             path="/account"
             element={

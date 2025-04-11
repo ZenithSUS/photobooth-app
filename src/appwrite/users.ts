@@ -8,7 +8,7 @@ export const getAllUsers = async () => {
   while (true) {
     const { documents } = await databases.listDocuments(
       DATABASE_ID,
-      USER_COLLECTION_ID[(Query.limit(limit), Query.offset(offset))]
+      USER_COLLECTION_ID[(Query.limit(limit), Query.offset(offset))],
     );
 
     allusers = [...allusers, ...documents];
@@ -34,7 +34,7 @@ export const createUser = async (data: Object, id: string) => {
       DATABASE_ID,
       USER_COLLECTION_ID,
       id,
-      data
+      data,
     );
   } catch (error) {
     console.log(error);

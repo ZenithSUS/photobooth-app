@@ -10,7 +10,7 @@ export default function BackgroundSelection() {
         {backgrounds.map((bg: background) => (
           <div
             key={bg.value}
-            className={`w-8 h-8 rounded-full cursor-pointer ${bg.background}`}
+            className={`h-8 w-8 cursor-pointer rounded-full ${bg.background}`}
             style={{
               border: bg.background === backgroundColor ? "2px solid" : "none",
             }}

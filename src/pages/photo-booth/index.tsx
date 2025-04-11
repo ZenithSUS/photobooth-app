@@ -13,28 +13,28 @@ export default function PhotoBooth() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold text-center mt-4">Photo Booth</h1>
-      <div className="place-self-center mx-4">
-        <div className="grid lg:grid-cols-2 gap-10">
-          <div className="flex flex-col gap-2 items-center self-center">
+      <h1 className="mt-4 text-center text-3xl font-bold">Photo Booth</h1>
+      <div className="mx-4 place-self-center">
+        <div className="grid gap-10 lg:grid-cols-2">
+          <div className="flex flex-col items-center gap-2 self-center">
             <h1 className="text-3xl">Take a selfie</h1>
             <Camera photoBoothRef={photoBoothRef} />
           </div>
 
           <div className="self-center">
-            <h1 className="text-2xl font-bold text-center">
+            <h1 className="text-center text-2xl font-bold">
               Photo Booth Customization
             </h1>
             <Customization />
           </div>
         </div>
 
-        <div className="flex flex-col gap-2 p-4 items-center">
-          <h2 className="text-2xl font-bold text-center">Captured Image</h2>
+        <div className="flex flex-col items-center gap-2 p-4">
+          <h2 className="text-center text-2xl font-bold">Captured Image</h2>
 
           {capturedImage.length > 0 ? (
             <div
-              className={`flex flex-col gap-0.5 p-2 items-center justify-center ${backgroundColor} border-10 ${borderColor}`}
+              className={`flex flex-col items-center justify-center gap-0.5 p-2 ${backgroundColor} border-10 ${borderColor}`}
               ref={photoBoothRef}
             >
               {capturedImage.map((image, index) => {
@@ -64,7 +64,7 @@ export default function PhotoBooth() {
               })}
             </div>
           ) : (
-            <p className="text-lg text-center">No images captured yet.</p>
+            <p className="text-center text-lg">No images captured yet.</p>
           )}
         </div>
       </div>

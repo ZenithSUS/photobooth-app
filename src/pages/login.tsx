@@ -30,15 +30,15 @@ export default function Login() {
   if (user) return <Navigate to="/" />;
 
   return (
-    <main className="flex flex-col items-center justify-center w-screen h-screen">
-      <form className="flex flex-col justify-center gap-5 bg- p-4 rounded-md ring-2 bg-sky-400 ring-amber-400 w-[300px] md:w-[400px]">
-        <h1 className="text-3xl font-bold text-center">Login</h1>
+    <main className="flex h-screen w-screen flex-col items-center justify-center">
+      <form className="flex w-[300px] flex-col justify-center gap-5 rounded-md bg-sky-400 p-4 ring-2 ring-amber-400 md:w-[400px]">
+        <h1 className="text-center text-3xl font-bold">Login</h1>
         <div className="flex flex-col gap-1">
-          <label htmlFor="email" className="font-bold text-xl">
+          <label htmlFor="email" className="text-xl font-bold">
             Email
           </label>
           <input
-            className="p-2 bg-white rounded-md ring-2 ring-amber-400"
+            className="rounded-md bg-white p-2 ring-2 ring-amber-400"
             name="email"
             type="text"
             value={email}
@@ -47,11 +47,11 @@ export default function Login() {
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="password" className="font-bold text-xl">
+          <label htmlFor="password" className="text-xl font-bold">
             Password
           </label>
           <input
-            className="p-2 bg-white rounded-md ring-2 ring-amber-400"
+            className="rounded-md bg-white p-2 ring-2 ring-amber-400"
             name="password"
             type="password"
             value={password}
@@ -60,7 +60,7 @@ export default function Login() {
           />
         </div>
         <button
-          className="p-2 text-lg cursor-pointer bg-amber-200 rounded hover:bg-amber-300 hover:scale-95 transition duration-300 ease-in-out"
+          className="cursor-pointer rounded bg-amber-200 p-2 text-lg transition duration-300 ease-in-out hover:scale-95 hover:bg-amber-300"
           onClick={login}
         >
           Login
@@ -68,7 +68,7 @@ export default function Login() {
         <p className="text-center">
           Don't have an account?{" "}
           <span
-            className="underline cursor-pointer hover:text-blue-500"
+            className="cursor-pointer underline hover:text-blue-500"
             onClick={() => navigate("/register")}
           >
             Register

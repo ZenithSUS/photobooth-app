@@ -11,7 +11,7 @@ export default function HueSelection() {
       <div className="flex gap-2">
         {hues.map((level: filterValues, index: number) => (
           <div
-            className={`w-8 h-8 rounded-full cursor-pointer ${SelectionColor[index]}`}
+            className={`h-8 w-8 cursor-pointer rounded-full ${SelectionColor[index]}`}
             key={level.value}
             style={{
               border: filter.hueRotate === level.value ? "2px solid" : "none",
