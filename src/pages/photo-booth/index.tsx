@@ -13,7 +13,7 @@ export default function PhotoBooth() {
 
   return (
     <>
-      <h1 className="mt-4 text-center text-3xl font-bold">Photo Booth</h1>
+      <h1 className="mt-4 text-center text-3xl font-bold">ZenithBooth</h1>
       <div className="mx-4 place-self-center">
         <div className="grid gap-10 lg:grid-cols-2">
           <div className="flex flex-col items-center gap-2 self-center">
