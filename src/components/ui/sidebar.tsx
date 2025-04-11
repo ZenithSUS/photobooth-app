@@ -41,7 +41,7 @@ export default function Sidebar({
 
   return (
     <div
-      className={`absolute ${isMobileMenuOpen ? "block" : "hidden"} top-0 bottom-0 left-0 z-20 flex-col pl-4 lg:block ${isMobile ? "w-full pt-36" : "w-[300px] pt-20"} min-h-screen overflow-y-auto border-r-2 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400`}
+      className={`absolute ${isMobile && !isMobileMenuOpen ? "hidden" : "block"} top-0 bottom-0 left-0 z-20 flex-col pl-4 lg:block ${isMobile ? "w-full pt-36" : "w-[300px] pt-20"} min-h-screen overflow-y-auto border-r-2 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400`}
     >
       <Modal
         parentSelector={() => document.querySelector("#root") as HTMLElement}
