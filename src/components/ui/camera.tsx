@@ -188,6 +188,9 @@ export default function Camera({
         className={
           "absolute top-1/8 z-50 mx-auto grid w-full max-w-lg place-items-center p-4 sm:inset-x-8 sm:top-1/4 sm:max-w-md md:max-w-lg lg:max-w-xl"
         }
+        overlayClassName={
+          "fixed inset-0 z-40 bg-black/50 bg-opacity-50 backdrop-blur-sm"
+        }
       >
         <div className="flex w-full flex-col">
           <form

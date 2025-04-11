@@ -27,12 +27,10 @@ export default function Sidebar({
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const logout = async () => {
-    if (confirm("Are you sure you want to logout?")) {
-      toast.success("Logged out successfully!");
-      await account.deleteSession("current");
-      localStorage.clear();
-      navigate("/login");
-    }
+    toast.success("Logged out successfully!");
+    await account.deleteSession("current");
+    localStorage.clear();
+    navigate("/login");
   };
 
   const closeLogoutModal = () => {
@@ -41,15 +39,34 @@ export default function Sidebar({
 
   return (
     <div
-      className={`absolute ${isMobile && !isMobileMenuOpen ? "hidden" : "lg:block"} top-0 bottom-0 left-0 z-20 flex-col pl-4 ${isMobile ? "w-full pt-36" : "w-[300px] pt-20"} min-h-screen overflow-y-auto border-r-2 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400`}
+      className={`absolute ${isMobile && !isMobileMenuOpen ? "hidden" : "lg:block"} top-0 bottom-0 left-0 z-10 flex-col pl-4 ${isMobile ? "w-full pt-36" : "w-[300px] pt-20"} min-h-screen overflow-y-auto border-r-2 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400`}
     >
       <Modal
         parentSelector={() => document.querySelector("#root") as HTMLElement}
         isOpen={isModalOpen}
         onRequestClose={closeLogoutModal}
-        className="fixed top-0 right-0 bottom-0 left-0 z-50 flex items-center justify-center bg-white"
-        overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-50"
-      ></Modal>
+        className="absolute top-1/8 z-[150] mx-auto grid max-h-full w-full max-w-lg place-items-center p-4 sm:inset-x-8 sm:top-1/4 sm:max-w-md md:max-w-lg lg:max-w-xl"
+        overlayClassName={"fixed inset-0 z-[100] bg-black/50"}
+      >
+        <div className="z-20 flex flex-col items-center gap-4 rounded-xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-5">
+          <h1>Are you sure you want to logout?</h1>
+          <div className="flex gap-4">
+            <button
+              className="cursor-pointer rounded-xl bg-gradient-to-br from-rose-400 via-pink-400 to-fuchsia-400 p-2 hover:scale-105 hover:bg-gradient-to-br hover:from-fuchsia-400 hover:via-purple-400 hover:to-violet-400"
+              onClick={logout}
+              type="button"
+            >
+              Confirm
+            </button>
+            <button
+              onClick={closeLogoutModal}
+              className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 hover:scale-105 hover:bg-gradient-to-br hover:from-red-400 hover:via-rose-400 hover:to-pink-400"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </Modal>
       <div className="flex items-center justify-between pr-4 pb-4">
         <h1 className="text-3xl font-bold">Navigation</h1>
         {isMobile && (
@@ -105,7 +122,7 @@ export default function Sidebar({
           Account
         </Link>
         <button
-          onClick={logout}
+          onClick={() => setIsModalOpen(true)}
           className="flex cursor-pointer items-center gap-2 rounded p-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-amber-400"
         >
           <img src={logoutIcon} alt="logout" className="h-8 w-8" />
