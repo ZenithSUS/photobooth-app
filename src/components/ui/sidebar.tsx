@@ -9,7 +9,14 @@ import socialIcon from "../../assets/ui/social.png";
 import saveIcon from "../../assets/ui/save.png";
 import dashboardIcon from "../../assets/ui/dashboard.png";
 
-export default function Sidebar() {
+
+type SidebarProps = {
+  isMobile: boolean;
+  isMobileMenuOpen: boolean;
+  closeMobileMenu: () => void;
+};
+
+export default function Sidebar({ isMobileMenuOpen, closeMobileMenu, isMobile }: SidebarProps) {
   const navigate = useNavigate();
   const logout = async () => {
     if (confirm("Are you sure you want to logout?")) {
@@ -19,9 +26,21 @@ export default function Sidebar() {
       navigate("/login");
     }
   };
+
+  
   return (
-    <div className="absolute hidden md:block top-0 left-0 bottom-0 flex-col pt-20 pl-4 w-[300px] min-h-screen bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 border-r-2 border-amber-400 overflow-y-auto">
-      <h1 className="text-3xl font-bold pb-4">Navigation</h1>
+    <div className={`absolute ${isMobileMenuOpen ? "block" : "hidden"} z-20 md:block top-0 left-0 bottom-0 flex-col pl-4 ${isMobile ? "w-full pt-36" : " w-[300px] pt-20"} min-h-screen bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 border-r-2 border-amber-400 overflow-y-auto`}>
+      <div className="flex items-center justify-between pr-4">
+        <h1 className="text-3xl font-bold pb-4">Navigation</h1>
+        {isMobile && (
+          <button
+            onClick={closeMobileMenu}
+            className="text-2xl text-white"
+          >
+            X
+          </button>
+        )}
+      </div>
       <div className="flex flex-col gap-6 text-2xl ml-4 items-start">
         <Link
           to="/"

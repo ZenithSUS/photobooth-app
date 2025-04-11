@@ -1,12 +1,31 @@
 import Header from "../components/ui/header";
 import Sidebar from "../components/ui/sidebar";
 import { Outlet } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { account } from "../appwrite";
 import { Navigate } from "react-router-dom";
 
 export default function UserLayout() {
   const user = localStorage.getItem("session");
+  const [isMobile, setIsMobile] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
+  const handleResize = () => {
+    if (window.innerWidth <= 768) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
 
   useEffect(() => {
     const fetchAuthUser = async () => {
@@ -24,6 +43,8 @@ export default function UserLayout() {
     };
 
     fetchAuthUser();
+    handleResize();
+    window.addEventListener("resize", handleResize); 
   }, []);
 
   if (!user) {
@@ -32,10 +53,21 @@ export default function UserLayout() {
 
   return (
     <div className="flex">
-      <Sidebar />
+      <Sidebar isMobileMenuOpen={isMobileMenuOpen} closeMobileMenu={closeMobileMenu} isMobile={isMobile} />
       <div className="flex flex-col w-full">
         <Header />
         <div className="flex flex-col md:ml-[calc(300px+2rem)] p-4">
+          
+          {isMobile && (
+            <div className="ml-auto">
+            <button
+              className="md:hidden text-2xl mb-4"
+              onClick={toggleMobileMenu}
+            >
+              {isMobileMenuOpen ? "Close Menu" : "Open Menu"}
+            </button>
+            </div>
+          )}
           <Outlet />
         </div>
       </div>

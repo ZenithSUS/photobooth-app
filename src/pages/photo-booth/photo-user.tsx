@@ -24,12 +24,11 @@ export default function PhotoUser() {
       <h1 className="text-2xl font-bold mb-4">{photo?.title}</h1>
       <div className="grid grid-cols-1 place-items-center gap-2 bg-gradient-to-br border-10 border-amber-400 from-sky-400 via-blue-400 to-indigo-400 p-3.5 rounded-lg shadow-lg">
         {images.map((image, index) => (
-          <div className="relative p-0.5">
+          <div className="relative p-0.5" key={index}>
             {photo?.sticker === "Axlot" && <Axlot set={index + 1} />}
             {photo?.sticker === "Minecraft" && <Minecraft set={index + 1} />}
             {photo?.sticker === "Cat" && <Cat set={index + 1} />}
             <img
-              key={index}
               src={image as string}
               alt={`Image ${index + 1}`}
               className="object-cover"

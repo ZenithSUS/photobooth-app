@@ -28,8 +28,8 @@ export default function Social() {
 
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="text-3xl font-bold mb-4">Socials</h1>
-      <div className="grid grid-cols-3 gap-4">
+      <h1 className="text-3xl font-bold text-center mb-4 lg:text-start">Socials</h1>
+      <div className="grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3 md:gap-4">
         {photos?.map((photo) => (
           <div
             key={photo.$id}
