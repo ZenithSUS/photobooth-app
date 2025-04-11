@@ -19,11 +19,11 @@ export default function PhotoUser() {
     navigate("/social");
   };
 
+  if (isLoading) return <Loading />;
   if (!photo)
     return (
       <div className="text-center text-3xl font-bold">No photo available</div>
     );
-  if (isLoading) return <Loading />;
   if (error)
     return (
       <div className="text-center text-3xl font-bold">

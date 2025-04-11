@@ -1,4 +1,4 @@
-export type filtersType = {
+export type FiltersType = {
   sepia: number | string;
   grayscale: number | string;
   hueRotate: number | string;
@@ -7,17 +7,17 @@ export type filtersType = {
   contrast: number | string;
 };
 
-export type filterValues = {
+export type FilterValues = {
   style: string;
   value: number | string;
 };
 
-export type background = {
+export type Background = {
   background: string;
   value: number;
 };
 
-export type border = {
+export type Border = {
   border: string;
   background: string;
   value: number;
@@ -46,11 +46,6 @@ export type User = {
   name: string;
   email: string;
   photo: string;
-};
-
-export type userData = {
-  name: string;
-  email: string;
 };
 
 export type ShowPhotos = CreatePhoto & {

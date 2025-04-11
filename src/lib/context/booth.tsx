@@ -1,13 +1,15 @@
 import { createContext, useContext, useState } from "react";
-import { filtersType } from "../../utils/types";
+import { FiltersType } from "../../utils/types";
 
 type BoothContextType = {
   capturedImage: Object[];
   setCapturedImage: React.Dispatch<React.SetStateAction<Object[]>>;
-  filter: filtersType;
-  setFilter: React.Dispatch<React.SetStateAction<filtersType>>;
-  prevFilter: filtersType[];
-  setPrevFilter: React.Dispatch<React.SetStateAction<filtersType[]>>;
+  filter: FiltersType;
+  setFilter: React.Dispatch<React.SetStateAction<FiltersType>>;
+  filterValues: Array<FiltersType>;
+  setFilterValues: React.Dispatch<React.SetStateAction<Array<FiltersType>>>;
+  prevFilter: FiltersType[];
+  setPrevFilter: React.Dispatch<React.SetStateAction<FiltersType[]>>;
   backgroundColor: string;
   setBackgroundColor: React.Dispatch<React.SetStateAction<string>>;
   backgroundValue: string;
@@ -38,6 +40,8 @@ export const BoothContext = createContext<BoothContextType>({
     contrast: 0,
   },
   setFilter: () => {},
+  filterValues: [],
+  setFilterValues: () => {},
   prevFilter: [
     {
       sepia: 0,
@@ -72,7 +76,7 @@ export const BoothProvider = ({ children }: Props) => {
   const [borderColor, setBorderColor] = useState<string>("border-sky-400");
   const [borderValue, setBorderValue] = useState<string>("");
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
-  const [filter, setFilter] = useState<filtersType>({
+  const [filter, setFilter] = useState<FiltersType>({
     sepia: 0,
     grayscale: 0,
     hueRotate: 0,
@@ -80,8 +84,9 @@ export const BoothProvider = ({ children }: Props) => {
     brightness: 100,
     contrast: 100,
   });
+  const [filterValues, setFilterValues] = useState<Array<FiltersType>>([]);
   const [sticker, setSticker] = useState<string>("N/A");
-  const [prevFilter, setPrevFilter] = useState<filtersType[]>([]);
+  const [prevFilter, setPrevFilter] = useState<FiltersType[]>([]);
 
   return (
     <BoothContext.Provider
@@ -90,6 +95,8 @@ export const BoothProvider = ({ children }: Props) => {
         setCapturedImage,
         filter,
         setFilter,
+        filterValues,
+        setFilterValues,
         prevFilter,
         setPrevFilter,
         backgroundColor,
