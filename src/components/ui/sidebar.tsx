@@ -41,7 +41,7 @@ export default function Sidebar({
 
   return (
     <div
-      className={`absolute ${isMobileMenuOpen ? "block" : "hidden"} top-0 bottom-0 left-0 z-20 flex-col pl-4 md:block ${isMobile ? "w-full pt-36" : "w-[300px] pt-20"} min-h-screen overflow-y-auto border-r-2 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400`}
+      className={`absolute ${isMobileMenuOpen ? "block" : "hidden"} top-0 bottom-0 left-0 z-20 flex-col pl-4 lg:block ${isMobile ? "w-full pt-36" : "w-[300px] pt-20"} min-h-screen overflow-y-auto border-r-2 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400`}
     >
       <Modal
         parentSelector={() => document.querySelector("#root") as HTMLElement}
@@ -53,12 +53,17 @@ export default function Sidebar({
       <div className="flex items-center justify-between pr-4 pb-4">
         <h1 className="text-3xl font-bold">Navigation</h1>
         {isMobile && (
-          <button onClick={closeMobileMenu} className="text-2xl text-white">
+          <button
+            onClick={closeMobileMenu}
+            className="text-2xl font-extrabold text-black"
+          >
             X
           </button>
         )}
       </div>
-      <div className="ml-4 flex flex-col items-start gap-6 text-2xl">
+      <div
+        className={`flex flex-col ${isMobile ? "items-center" : "ml-4 items-start"} gap-6 text-2xl`}
+      >
         <Link
           to="/"
           onClick={isMobile ? closeMobileMenu : undefined}
