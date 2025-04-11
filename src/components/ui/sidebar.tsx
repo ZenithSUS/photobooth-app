@@ -26,6 +26,12 @@ export default function Sidebar({
 }: SidebarProps) {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleLogout = () => {
+    setIsModalOpen(true);
+    isMobile ? closeMobileMenu() : null;
+  };
+
   const logout = async () => {
     toast.success("Logged out successfully!");
     await account.deleteSession("current");
@@ -122,7 +128,7 @@ export default function Sidebar({
           Account
         </Link>
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => handleLogout()}
           className="flex cursor-pointer items-center gap-2 rounded p-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-amber-400"
         >
           <img src={logoutIcon} alt="logout" className="h-8 w-8" />
