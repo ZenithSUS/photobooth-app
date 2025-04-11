@@ -20,7 +20,7 @@ export default function UserLayout() {
   };
 
   const handleResize = () => {
-    if (window.innerWidth <= 1024) {
+    if (window.innerWidth < 1024) {
       setIsMobile(true);
       setMobileMenuOpen(false);
     } else {
@@ -65,7 +65,7 @@ export default function UserLayout() {
       />
       <div className="flex w-full flex-col">
         <Header />
-        <div className="flex flex-col p-4 lg:ml-[calc(300px+2rem)]">
+        <div className={`flex flex-col p-4 lg:ml-[calc(300px+2rem)]`}>
           {isMobile && (
             <div className="ml-auto">
               <button
