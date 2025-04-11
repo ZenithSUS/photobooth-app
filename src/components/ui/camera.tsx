@@ -260,7 +260,7 @@ export default function Camera({
             />
           </>
         ) : (
-          <div className="grid w-[480px] h-[300px] inset-0 place-items-center text-3xl bg-black font-bold gap-4 text-white">
+          <div className="grid inset-0 place-items-center text-3xl bg-black font-bold gap-4 text-white">
             {messages[Math.floor(Math.random() * messages.length)]}
           </div>
         )}

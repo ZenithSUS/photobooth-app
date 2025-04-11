@@ -10,4 +10,6 @@ export const messages = [
   "Smile, it's contagious!",
   "What a great shot!",
   "Memories made!",
+  "Picture this!",
+  "You're a natural!",
 ];
