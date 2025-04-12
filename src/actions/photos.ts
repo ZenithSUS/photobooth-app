@@ -9,9 +9,9 @@ export const createPhoto = async (data: CreatePhoto) => {
   }
 };
 
-export const fetchAllPhotos = async () => {
+export const fetchAllPhotos = async (userId: string) => {
   try {
-    return await getAllPhotos();
+    return await getAllPhotos(userId);
   } catch (error) {
     console.log("Error fetching photos:", error);
   }

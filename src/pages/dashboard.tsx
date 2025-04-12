@@ -3,13 +3,13 @@ import photoIcon from "../assets/ui/save.png";
 import friendsIcon from "../assets/ui/friends.png";
 import videoIcon from "../assets/ui/video.png";
 import sharedPhotoIcon from "../assets/ui/share-photo.png";
-import { getSharedPhotos } from "../hooks/shared.ts";
+import { getAllPhotos } from "../hooks/photos.ts";
 import Loading from "../components/ui/loading.tsx";
 
 export default function Dashboard() {
   const user = localStorage.getItem("session");
   const id = JSON.parse(localStorage.getItem("id") as string);
-  const { data: shared, isLoading } = getSharedPhotos(id);
+  const { data: photos, isLoading } = getAllPhotos(id);
 
   useEffect(() => {
     if (!user) window.location.href = "/login";
@@ -56,7 +56,7 @@ export default function Dashboard() {
             />
           </div>
 
-          <h2 className="text-2xl font-bold">{shared?.length}</h2>
+          <h2 className="text-2xl font-bold">{photos?.length}</h2>
         </div>
       </div>
     </div>

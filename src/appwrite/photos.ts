@@ -15,7 +15,7 @@ export const createNewPhoto = async (urls: Object) => {
   }
 };
 
-export const getAllPhotos = async () => {
+export const getAllPhotos = async (userID: string) => {
   try {
     let allPhotos: ShowPhotos[] = [];
     let offset = 0;
@@ -25,7 +25,11 @@ export const getAllPhotos = async () => {
       const { documents } = await databases.listDocuments(
         DATABASE_ID,
         PHOTO_COLLECTION_ID,
-        [Query.limit(limit), Query.offset(offset)],
+        [
+          Query.limit(limit),
+          Query.offset(offset),
+          Query.equal("userID", userID),
+        ],
       );
 
       allPhotos = [

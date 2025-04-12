@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
 import { createPhoto } from "../../actions/photos.ts";
-import { createSharedPhoto } from "../../appwrite/shared.ts";
 import {
   ENDPOINT as endpointUrl,
   PROJECT_ID as projectId,
@@ -95,11 +94,6 @@ export default async function shareImages(
         toast.error("There was an error sharing images");
         return;
       }
-
-      await createSharedPhoto(
-        JSON.parse(localStorage.getItem("id") || '""') as string,
-        response.$id,
-      );
 
       navigator.clipboard.writeText(
         import.meta.env.PROD
