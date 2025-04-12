@@ -11,6 +11,7 @@ const Dashboard = lazy(() => import("./pages/dashboard"));
 const Social = lazy(() => import("./pages/social"));
 const PhotoBooth = lazy(() => import("./pages/photo-booth/index.tsx"));
 const PhotoUser = lazy(() => import("./pages/photo-booth/photo-user.tsx"));
+const Photo = lazy(() => import("./pages/photo"));
 const Account = lazy(() => import("./pages/account"));
 const NotFound = lazy(() => import("./pages/not-found"));
 
@@ -61,6 +62,23 @@ function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <Social />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="/photos"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Photo />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/photos/:id"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Photo />
               </Suspense>
             }
           />
