@@ -2,12 +2,12 @@ import Header from "../components/ui/header";
 import Sidebar from "../components/ui/sidebar";
 import Burger from "../assets/ui/burger.png";
 import { Outlet } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import { account } from "../appwrite";
 import { Navigate } from "react-router-dom";
 
 export default function UserLayout() {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   let user = JSON.parse(localStorage.getItem("session") || "false") as boolean;
 
@@ -32,6 +32,16 @@ export default function UserLayout() {
     };
 
     fetchAuthUser();
+  }, []);
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+      if (window.innerWidth >= 1024) {
+        setMobileMenuOpen(false);
+      }
+    };
+
     handleResize();
     window.addEventListener("resize", handleResize);
 
@@ -46,15 +56,6 @@ export default function UserLayout() {
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
-  };
-
-  const handleResize = () => {
-    if (window.innerWidth < 1024) {
-      setIsMobile(true);
-      setMobileMenuOpen(false);
-    } else {
-      setIsMobile(false);
-    }
   };
 
   if (!user) {

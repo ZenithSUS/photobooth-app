@@ -11,10 +11,6 @@ export default function Dashboard() {
   const id = JSON.parse(localStorage.getItem("id") as string);
   const { data: shared, isLoading } = getSharedPhotos(id);
 
-  if (shared) {
-    console.log(shared);
-  }
-
   useEffect(() => {
     if (!user) window.location.href = "/login";
   }, [user]);
