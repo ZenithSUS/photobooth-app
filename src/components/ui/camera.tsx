@@ -28,7 +28,7 @@ export default function Camera({
   const navigate = useNavigate();
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [webCamReady, setWebCamReady] = useState(true);
+  const [webCamReady, setWebCamReady] = useState(false);
   const [timer, setTimer] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const title = useRef<HTMLInputElement>(null);
