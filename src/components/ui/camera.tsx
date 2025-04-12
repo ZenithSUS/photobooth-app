@@ -323,14 +323,14 @@ export default function Camera({
             <button
               className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-blue-700 disabled:bg-gray-500"
               onClick={startTimer}
-              disabled={timer !== null}
+              disabled={timer !== null || !webCamReady}
             >
               📸
             </button>
             <button
               className="cursor-pointer rounded bg-red-500 px-4 py-2 text-center text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-red-600 disabled:bg-gray-500"
               onClick={resetFilter}
-              disabled={isCapturing}
+              disabled={isCapturing || !webCamReady}
             >
               <img src={resetPic} alt="reset" className="h-7 w-7" />
             </button>
