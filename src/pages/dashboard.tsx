@@ -5,6 +5,7 @@ import videoIcon from "../assets/ui/video.png";
 import sharedPhotoIcon from "../assets/ui/share-photo.png";
 import { getAllPhotosByUser } from "../hooks/photos.ts";
 import Loading from "../components/ui/loading.tsx";
+import userFilter from "../utils/functions/userFilter.ts";
 
 export default function Dashboard() {
   const user = localStorage.getItem("session");
@@ -16,6 +17,10 @@ export default function Dashboard() {
   }, [user]);
 
   if (isLoading) return <Loading />;
+
+  const latestPhoto = photos
+    ?.slice(0, 4)
+    .sort((a, b) => Number(b.$createdAt) - Number(a.$createdAt));
 
   return (
     <div className="flex flex-col gap-5">
@@ -57,6 +62,29 @@ export default function Dashboard() {
           </div>
 
           <h2 className="text-2xl font-bold">{photos?.length}</h2>
+        </div>
+      </div>
+
+      <div className="flex flex-col">
+        <h1 className="text-3xl font-bold">Latest Photos</h1>
+
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
+          {latestPhoto?.map((photo) => (
+            <div
+              key={photo.$id}
+              className="flex flex-col items-center gap-2.5 rounded border border-gray-200 bg-white p-4 shadow-md"
+            >
+              <img
+                src={photo.image1Url as string}
+                alt={photo.title}
+                className={`h-64 w-full rounded object-cover ${
+                  photo.filters ? userFilter(photo.filters as string[]) : ""
+                }`}
+              />
+              <h2 className="text-2xl font-bold">{photo.title}</h2>
+              <p className="text-gray-600"></p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
