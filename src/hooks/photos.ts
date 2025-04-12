@@ -1,13 +1,15 @@
-import { fetchAllPhotos, fetchPhoto } from "../actions/photos";
+import {
+  fetchAllPhotos,
+  fetchPhoto,
+  fetchPhotosByUser,
+} from "../actions/photos";
 import { QueryObserverResult, useQuery } from "@tanstack/react-query";
 import { ShowPhotos } from "../utils/types";
 
-export const getAllPhotos = (
-  userID: string,
-): QueryObserverResult<ShowPhotos[]> => {
+export const getAllPhotos = (): QueryObserverResult<ShowPhotos[]> => {
   return useQuery<ShowPhotos[]>({
     queryFn: async () => {
-      const result = await fetchAllPhotos(userID);
+      const result = await fetchAllPhotos();
 
       if (!result) {
         throw new Error("Failed to fetch photos");
@@ -17,6 +19,20 @@ export const getAllPhotos = (
     queryKey: ["photos"],
   });
 };
+
+export const getAllPhotosByUser = (
+  userID: string,
+): QueryObserverResult<ShowPhotos[]> =>
+  useQuery<ShowPhotos[]>({
+    queryFn: async () => {
+      const result = await fetchPhotosByUser(userID);
+      if (!result) {
+        throw new Error(`Failed to fetch photos for user: ${userID}`);
+      }
+      return result;
+    },
+    queryKey: ["photos", userID],
+  });
 
 export const getPhoto = (
   id: string,

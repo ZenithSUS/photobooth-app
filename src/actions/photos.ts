@@ -1,4 +1,9 @@
-import { createNewPhoto, getAllPhotos, getPhoto } from "../appwrite/photos";
+import {
+  createNewPhoto,
+  getAllPhotos,
+  getAllPhotosByUser,
+  getPhoto,
+} from "../appwrite/photos";
 import { CreatePhoto } from "../utils/types";
 
 export const createPhoto = async (data: CreatePhoto) => {
@@ -9,11 +14,19 @@ export const createPhoto = async (data: CreatePhoto) => {
   }
 };
 
-export const fetchAllPhotos = async (userId: string) => {
+export const fetchAllPhotos = async () => {
   try {
-    return await getAllPhotos(userId);
+    return await getAllPhotos();
   } catch (error) {
     console.log("Error fetching photos:", error);
+  }
+};
+
+export const fetchPhotosByUser = async (userID: string) => {
+  try {
+    return await getAllPhotosByUser(userID);
+  } catch (error) {
+    console.log("Error fetching photos by user:", error);
   }
 };
 
