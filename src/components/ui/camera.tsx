@@ -213,8 +213,8 @@ export default function Camera({
   };
 
   const videoConstraints = {
-    width: 480,
-    height: 300,
+    width: window.innerWidth < 1024 ? 320 : 480,
+    height: window.innerWidth < 1024 ? 300 : 300,
     facingMode: "user",
   };
 
