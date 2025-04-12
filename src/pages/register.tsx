@@ -84,9 +84,9 @@ export default function Register() {
   }, [user]);
 
   return (
-    <main className="my-2 flex w-full flex-col items-center justify-center lg:h-screen lg:w-screen">
+    <main className="m-auto flex w-screen flex-col items-center justify-center lg:h-screen">
       <form
-        className="flex flex-col justify-center gap-5 rounded-md bg-sky-400 p-4 ring-2 ring-amber-400"
+        className="flex w-screen flex-col justify-center gap-5 rounded-md bg-sky-400 p-5 ring-2 ring-amber-400 lg:w-[800px]"
         onSubmit={form.handleSubmit(register)}
       >
         <h1 className="text-center text-3xl font-bold">Register</h1>
