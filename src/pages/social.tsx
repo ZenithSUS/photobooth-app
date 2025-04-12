@@ -36,7 +36,7 @@ export default function Social() {
             key={photo.$id}
             className="flex flex-col items-center gap-2.5 rounded border border-gray-200 bg-white p-4 shadow-md"
           >
-            <div className="relative p-0.5">
+            <div className="relative w-full p-0.5">
               {photo.sticker === "Axlot" && <Axlot />}
               {photo.sticker === "Minecraft" && <Minecraft />}
               {photo.sticker === "Cat" && <Cat />}
