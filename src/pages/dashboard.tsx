@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import photoIcon from "../assets/ui/save.png";
 import downloadIcon from "../assets/ui/downloading.png";
 import heartIcon from "../assets/ui/heart.png";
