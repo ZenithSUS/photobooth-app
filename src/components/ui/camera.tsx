@@ -5,6 +5,7 @@ import { messages } from "../../utils/constants/message.ts";
 import { BlinkBlur } from "react-loading-indicators";
 import Modal from "react-modal";
 import Webcam from "react-webcam";
+import { UserFilters } from "../../utils/types.ts";
 import filters from "../../utils/functions/filters.ts";
 import shareImages from "../../utils/functions/share.ts";
 import downloadAllImages from "../../utils/functions/download.ts";
@@ -21,6 +22,7 @@ export default function Camera({
 }: {
   photoBoothRef: React.RefObject<HTMLDivElement | null>;
 }) {
+  let userFilters: UserFilters[] = [];
   const name = JSON.parse(localStorage.getItem("name") as string);
   const navigate = useNavigate();
   const webcamRef = useRef<Webcam>(null);
@@ -34,8 +36,10 @@ export default function Camera({
     capturedImage,
     setCapturedImage,
     filter,
-    setPrevFilter,
     setFilter,
+    setPrevFilter,
+    filterValues,
+    setFilterValues,
     backgroundColor,
     setBackgroundColor,
     backgroundValue,
@@ -85,6 +89,24 @@ export default function Camera({
       if (!window.confirm("Are you sure you want to go back?")) return;
     }
 
+    setFilterValues({
+      sepia: 0,
+      grayscale: 0,
+      hueRotate: 0,
+      invert: 0,
+      brightness: 100,
+      contrast: 100,
+    });
+    setFilter({
+      sepia: 0,
+      grayscale: 0,
+      hueRotate: 0,
+      invert: 0,
+      brightness: 100,
+      contrast: 100,
+    });
+    setBackgroundColor("");
+    setBorderColor("");
     setBorderValue("");
     setBackgroundValue("");
     setCapturedImage([]);
@@ -140,6 +162,14 @@ export default function Camera({
   const resetImage = useCallback(() => {
     if (capturedImage.length === 0) return;
 
+    setFilterValues({
+      sepia: 0,
+      grayscale: 0,
+      hueRotate: 0,
+      invert: 0,
+      brightness: 100,
+      contrast: 100,
+    });
     setBorderValue("");
     setBackgroundValue("");
     setCapturedImage([]);
@@ -159,6 +189,9 @@ export default function Camera({
   const shareImage = async (e: React.FormEvent, title: string) => {
     try {
       e.preventDefault();
+
+      userFilters = Object.values(filterValues).map((f) => String(f));
+      console.log(userFilters);
       await shareImages(
         capturedImage as Blob[],
         setCapturedImage,
@@ -168,6 +201,7 @@ export default function Camera({
         sticker,
         backgroundValue,
         borderValue,
+        userFilters,
       );
     } catch (error) {
       console.log(error);
@@ -271,7 +305,7 @@ export default function Camera({
             />
           </>
         ) : (
-          <div className="inset-0 grid h-[200px] place-items-center gap-4 bg-black text-center text-3xl font-bold text-white md:h-[300px] md:w-[480px]">
+          <div className="inset-0 grid h-[200px] w-[calc(100%-2rem)] place-items-center gap-4 bg-black text-center text-3xl font-bold text-white md:h-[300px] md:w-[480px]">
             <div className="p-3">
               {messages[Math.floor(Math.random() * messages.length)]}
             </div>

@@ -4,7 +4,20 @@ import { FiltersType, FilterValues } from "../../utils/types.ts";
 import { SelectionColor } from "../../utils/constants/selection-colors.ts";
 
 export default function GrayscaleSelection() {
-  const { filter, setFilter } = useBoothContext();
+  const { filter, setFilter, setFilterValues } = useBoothContext();
+
+  const handleGrayscaleChange = (value: FilterValues) => {
+    setFilter((prevFilter: FiltersType) => ({
+      ...prevFilter,
+      grayscale: value.value,
+    }));
+
+    setFilterValues((prevFilterValues: FiltersType) => ({
+      ...prevFilterValues,
+      grayscale: value.style,
+    }));
+  };
+
   return (
     <div className="flex items-center gap-5">
       <h2 className="text-md font-bold">Grayscale</h2>
@@ -16,12 +29,7 @@ export default function GrayscaleSelection() {
             style={{
               border: filter.grayscale === level.value ? "2px solid" : "none",
             }}
-            onClick={() =>
-              setFilter((prevFilter: FiltersType) => ({
-                ...prevFilter,
-                grayscale: level.value,
-              }))
-            }
+            onClick={() => handleGrayscaleChange(level)}
           ></div>
         ))}
       </div>

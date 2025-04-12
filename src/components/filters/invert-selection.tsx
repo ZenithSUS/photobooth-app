@@ -5,7 +5,7 @@ import { SelectionColor } from "../../utils/constants/selection-colors.ts";
 import { useEffect } from "react";
 
 export default function InvertSelection() {
-  const { filter, setFilter } = useBoothContext();
+  const { filter, setFilter, setFilterValues } = useBoothContext();
 
   useEffect(() => {
     if (!filter.invert) {
@@ -15,6 +15,17 @@ export default function InvertSelection() {
       }));
     }
   }, [filter.invert, setFilter]);
+
+  const handleInvertChange = (value: FilterValues) => {
+    setFilter((prevFilter: FiltersType) => ({
+      ...prevFilter,
+      invert: value.value,
+    }));
+    setFilterValues((prevFilterValues: FiltersType) => ({
+      ...prevFilterValues,
+      invert: value.style,
+    }));
+  };
 
   return (
     <div className="flex items-center gap-5">
@@ -27,12 +38,7 @@ export default function InvertSelection() {
             style={{
               border: filter.invert === level.value ? "2px solid" : "none",
             }}
-            onClick={() =>
-              setFilter((prevFilter: FiltersType) => ({
-                ...prevFilter,
-                invert: level.value,
-              }))
-            }
+            onClick={() => handleInvertChange(level)}
           ></div>
         ))}
       </div>

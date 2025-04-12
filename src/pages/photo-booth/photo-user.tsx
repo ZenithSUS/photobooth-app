@@ -2,10 +2,8 @@ import { getPhoto } from "../../hooks/photos";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import formatDate from "../../utils/functions/format-date";
-import {
-  getBackgroundColor,
-  getBorderColor,
-} from "../../utils/constants/user-backgrounds";
+import userFilter from "../../utils/functions/userFilter";
+import userBackground from "../../utils/functions/userBackground";
 import Loading from "../../components/ui/loading";
 import Axlot from "../../components/stickers/axlot/img";
 import Minecraft from "../../components/stickers/minecraft/img";
@@ -14,16 +12,20 @@ import Cat from "../../components/stickers/cat/img";
 export default function PhotoUser() {
   const { id } = useParams();
   const { data: photo, isLoading, error } = getPhoto(id as string);
+  let userFilters = "";
+  let userBg = "";
   const navigate = useNavigate();
   const handleBack = () => {
     navigate("/social");
   };
 
   if (isLoading) return <Loading />;
-  if (!photo)
-    return (
-      <div className="text-center text-3xl font-bold">No photo available</div>
-    );
+
+  if (!photo) {
+    navigate("/social");
+    return null;
+  }
+
   if (error)
     return (
       <div className="text-center text-3xl font-bold">
@@ -31,13 +33,19 @@ export default function PhotoUser() {
       </div>
     );
 
+  if (photo.filters && photo.border && photo.background) {
+    userFilters = userFilter(photo.filters as string[]);
+    userBg = userBackground(Number(photo.background), Number(photo.border));
+  }
+
   const images = [photo.image1Url, photo.image2Url, photo.image3Url];
+  console.log(photo.filters);
 
   return (
     <div className="mx-auto flex min-h-screen flex-col items-center justify-center gap-2 p-4">
       <h1 className="text-2xl font-bold">{photo.title}</h1>
       <div
-        className={`grid grid-cols-1 place-items-center ${getBackgroundColor(Number(photo.background))} ${getBorderColor(Number(photo.border))} gap-2 rounded-lg border-10 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-3.5 shadow-lg`}
+        className={`grid grid-cols-1 place-items-center ${userBg} gap-2 rounded-lg border-10 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-3.5 shadow-lg`}
       >
         {images.map((image, index) => (
           <div className="relative p-0.5" key={index}>
@@ -47,7 +55,7 @@ export default function PhotoUser() {
             <img
               src={image as string}
               alt={`Image ${index + 1}`}
-              className="object-cover"
+              className={`object-cover ${userFilters}`}
               height={"300px"}
               width={"300px"}
             />

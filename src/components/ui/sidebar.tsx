@@ -45,13 +45,13 @@ export default function Sidebar({
 
   return (
     <div
-      className={`absolute ${isMobile && !isMobileMenuOpen ? "hidden" : "lg:block"} top-0 bottom-0 left-0 z-10 flex-col pl-4 ${isMobile ? "w-full pt-36" : "w-[300px] pt-20"} min-h-screen overflow-y-auto border-r-2 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400`}
+      className={`absolute ${isMobile && !isMobileMenuOpen ? "hidden" : "lg:block"} top-0 bottom-0 left-0 z-20 flex-col pl-4 ${isMobile ? "w-full pt-36" : "w-[300px] pt-20"} min-h-screen overflow-y-auto border-r-2 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400`}
     >
       <Modal
         parentSelector={() => document.querySelector("#root") as HTMLElement}
         isOpen={isModalOpen}
         onRequestClose={closeLogoutModal}
-        className="absolute top-1/8 z-[150] mx-auto grid max-h-full w-full max-w-lg place-items-center p-4 sm:inset-x-8 sm:top-1/4 sm:max-w-md md:max-w-lg lg:max-w-xl"
+        className="absolute top-1/8 z-[150] mx-auto grid max-h-screen w-full max-w-lg place-items-center p-4 sm:inset-x-8 sm:top-1/4 sm:max-w-md md:max-w-lg lg:max-w-xl"
         overlayClassName={"fixed inset-0 z-[100] bg-black/50"}
       >
         <div className="z-20 flex flex-col items-center gap-4 rounded-xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-5">

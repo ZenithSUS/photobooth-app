@@ -4,7 +4,18 @@ import { FiltersType, FilterValues } from "../../utils/types.ts";
 import { SelectionColor } from "../../utils/constants/selection-colors.ts";
 
 export default function SepiaSelection() {
-  const { filter, setFilter } = useBoothContext();
+  const { filter, setFilter, setFilterValues } = useBoothContext();
+
+  const handleSepiaChange = (value: FilterValues) => {
+    setFilter((prevFilter: FiltersType) => ({
+      ...prevFilter,
+      sepia: value.value,
+    }));
+    setFilterValues((prevFilterValues: FiltersType) => ({
+      ...prevFilterValues,
+      sepia: value.style,
+    }));
+  };
   return (
     <div className="flex items-center gap-5">
       <h2 className="text-md font-bold">Sepia</h2>
@@ -16,12 +27,7 @@ export default function SepiaSelection() {
             style={{
               border: filter.sepia === level.value ? "2px solid" : "none",
             }}
-            onClick={() =>
-              setFilter((prevFilter: FiltersType) => ({
-                ...prevFilter,
-                sepia: level.value,
-              }))
-            }
+            onClick={() => handleSepiaChange(level)}
           ></div>
         ))}
       </div>

@@ -5,6 +5,7 @@ import Loading from "../components/ui/loading";
 import Axlot from "../components/stickers/axlot/cam";
 import Minecraft from "../components/stickers/minecraft/cam";
 import Cat from "../components/stickers/cat/cam";
+import userFilter from "../utils/functions/userFilter";
 
 export default function Social() {
   const { data: photos, isLoading } = getAllPhotos();
@@ -24,8 +25,6 @@ export default function Social() {
     navigate(`/photo-booth/${id}`);
   };
 
-  console.log(photos);
-
   return (
     <div className="flex flex-col gap-5">
       <h1 className="mb-4 text-center text-3xl font-bold lg:text-start">
@@ -44,7 +43,9 @@ export default function Social() {
               <img
                 src={photo.image1Url as string}
                 alt={photo.title}
-                className="h-52 w-full rounded object-cover"
+                className={`h-52 w-full rounded object-cover ${userFilter(
+                  photo.filters as string[],
+                )}`}
               />
             </div>
             <h1 className="text-center font-bold">{photo.title}</h1>

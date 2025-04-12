@@ -40,6 +40,7 @@ export const getAllPhotos = async () => {
           sticker: doc.sticker,
           border: doc.border,
           background: doc.background,
+          filters: doc.filters,
           image1Url: doc.image1Url,
           image2Url: doc.image2Url,
           image3Url: doc.image3Url,

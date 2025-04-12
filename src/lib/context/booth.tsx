@@ -6,6 +6,8 @@ type BoothContextType = {
   setCapturedImage: React.Dispatch<React.SetStateAction<Object[]>>;
   filter: FiltersType;
   setFilter: React.Dispatch<React.SetStateAction<FiltersType>>;
+  filterValues: FiltersType;
+  setFilterValues: React.Dispatch<React.SetStateAction<FiltersType>>;
   prevFilter: FiltersType[];
   setPrevFilter: React.Dispatch<React.SetStateAction<FiltersType[]>>;
   backgroundColor: string;
@@ -38,6 +40,15 @@ export const BoothContext = createContext<BoothContextType>({
     contrast: 0,
   },
   setFilter: () => {},
+  filterValues: {
+    sepia: "sepia-0",
+    grayscale: "grayscale-0",
+    hueRotate: "hue-rotate-0",
+    invert: "invert-0",
+    brightness: "brightness-100",
+    contrast: "contrast-100",
+  },
+  setFilterValues: () => {},
   prevFilter: [
     {
       sepia: 0,
@@ -80,6 +91,14 @@ export const BoothProvider = ({ children }: Props) => {
     brightness: 100,
     contrast: 100,
   });
+  const [filterValues, setFilterValues] = useState<FiltersType>({
+    sepia: "sepia-0",
+    grayscale: "grayscale-0",
+    hueRotate: "hue-rotate-0",
+    invert: "invert-0",
+    brightness: "brightness-100",
+    contrast: "contrast-100",
+  });
   const [sticker, setSticker] = useState<string>("N/A");
   const [prevFilter, setPrevFilter] = useState<FiltersType[]>([]);
 
@@ -91,6 +110,8 @@ export const BoothProvider = ({ children }: Props) => {
         filter,
         setFilter,
         prevFilter,
+        setFilterValues,
+        filterValues,
         setPrevFilter,
         backgroundColor,
         setBackgroundColor,

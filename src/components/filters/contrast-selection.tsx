@@ -4,7 +4,19 @@ import { FiltersType, FilterValues } from "../../utils/types";
 import { SelectionColor } from "../../utils/constants/selection-colors.ts";
 
 export default function ContrastSelection() {
-  const { filter, setFilter } = useBoothContext();
+  const { filter, setFilter, setFilterValues } = useBoothContext();
+
+  const handleContrastChange = (value: FilterValues) => {
+    setFilter((prevFilter: FiltersType) => ({
+      ...prevFilter,
+      contrast: value.value,
+    }));
+
+    setFilterValues((prevFilterValues: FiltersType) => ({
+      ...prevFilterValues,
+      contrast: value.style,
+    }));
+  };
   return (
     <div className="flex items-center gap-5">
       <h2 className="text-md font-bold">Contrast</h2>
@@ -16,12 +28,7 @@ export default function ContrastSelection() {
             style={{
               border: filter.contrast === level.value ? "2px solid" : "none",
             }}
-            onClick={() =>
-              setFilter((prevFilter: FiltersType) => ({
-                ...prevFilter,
-                contrast: level.value,
-              }))
-            }
+            onClick={() => handleContrastChange(level)}
           ></div>
         ))}
       </div>

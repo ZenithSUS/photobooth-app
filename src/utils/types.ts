@@ -12,6 +12,9 @@ export type FilterValues = {
   value: number | string;
 };
 
+export type UserFilters = FiltersType[keyof FiltersType];
+export type UserFilterValues = FiltersType;
+
 export type Background = {
   background: string;
   value: number;
@@ -30,6 +33,7 @@ export type CreatePhoto = {
   sticker: string;
   background: string;
   border: string;
+  filters: UserFilters[];
   image1Url: string | File;
   image2Url: string | File;
   image3Url: string | File;

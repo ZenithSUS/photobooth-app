@@ -8,6 +8,7 @@ import {
 } from "../../appwrite/index.ts";
 import { ID } from "appwrite";
 import { toast } from "react-toastify";
+import { UserFilters } from "../types.ts";
 
 export default async function shareImages(
   capturedImage: Blob[],
@@ -18,6 +19,7 @@ export default async function shareImages(
   sticker: string,
   background: string,
   border: string,
+  userFilters: UserFilters[],
 ) {
   try {
     if (capturedImage.length === 3) {
@@ -82,6 +84,7 @@ export default async function shareImages(
         sticker: sticker,
         background: background,
         border: border,
+        filters: userFilters,
         image1Url: `${endpointUrl}/storage/buckets/${imageData1.bucketId}/files/${imageData1.$id}/view?project=${projectId}&mode=admin`,
         image2Url: `${endpointUrl}/storage/buckets/${imageData2.bucketId}/files/${imageData2.$id}/view?project=${projectId}&mode=admin`,
         image3Url: `${endpointUrl}/storage/buckets/${imageData3.bucketId}/files/${imageData3.$id}/view?project=${projectId}&mode=admin`,
