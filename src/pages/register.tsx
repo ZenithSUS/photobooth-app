@@ -68,10 +68,11 @@ export default function Register() {
 
       localStorage.setItem("session", JSON.stringify(session.current));
       const userData = await account.get();
+      localStorage.setItem("id", JSON.stringify(userData.$id));
       localStorage.setItem("name", JSON.stringify(userData.name));
-
+      localStorage.setItem("email", JSON.stringify(userData.email));
+      localStorage.setItem("joined", JSON.stringify(userData.$createdAt));
       toast.success("Registered Successfully!");
-      // navigate("/");
     } catch (error) {
       console.log(error);
       toast.error("There was an error registering");
@@ -83,14 +84,14 @@ export default function Register() {
   }, [user]);
 
   return (
-    <main className="flex w-screen flex-col items-center justify-center md:h-screen">
+    <main className="my-2 flex w-full flex-col items-center justify-center lg:h-screen lg:w-screen">
       <form
         className="flex flex-col justify-center gap-5 rounded-md bg-sky-400 p-4 ring-2 ring-amber-400"
         onSubmit={form.handleSubmit(register)}
       >
         <h1 className="text-center text-3xl font-bold">Register</h1>
 
-        <div className="flex flex-col gap-2 md:grid md:grid-cols-3 md:gap-5">
+        <div className="flex flex-col gap-2 md:grid md:grid-cols-2 md:gap-2 lg:grid-cols-3 lg:gap-5">
           <div className="flex flex-col gap-1">
             <label htmlFor="firstname" className="text-xl font-bold">
               First Name

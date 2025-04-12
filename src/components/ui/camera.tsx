@@ -161,8 +161,6 @@ export default function Camera({
   }, [capture]);
 
   const resetImage = useCallback(() => {
-    if (capturedImage.length === 0) return;
-
     setFilterValues({
       sepia: 0,
       grayscale: 0,
