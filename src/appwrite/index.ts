@@ -15,3 +15,5 @@ export const BUCKET_ID = import.meta.env.VITE_BUCKET_ID;
 export const DATABASE_ID = import.meta.env.VITE_DATABASE_ID;
 export const USER_COLLECTION_ID = import.meta.env.VITE_USER_COLLECTION_ID;
 export const PHOTO_COLLECTION_ID = import.meta.env.VITE_PHOTO_COLLECTION_ID;
+export const SHARED_COLLECTION_ID = import.meta.env.VITE_SHARED_COLLECTION_ID;
+export const SAVED_COLLECTION_ID = import.meta.env.VITE_SAVED_COLLECTION_ID;

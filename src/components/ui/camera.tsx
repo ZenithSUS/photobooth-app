@@ -14,6 +14,7 @@ import backPic from "../../assets/ui/back.svg";
 import Axlot from "../stickers/axlot/cam.tsx";
 import Minecraft from "../stickers/minecraft/cam.tsx";
 import Cat from "../stickers/cat/cam.tsx";
+import { toast } from "react-toastify";
 
 Modal.setAppElement("#root");
 
@@ -189,6 +190,11 @@ export default function Camera({
   const shareImage = async (e: React.FormEvent, title: string) => {
     try {
       e.preventDefault();
+
+      if (title.length === 0) {
+        toast.error("Please enter a title");
+        return;
+      }
 
       userFilters = Object.values(filterValues).map((f) => String(f));
       console.log(userFilters);

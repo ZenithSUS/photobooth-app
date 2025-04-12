@@ -1,4 +1,4 @@
-import { databases, PHOTO_COLLECTION_ID, DATABASE_ID } from "../appwrite";
+import { databases, PHOTO_COLLECTION_ID, DATABASE_ID } from "./index.ts";
 import { Query, ID } from "appwrite";
 import { ShowPhotos } from "../utils/types";
 

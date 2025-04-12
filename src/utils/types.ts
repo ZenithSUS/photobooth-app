@@ -58,6 +58,12 @@ export type ShowPhotos = CreatePhoto & {
   $updatedAt: string;
 };
 
+export type SharedPhotos = {
+  $id: string;
+  userID: string;
+  photoID: string;
+};
+
 export type Sticker = {
   name: string;
   value: string;
