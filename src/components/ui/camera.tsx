@@ -212,12 +212,6 @@ export default function Camera({
     }
   };
 
-  const videoConstraints = {
-    width: window.innerWidth < 1024 ? 320 : 480,
-    height: window.innerWidth < 1024 ? 300 : 300,
-    facingMode: "user",
-  };
-
   return (
     <div className="flex flex-col items-center justify-center gap-4">
       <Modal
@@ -296,7 +290,7 @@ export default function Camera({
               ref={webcamRef}
               screenshotFormat="image/jpeg"
               audio={false}
-              videoConstraints={videoConstraints}
+              width={500}
               mirrored={true}
               onUserMedia={() => setWebCamReady(true)}
               onUserMediaError={() => setWebCamReady(false)}
