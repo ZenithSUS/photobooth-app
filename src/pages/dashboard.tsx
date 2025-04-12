@@ -1,26 +1,21 @@
 import { useEffect } from "react";
 import photoIcon from "../assets/ui/save.png";
-import friendsIcon from "../assets/ui/friends.png";
-import videoIcon from "../assets/ui/video.png";
+import downloadIcon from "../assets/ui/downloading.png";
+import heartIcon from "../assets/ui/heart.png";
 import sharedPhotoIcon from "../assets/ui/share-photo.png";
 import { getAllPhotosByUser } from "../hooks/photos.ts";
-import Loading from "../components/ui/loading.tsx";
-import userFilter from "../utils/functions/userFilter.ts";
-import formatDate from "../utils/functions/format-date.ts";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/ui/loading.tsx";
+import formatDate from "../utils/functions/format-date.ts";
+import userFilter from "../utils/functions/userFilter.ts";
 import Axlot from "../components/stickers/axlot/cam.tsx";
 import Minecraft from "../components/stickers/minecraft/cam.tsx";
 import Cat from "../components/stickers/cat/cam.tsx";
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const user = localStorage.getItem("session");
   const id = JSON.parse(localStorage.getItem("id") as string);
   const { data: photos, isLoading } = getAllPhotosByUser(id);
-
-  useEffect(() => {
-    if (!user) window.location.href = "/login";
-  }, [user]);
 
   if (isLoading) return <Loading />;
 
@@ -47,16 +42,20 @@ export default function Dashboard() {
 
         <div className="flex flex-col bg-gradient-to-br from-rose-400 via-pink-400 to-fuchsia-400 p-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold">Saved Videos</h2>
-            <img src={videoIcon} alt="saveVideos" className="h-10 w-10" />
+            <h2 className="text-2xl font-bold">Total Hearts</h2>
+            <img src={heartIcon} alt="heart" className="h-10 w-10" />
           </div>
-          <h2 className="text-2xl font-bold">0</h2>
+          <h2 className="text-2xl font-bold">{0}</h2>
         </div>
 
         <div className="flex flex-col bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold">Friends</h2>
-            <img src={friendsIcon} alt="friends" className="h-10 w-10" />
+            <h2 className="text-2xl font-bold">Downloads</h2>
+            <img
+              src={downloadIcon}
+              alt="downloadImages"
+              className="h-10 w-10"
+            />
           </div>
           <h2 className="text-2xl font-bold">0</h2>
         </div>
