@@ -1,10 +1,29 @@
 import { toast } from "react-toastify";
 import { useNavigate, Navigate } from "react-router-dom";
 import { account } from "../appwrite";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Login() {
-  const user = localStorage.getItem("session");
+  let user = JSON.parse(localStorage.getItem("session") || "false") as boolean;
+  useEffect(() => {
+    const fetchAuthUser = async () => {
+      try {
+        const data = await account.get();
+        const session = await account.getSession("current");
+        user = session.current;
+        localStorage.setItem("id", JSON.stringify(data.$id));
+        localStorage.setItem("name", JSON.stringify(data.name));
+        localStorage.setItem("email", JSON.stringify(data.email));
+        localStorage.setItem("joined", JSON.stringify(data.$createdAt));
+      } catch (error) {
+        localStorage.clear();
+        account.deleteSession("current");
+        return;
+      }
+    };
+
+    fetchAuthUser();
+  }, []);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>("");

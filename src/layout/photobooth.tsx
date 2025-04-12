@@ -4,12 +4,13 @@ import { account } from "../appwrite";
 import { Navigate } from "react-router-dom";
 
 export default function MainLayout() {
-  const user = localStorage.getItem("session");
-
+  let user = JSON.parse(localStorage.getItem("session") || "false") as boolean;
   useEffect(() => {
     const fetchAuthUser = async () => {
       try {
         const data = await account.get();
+        const session = await account.getSession("current");
+        user = session.current;
         localStorage.setItem("id", JSON.stringify(data.$id));
         localStorage.setItem("name", JSON.stringify(data.name));
         localStorage.setItem("email", JSON.stringify(data.email));
@@ -23,10 +24,6 @@ export default function MainLayout() {
 
     fetchAuthUser();
   }, []);
-
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
 
   if (!user) {
     return <Navigate to="/login" />;
