@@ -299,6 +299,7 @@ export default function Camera({
               videoConstraints={videoConstraints}
               mirrored={true}
               onUserMedia={() => setWebCamReady(true)}
+              onUserMediaError={() => setWebCamReady(false)}
               className={`${invertFilter(filter.invert)} ${brightnessFilter(
                 filter.brightness,
               )} ${sepiaFilter(filter.sepia)} ${hueRotateFilter(
