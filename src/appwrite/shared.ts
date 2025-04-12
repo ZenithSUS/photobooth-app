@@ -20,7 +20,6 @@ export const createSharedPhoto = async (userID: string, photoID: string) => {
 
 export const getSharedPhotos = async (userID: string) => {
   try {
-    console.log(userID);
     let allsharedphotos: SharedPhotos[] = [];
     let offset = 0;
     const limit = 100;

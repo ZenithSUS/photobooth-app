@@ -30,17 +30,17 @@ export default function UserLayout() {
 
   useEffect(() => {
     const fetchAuthUser = async () => {
-      const data = await account.get();
-      if (!data) {
+      try {
+        const data = await account.get();
+        localStorage.setItem("id", JSON.stringify(data.$id));
+        localStorage.setItem("name", JSON.stringify(data.name));
+        localStorage.setItem("email", JSON.stringify(data.email));
+        localStorage.setItem("joined", JSON.stringify(data.$createdAt));
+      } catch (error) {
         localStorage.clear();
         account.deleteSession("current");
         return;
       }
-
-      localStorage.setItem("id", JSON.stringify(data.$id));
-      localStorage.setItem("name", JSON.stringify(data.name));
-      localStorage.setItem("email", JSON.stringify(data.email));
-      localStorage.setItem("joined", JSON.stringify(data.$createdAt));
     };
 
     fetchAuthUser();
