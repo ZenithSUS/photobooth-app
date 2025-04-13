@@ -182,7 +182,7 @@ export default function Camera({
     try {
       const guestMode = !user;
       if (guestMode) {
-        toast.error("You must be logged in to share images");
+        toast.warn("You must be logged in to share images");
         return navigate("/login");
       }
       setIsModalOpen(true);
