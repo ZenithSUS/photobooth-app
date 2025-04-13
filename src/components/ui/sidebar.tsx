@@ -3,15 +3,22 @@ import { account } from "../../appwrite";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Modal from "react-modal";
 import accountIcon from "../../assets/ui/account.png";
 import cameraIcon from "../../assets/ui/camera.png";
 import logoutIcon from "../../assets/ui/logout.png";
 import socialIcon from "../../assets/ui/social.png";
 import saveIcon from "../../assets/ui/save.png";
 import dashboardIcon from "../../assets/ui/dashboard.png";
-import Modal from "react-modal";
 
 Modal.setAppElement("#root");
+
+type NavItem = {
+  to: string;
+  icon: string;
+  label: string;
+  alt: string;
+};
 
 type SidebarProps = {
   isMobile: boolean;
@@ -27,32 +34,70 @@ export default function Sidebar({
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const navItems: NavItem[] = [
+    {
+      to: "/dashboard",
+      icon: dashboardIcon,
+      label: "Dashboard",
+      alt: "dashboard",
+    },
+    { to: "/social", icon: socialIcon, label: "Social", alt: "social" },
+    { to: "/photos", icon: saveIcon, label: "Save Photos", alt: "photos" },
+    {
+      to: "/photo-booth",
+      icon: cameraIcon,
+      label: "Photo Booth",
+      alt: "camera",
+    },
+    { to: "/account", icon: accountIcon, label: "Account", alt: "account" },
+  ];
+
   const handleLogout = () => {
     setIsModalOpen(true);
-    isMobile ? closeMobileMenu() : null;
+    if (isMobile) closeMobileMenu();
   };
 
   const logout = async () => {
-    toast.success("Logged out successfully!");
-    await account.deleteSession("current");
-    localStorage.clear();
-    navigate("/login");
+    try {
+      await account.deleteSession("current");
+      localStorage.clear();
+      toast.success("Logged out successfully!");
+      navigate("/login");
+    } catch (error) {
+      toast.error("Failed to log out. Please try again.");
+      console.error("Logout error:", error);
+    }
   };
 
   const closeLogoutModal = () => {
     setIsModalOpen(false);
   };
 
+  const NavItem = ({ item }: { item: NavItem }) => (
+    <Link
+      to={item.to}
+      onClick={isMobile ? closeMobileMenu : undefined}
+      className="flex items-center gap-2 rounded p-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-amber-400"
+    >
+      <img src={item.icon} alt={item.alt} className="h-8 w-8" />
+      {item.label}
+    </Link>
+  );
+
   return (
-    <div
-      className={`absolute ${isMobile && !isMobileMenuOpen ? "hidden" : "lg:block"} top-0 bottom-0 left-0 z-20 flex-col pl-4 ${isMobile ? "w-full pt-36" : "w-[300px] pt-20"} min-h-screen overflow-y-auto border-r-2 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400`}
+    <nav
+      className={`fixed lg:relative ${
+        isMobile && !isMobileMenuOpen ? "hidden" : "lg:block"
+      } top-0 left-0 z-20 flex-col pl-4 ${
+        isMobile ? "w-full pt-35 md:pt-30" : "w-[300px]"
+      } h-screen overflow-auto border-r-2 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400`}
     >
       <Modal
         parentSelector={() => document.querySelector("#root") as HTMLElement}
         isOpen={isModalOpen}
         onRequestClose={closeLogoutModal}
         className="absolute top-1/8 z-[150] mx-auto grid max-h-screen w-full max-w-lg place-items-center p-4 sm:inset-x-8 sm:top-1/4 sm:max-w-md md:max-w-lg lg:max-w-xl"
-        overlayClassName={"fixed inset-0 z-[100] bg-black/50"}
+        overlayClassName="fixed inset-0 z-[100] bg-black/50"
       >
         <div className="z-20 flex flex-col items-center gap-4 rounded-xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-5">
           <h1>Are you sure you want to logout?</h1>
@@ -73,68 +118,30 @@ export default function Sidebar({
           </div>
         </div>
       </Modal>
-      <div className="flex items-center justify-between pr-4 pb-4">
-        <h1 className="text-3xl font-bold">Navigation</h1>
-        {isMobile && (
-          <button
-            onClick={closeMobileMenu}
-            className="text-2xl font-extrabold text-black"
-          >
-            X
-          </button>
-        )}
+
+      <div className="flex items-center justify-between lg:pr-4 lg:pb-4">
+        <h1 className="mt-1.5 hidden text-center text-3xl font-bold lg:block lg:text-start">
+          Navigation
+        </h1>
       </div>
+
       <div
-        className={`flex flex-col ${isMobile ? "items-center" : "ml-4 items-start"} gap-6 text-2xl`}
+        className={`flex flex-col ${
+          isMobile ? "items-center py-4" : "ml-4 items-start"
+        } gap-6 text-2xl`}
       >
-        <Link
-          to="/"
-          onClick={isMobile ? closeMobileMenu : undefined}
-          className="flex items-center gap-2 rounded p-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-amber-400"
-        >
-          <img src={dashboardIcon} alt="photos" className="h-8 w-8" />
-          Dashboard
-        </Link>
-        <Link
-          to="/social"
-          onClick={isMobile ? closeMobileMenu : undefined}
-          className="flex items-center gap-2 rounded p-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-amber-400"
-        >
-          <img src={socialIcon} alt="social" className="h-8 w-8" />
-          Social
-        </Link>
-        <Link
-          to="/photos"
-          onClick={isMobile ? closeMobileMenu : undefined}
-          className="flex items-center gap-2 rounded p-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-amber-400"
-        >
-          <img src={saveIcon} alt="photos" className="h-8 w-8" />
-          Save Photos
-        </Link>
-        <Link
-          to="/photo-booth"
-          onClick={isMobile ? closeMobileMenu : undefined}
-          className="flex items-center gap-2 rounded p-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-amber-400"
-        >
-          <img src={cameraIcon} alt="camera" className="h-8 w-8" />
-          Photo Booth
-        </Link>
-        <Link
-          to="/account"
-          onClick={isMobile ? closeMobileMenu : undefined}
-          className="flex items-center gap-2 rounded p-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-amber-400"
-        >
-          <img src={accountIcon} alt="account" className="h-8 w-8" />
-          Account
-        </Link>
+        {navItems.map((item) => (
+          <NavItem key={item.to} item={item} />
+        ))}
+
         <button
-          onClick={() => handleLogout()}
+          onClick={handleLogout}
           className="flex cursor-pointer items-center gap-2 rounded p-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-amber-400"
         >
           <img src={logoutIcon} alt="logout" className="h-8 w-8" />
           Logout
         </button>
       </div>
-    </div>
+    </nav>
   );
 }

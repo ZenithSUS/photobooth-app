@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewUser } from "../actions/users";
+import fetchAuthUser from "../lib/services/getAuth";
 
 const registerSchema = z
   .object({
@@ -30,7 +31,9 @@ const registerSchema = z
 type registerSchemaType = z.infer<typeof registerSchema>;
 
 export default function Register() {
-  const user = localStorage.getItem("session");
+  const user = JSON.parse(
+    localStorage.getItem("session") || "false",
+  ) as boolean;
   const navigate = useNavigate();
 
   const form = useForm<registerSchemaType>({
@@ -80,8 +83,10 @@ export default function Register() {
   };
 
   useEffect(() => {
-    if (user) window.location.href = "/";
-  }, [user]);
+    fetchAuthUser(user);
+  }, []);
+
+  if (user) return (window.location.href = "/dashboard");
 
   return (
     <main className="m-auto flex w-screen flex-col items-center justify-center lg:h-screen">

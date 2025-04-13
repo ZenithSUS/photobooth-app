@@ -2,7 +2,7 @@ import photoIcon from "../assets/ui/save.png";
 import downloadIcon from "../assets/ui/downloading.png";
 import heartIcon from "../assets/ui/heart.png";
 import sharedPhotoIcon from "../assets/ui/share-photo.png";
-import { getAllPhotosByUser } from "../hooks/photos.ts";
+import { getAllPhotosByUser, getAllPhotos } from "../hooks/photos.ts";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/ui/loading.tsx";
 import formatDate from "../utils/functions/format-date.ts";
@@ -14,9 +14,11 @@ import Cat from "../components/stickers/cat/cam.tsx";
 export default function Dashboard() {
   const navigate = useNavigate();
   const id = JSON.parse(localStorage.getItem("id") as string);
-  const { data: photos, isLoading } = getAllPhotosByUser(id);
+  const { data: userPhotos, isLoading: userPhotoLoading } =
+    getAllPhotosByUser(id);
+  const { data: photos, isLoading: photoLoading } = getAllPhotos();
 
-  if (isLoading) return <Loading />;
+  if (userPhotoLoading || photoLoading) return <Loading />;
 
   const handleView = (id: string) => {
     navigate(`/photo-booth/${id}`);
@@ -27,7 +29,7 @@ export default function Dashboard() {
     .sort((a, b) => Number(b.$createdAt) - Number(a.$createdAt));
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 overflow-auto">
       <h1 className="text-3xl font-bold">Dashboard</h1>
 
       <div className="flex w-full flex-col gap-1.5 md:grid md:grid-cols-2 md:gap-4">
@@ -69,7 +71,7 @@ export default function Dashboard() {
             />
           </div>
 
-          <h2 className="text-2xl font-bold">{photos?.length}</h2>
+          <h2 className="text-2xl font-bold">{userPhotos?.length}</h2>
         </div>
       </div>
 

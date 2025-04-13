@@ -24,6 +24,7 @@ export default function Camera({
   photoBoothRef: React.RefObject<HTMLDivElement | null>;
 }) {
   let userFilters: UserFilters[] = [];
+  let user = JSON.parse(localStorage.getItem("session") || "false") as boolean;
   const name = JSON.parse(localStorage.getItem("name") as string);
   const navigate = useNavigate();
   const webcamRef = useRef<Webcam>(null);
@@ -114,7 +115,7 @@ export default function Camera({
     setPrevFilter([]);
     resetFilter();
     setSticker("N/A");
-    navigate("/");
+    navigate("/dashboard");
   };
 
   const capture = useCallback(() => {
@@ -179,6 +180,10 @@ export default function Camera({
 
   const handleShare = async () => {
     try {
+      const guestMode = !user;
+      if (guestMode) {
+        return navigate("/login");
+      }
       setIsModalOpen(true);
     } catch (error) {
       console.log(error);
@@ -312,7 +317,9 @@ export default function Camera({
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+      <div
+        className={`grid grid-cols-2 gap-4 md:grid-cols-3 lg:${capturedImage.length < 3 ? "grid-cols-3" : "grid-cols-4"}`}
+      >
         {capturedImage.length !== 3 ? (
           <>
             <button

@@ -63,3 +63,8 @@ export type Sticker = {
   value: string;
   image: string;
 };
+
+export type ErrorType = {
+  code: number;
+  message: string;
+};

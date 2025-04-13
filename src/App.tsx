@@ -28,6 +28,7 @@ function App() {
             </BoothProvider>
           }
         >
+          <Route index path="/" element={<PhotoBooth />} />
           <Route path="/photo-booth" element={<PhotoBooth />} />
           <Route path="/photo-booth/:id" element={<PhotoUser />} />
         </Route>
@@ -40,7 +41,7 @@ function App() {
           }
         >
           <Route
-            path="/"
+            path="/dashboard"
             element={
               <Suspense fallback={<Loading />}>
                 <Dashboard />

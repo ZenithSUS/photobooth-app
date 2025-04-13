@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 /* Add Tailwind utility classes for custom fonts */
 @layer utilities {
   .font-custom-1 {
