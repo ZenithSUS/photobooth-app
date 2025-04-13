@@ -113,7 +113,16 @@ function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <ToastContainer className={"z-50"} />
+      <ToastContainer
+        className="z-50"
+        toastStyle={{
+          borderRadius: "10px",
+          background: "#38bdf8",
+          color: "black",
+          font: "bold",
+          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
+        }}
+      />
     </Router>
   );
 }

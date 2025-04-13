@@ -182,6 +182,7 @@ export default function Camera({
     try {
       const guestMode = !user;
       if (guestMode) {
+        toast.error("You must be logged in to share images");
         return navigate("/login");
       }
       setIsModalOpen(true);
@@ -362,7 +363,7 @@ export default function Camera({
         )}
         <button
           className="cursor-pointer rounded bg-red-500 p-2 text-center text-lg text-white transition duration-300 ease-in-out hover:scale-95 hover:bg-red-600 disabled:bg-gray-500"
-          disabled={isCapturing}
+          disabled={isCapturing || !user}
           onClick={() => GoBack()}
         >
           <img src={backPic} alt="back" className="mx-auto h-7 w-7" />
