@@ -56,7 +56,9 @@ export default function Login() {
           <input
             className="rounded-md bg-white p-2 ring-2 ring-amber-400"
             name="email"
+            id="email"
             type="text"
+            autoComplete="on"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
@@ -69,7 +71,9 @@ export default function Login() {
           <input
             className="rounded-md bg-white p-2 ring-2 ring-amber-400"
             name="password"
+            id="password"
             type="password"
+            autoComplete="on"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"

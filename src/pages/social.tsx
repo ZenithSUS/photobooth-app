@@ -27,9 +27,7 @@ export default function Social() {
 
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="mb-4 text-center text-3xl font-bold lg:text-start">
-        Socials
-      </h1>
+      <h1 className="text-center text-3xl font-bold">Socials</h1>
       <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4 xl:grid-cols-3">
         {photos?.map((photo) => (
           <div

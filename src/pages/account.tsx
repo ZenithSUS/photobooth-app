@@ -10,7 +10,7 @@ export default function Account() {
 
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="text-center text-3xl font-bold md:text-start">Account</h1>
+      <h1 className="text-center text-3xl font-bold">Account</h1>
       <div className="relative flex flex-col gap-2 rounded-md bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4 shadow-md shadow-sky-400">
         <div className="flex flex-col gap-2 overflow-hidden">
           <div className="grid grid-cols-1 place-items-center gap-1.5 text-center">

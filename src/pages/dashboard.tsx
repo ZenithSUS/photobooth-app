@@ -28,51 +28,50 @@ export default function Dashboard() {
     ?.slice(0, 4)
     .sort((a, b) => Number(b.$createdAt) - Number(a.$createdAt));
 
+  const dashboardData = [
+    {
+      name: "Saved Photos",
+      icon: photoIcon,
+      value: 0,
+      bg: "bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400",
+    },
+    {
+      name: "Downloaded Photos",
+      icon: downloadIcon,
+      value: 0,
+      bg: "bg-gradient-to-br from-rose-400 via-pink-400 to-fuchsia-400",
+    },
+    {
+      name: "Liked Photos",
+      icon: heartIcon,
+      value: 0,
+      bg: "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400",
+    },
+    {
+      name: "Shared Photos",
+      icon: sharedPhotoIcon,
+      value: userPhotos?.length || 0,
+      bg: "bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400",
+    },
+  ];
+
   return (
-    <div className="flex flex-col gap-5 overflow-auto">
-      <h1 className="text-3xl font-bold">Dashboard</h1>
+    <div className="flex flex-col gap-5">
+      <h1 className="text-center text-3xl font-bold">Dashboard</h1>
 
       <div className="flex w-full flex-col gap-1.5 md:grid md:grid-cols-2 md:gap-4">
-        <div className="flex flex-col bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 p-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold">Saved Photos</h2>
-            <img src={photoIcon} alt="saveImages" className="h-10 w-10" />
+        {dashboardData.map((data, index) => (
+          <div
+            key={index}
+            className={`flex flex-col bg-gradient-to-br p-4 ${data.bg}`}
+          >
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold">{data.name}</h2>
+              <img src={data.icon} alt={data.name} className="h-10 w-10" />
+            </div>
+            <h2 className="text-2xl font-bold">{data.value}</h2>
           </div>
-          <h2 className="text-2xl font-bold">0</h2>
-        </div>
-
-        <div className="flex flex-col bg-gradient-to-br from-rose-400 via-pink-400 to-fuchsia-400 p-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold">Total Hearts</h2>
-            <img src={heartIcon} alt="heart" className="h-10 w-10" />
-          </div>
-          <h2 className="text-2xl font-bold">{0}</h2>
-        </div>
-
-        <div className="flex flex-col bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold">Downloads</h2>
-            <img
-              src={downloadIcon}
-              alt="downloadImages"
-              className="h-10 w-10"
-            />
-          </div>
-          <h2 className="text-2xl font-bold">0</h2>
-        </div>
-
-        <div className="flex flex-col bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold">Shared Photos</h2>
-            <img
-              src={sharedPhotoIcon}
-              alt="sharedPhotos"
-              className="h-10 w-10"
-            />
-          </div>
-
-          <h2 className="text-2xl font-bold">{userPhotos?.length}</h2>
-        </div>
+        ))}
       </div>
 
       <div className="flex flex-col gap-5">

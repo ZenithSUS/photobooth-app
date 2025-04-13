@@ -89,23 +89,25 @@ export default function Register() {
   if (user) return (window.location.href = "/dashboard");
 
   return (
-    <main className="m-auto flex w-screen flex-col items-center justify-center lg:h-screen">
+    <main className="m-auto flex w-screen flex-col items-center justify-center md:h-screen">
       <form
-        className="flex w-screen flex-col justify-center gap-5 rounded-md bg-sky-400 p-5 ring-2 ring-amber-400 lg:w-[800px]"
+        className="m-1.5 flex min-w-[calc(100vw-2rem)] flex-col justify-center gap-5 rounded-md bg-sky-400 p-5 ring-2 ring-amber-400 md:max-w-4xl lg:w-[800px]"
         onSubmit={form.handleSubmit(register)}
       >
         <h1 className="text-center text-3xl font-bold">Register</h1>
 
         <div className="flex flex-col gap-2 md:grid md:grid-cols-2 md:gap-2 lg:grid-cols-3 lg:gap-5">
           <div className="flex flex-col gap-1">
-            <label htmlFor="firstname" className="text-xl font-bold">
+            <label htmlFor="firstName" className="text-xl font-bold">
               First Name
             </label>
             <input
+              id="firstName"
               className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
               type="text"
               {...form.register("firstName")}
               placeholder="First Name"
+              autoComplete="on"
             />
             {form.formState.errors.firstName ? (
               <span className="h-10 text-red-500">
@@ -116,14 +118,16 @@ export default function Register() {
             )}
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="middleIntial" className="text-xl font-bold">
-              Middle Intial
+            <label htmlFor="middleInitial" className="text-xl font-bold">
+              Middle Initial
             </label>
             <input
+              id="middleInitial"
               className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
               type="text"
               {...form.register("middleInitial")}
               placeholder="Middle Initial"
+              autoComplete="on"
             />
             {form.formState.errors.middleInitial ? (
               <span className="h-10 text-red-500">
@@ -135,14 +139,16 @@ export default function Register() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="lastname" className="text-xl font-bold">
+            <label htmlFor="lastName" className="text-xl font-bold">
               Last Name
             </label>
             <input
+              id="lastName"
               className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
               type="text"
               {...form.register("lastName")}
               placeholder="Last Name"
+              autoComplete="on"
             />
             {form.formState.errors.lastName ? (
               <span className="h-10 text-red-500">
@@ -158,10 +164,12 @@ export default function Register() {
               Email
             </label>
             <input
+              id="email"
               className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
               type="text"
               {...form.register("email")}
               placeholder="Email"
+              autoComplete="on"
             />
             {form.formState.errors.email ? (
               <span className="h-10 text-red-500">
@@ -176,10 +184,12 @@ export default function Register() {
               Password
             </label>
             <input
+              id="password"
               className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
               type="password"
               {...form.register("password")}
               placeholder="Password"
+              autoComplete="on"
             />
             {form.formState.errors.password ? (
               <span className="h-10 text-red-500">
@@ -191,14 +201,16 @@ export default function Register() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="confirmpassword" className="text-xl font-bold">
+            <label htmlFor="confirmPassword" className="text-xl font-bold">
               Confirm Password
             </label>
             <input
+              id="confirmPassword"
               className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
               type="password"
               {...form.register("confirmPassword")}
               placeholder="Confirm Password"
+              autoComplete="on"
             />
             {form.formState.errors.confirmPassword ? (
               <span className="h-10 text-red-500">

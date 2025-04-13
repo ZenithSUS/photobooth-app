@@ -243,6 +243,8 @@ export default function Camera({
               <input
                 type="text"
                 name="title"
+                id="title"
+                autoComplete="off"
                 ref={title}
                 className="w-full rounded-sm bg-white p-2"
               />
