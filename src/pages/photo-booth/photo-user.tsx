@@ -8,6 +8,8 @@ import Loading from "../../components/ui/loading";
 import Axlot from "../../components/stickers/axlot/img";
 import Minecraft from "../../components/stickers/minecraft/img";
 import Cat from "../../components/stickers/cat/img";
+import BackIcon from "../../assets/ui/back.svg";
+import SaveIcon from "../../assets/ui/save.png";
 
 export default function PhotoUser() {
   const { id } = useParams();
@@ -61,20 +63,24 @@ export default function PhotoUser() {
             />
           </div>
         ))}
+        <div className="w-full bg-gradient-to-br from-white via-slate-300 to-zinc-300 p-3 text-center">
+          <p className="text-lg font-bold">
+            {formatDate(photo.$createdAt as string)}
+          </p>
+        </div>
       </div>
 
-      <div className="w-full rounded-2xl bg-gradient-to-br from-white via-slate-300 to-zinc-300 p-3 text-center">
-        <p className="text-lg font-bold">
-          {formatDate(photo.$createdAt as string)}
-        </p>
+      <div className="flex gap-2">
+        <button
+          onClick={handleBack}
+          className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
+        >
+          <img src={BackIcon} alt="Back" className="h-6 w-6" />
+        </button>
+        <button className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600">
+          <img src={SaveIcon} alt="Save" className="h-6 w-6" />
+        </button>
       </div>
-
-      <button
-        onClick={handleBack}
-        className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
-      >
-        Go Back
-      </button>
     </div>
   );
 }

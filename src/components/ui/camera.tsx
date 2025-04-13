@@ -372,7 +372,7 @@ export default function Camera({
         </button>
       </div>
       <span className="text-center text-lg">
-        Images Captured: {capturedImage.length}/3
+        Images Captured: {capturedImage.length} of 3
       </span>
     </div>
   );

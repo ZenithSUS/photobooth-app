@@ -1,5 +1,40 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "photobooth-text";
+  src: url("./assets/fonts/LobsterTwo-Regular.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "photobooth-text-bold";
+  src: url("./assets/fonts/LobsterTwo-Bold.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "photobooth-text-italic";
+  src: url("./assets/fonts/LobsterTwo-BoldItalic.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "photobooth-text-bold-italic";
+  src: url("./assets/fonts/LobsterTwo-Italic.ttf") format("opentype");
+}
+
+.photobooth-text {
+  font-family: "photobooth-text", cursive;
+}
+
+.photobooth-text-bold {
+  font-family: "photobooth-text-bold", cursive;
+}
+
+.photobooth-text-italic {
+  font-family: "photobooth-text-italic", cursive;
+}
+
+.photobooth-text-bold-italic {
+  font-family: "photobooth-text-bold-italic", cursive;
+}
 
 /* Add Tailwind utility classes for custom fonts */
 @layer utilities {
