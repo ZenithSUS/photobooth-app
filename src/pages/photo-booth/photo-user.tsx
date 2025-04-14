@@ -1,6 +1,7 @@
-import { getPhoto } from "../../hooks/photos";
+import { useGetPhoto } from "../../hooks/photos";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useCreateSavedPhoto } from "../../hooks/saved";
 import formatDate from "../../utils/functions/format-date";
 import userFilter from "../../utils/functions/userFilter";
 import userBackground from "../../utils/functions/userBackground";
@@ -10,10 +11,12 @@ import Minecraft from "../../components/stickers/minecraft/img";
 import Cat from "../../components/stickers/cat/img";
 import BackIcon from "../../assets/ui/back.svg";
 import SaveIcon from "../../assets/ui/save.png";
+import { toast } from "react-toastify";
 
 export default function PhotoUser() {
   const { id } = useParams();
-  const { data: photo, isLoading, error } = getPhoto(id as string);
+  const { mutate: createSaved } = useCreateSavedPhoto();
+  const { data: photo, isLoading, error } = useGetPhoto(id as string);
   let userFilters = "";
   let userBg = "";
   const navigate = useNavigate();
@@ -41,7 +44,26 @@ export default function PhotoUser() {
   }
 
   const images = [photo.image1Url, photo.image2Url, photo.image3Url];
-  console.log(photo.filters);
+
+  const handleSave = (photoID: string, userID: string) => {
+    createSaved(
+      {
+        photoID: photoID,
+        userID: userID,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Saved Successfully");
+        },
+        onError: (error) => {
+          if (error instanceof Error) {
+            toast.error(error.message);
+            console.error("Error adding user", error);
+          }
+        },
+      },
+    );
+  };
 
   return (
     <div className="mx-auto flex min-h-screen flex-col items-center justify-center gap-2 p-4">
@@ -77,7 +99,10 @@ export default function PhotoUser() {
         >
           <img src={BackIcon} alt="Back" className="h-6 w-6" />
         </button>
-        <button className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600">
+        <button
+          onClick={() => handleSave(photo.$id ?? "", photo.userID ?? "")}
+          className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
+        >
           <img src={SaveIcon} alt="Save" className="h-6 w-6" />
         </button>
       </div>

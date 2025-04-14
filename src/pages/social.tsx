@@ -1,4 +1,4 @@
-import { getAllPhotos } from "../hooks/photos";
+import { useGetAllPhotos } from "../hooks/photos";
 import { useNavigate } from "react-router-dom";
 import formatDate from "../utils/functions/format-date";
 import Loading from "../components/ui/loading";
@@ -8,7 +8,7 @@ import Cat from "../components/stickers/cat/cam";
 import userFilter from "../utils/functions/userFilter";
 
 export default function Social() {
-  const { data: photos, isLoading } = getAllPhotos();
+  const { data: photos, isLoading } = useGetAllPhotos();
   const navigate = useNavigate();
 
   if (isLoading) {
@@ -28,6 +28,11 @@ export default function Social() {
   return (
     <div className="flex flex-col gap-5">
       <h1 className="text-center text-3xl font-bold">Socials</h1>
+
+      {photos.length === 0 && (
+        <div className="text-md text-center">No Saved Photos</div>
+      )}
+
       <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4 xl:grid-cols-3">
         {photos?.map((photo) => (
           <div

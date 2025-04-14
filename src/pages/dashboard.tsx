@@ -2,7 +2,7 @@ import photoIcon from "../assets/ui/save.png";
 import downloadIcon from "../assets/ui/downloading.png";
 import heartIcon from "../assets/ui/heart.png";
 import sharedPhotoIcon from "../assets/ui/share-photo.png";
-import { getAllPhotosByUser, getAllPhotos } from "../hooks/photos.ts";
+import { useGetAllPhotosByUser, useGetAllPhotos } from "../hooks/photos.ts";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/ui/loading.tsx";
 import formatDate from "../utils/functions/format-date.ts";
@@ -15,8 +15,8 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const id = JSON.parse(localStorage.getItem("id") as string);
   const { data: userPhotos, isLoading: userPhotoLoading } =
-    getAllPhotosByUser(id);
-  const { data: photos, isLoading: photoLoading } = getAllPhotos();
+    useGetAllPhotosByUser(id);
+  const { data: photos, isLoading: photoLoading } = useGetAllPhotos();
 
   if (userPhotoLoading || photoLoading) return <Loading />;
 

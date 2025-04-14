@@ -6,7 +6,7 @@ import {
 import { QueryObserverResult, useQuery } from "@tanstack/react-query";
 import { ShowPhotos } from "../utils/types";
 
-export const getAllPhotos = (): QueryObserverResult<ShowPhotos[]> => {
+export const useGetAllPhotos = (): QueryObserverResult<ShowPhotos[]> => {
   return useQuery<ShowPhotos[]>({
     queryFn: async () => {
       const result = await fetchAllPhotos();
@@ -20,7 +20,7 @@ export const getAllPhotos = (): QueryObserverResult<ShowPhotos[]> => {
   });
 };
 
-export const getAllPhotosByUser = (
+export const useGetAllPhotosByUser = (
   userID: string,
 ): QueryObserverResult<ShowPhotos[]> =>
   useQuery<ShowPhotos[]>({
@@ -34,7 +34,7 @@ export const getAllPhotosByUser = (
     queryKey: ["photos", userID],
   });
 
-export const getPhoto = (
+export const useGetPhoto = (
   id: string,
 ): QueryObserverResult<Partial<ShowPhotos>> => {
   return useQuery<Partial<ShowPhotos>>({
