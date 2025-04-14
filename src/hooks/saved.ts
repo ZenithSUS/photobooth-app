@@ -9,7 +9,7 @@ import {
 import { CreateSaved, ShowSaved as ShowSavedPhotos } from "../utils/types";
 import { Models } from "appwrite";
 
-export const useFetchAllPhoto = (
+export const useGetAllSavedPhoto = (
   userID: string,
 ): QueryObserverResult<ShowSavedPhotos[]> => {
   return useQuery<ShowSavedPhotos[]>({

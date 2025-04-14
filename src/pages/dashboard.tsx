@@ -3,6 +3,7 @@ import downloadIcon from "../assets/ui/downloading.png";
 import heartIcon from "../assets/ui/heart.png";
 import sharedPhotoIcon from "../assets/ui/share-photo.png";
 import { useGetAllPhotosByUser, useGetAllPhotos } from "../hooks/photos.ts";
+import { useGetAllSavedPhoto } from "../hooks/saved.ts";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/ui/loading.tsx";
 import formatDate from "../utils/functions/format-date.ts";
@@ -17,8 +18,10 @@ export default function Dashboard() {
   const { data: userPhotos, isLoading: userPhotoLoading } =
     useGetAllPhotosByUser(id);
   const { data: photos, isLoading: photoLoading } = useGetAllPhotos();
+  const { data: savedPhotos, isLoading: savedPhotoLoading } =
+    useGetAllSavedPhoto(id);
 
-  if (userPhotoLoading || photoLoading) return <Loading />;
+  if (userPhotoLoading || photoLoading || savedPhotoLoading) return <Loading />;
 
   const handleView = (id: string) => {
     navigate(`/photo-booth/${id}`);
@@ -32,7 +35,7 @@ export default function Dashboard() {
     {
       name: "Saved Photos",
       icon: photoIcon,
-      value: 0,
+      value: savedPhotos?.length || 0,
       bg: "bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400",
     },
     {

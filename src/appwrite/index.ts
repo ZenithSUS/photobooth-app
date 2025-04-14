@@ -17,3 +17,5 @@ export const USER_COLLECTION_ID = import.meta.env.VITE_USER_COLLECTION_ID;
 export const PHOTO_COLLECTION_ID = import.meta.env.VITE_PHOTO_COLLECTION_ID;
 export const SHARED_COLLECTION_ID = import.meta.env.VITE_SHARED_COLLECTION_ID;
 export const SAVED_COLLECTION_ID = import.meta.env.VITE_SAVED_COLLECTION_ID;
+export const DOWNLOADED_COLLECTION_ID = import.meta.env
+  .VITE_DOWNLOADED_COLLECTION_ID;

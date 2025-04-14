@@ -83,6 +83,7 @@ export default function Camera({
   const handleDownload = () => {
     downloadAllImages({
       photoBoothRef: photoBoothRef as React.RefObject<HTMLDivElement>,
+      user: user,
     });
   };
 

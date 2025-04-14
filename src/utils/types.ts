@@ -34,6 +34,7 @@ export type Border = {
 
 export type DownloadType = {
   photoBoothRef: React.RefObject<HTMLDivElement>;
+  user: boolean;
 };
 
 export type User = {
@@ -74,6 +75,23 @@ export type CreateSaved = Omit<Saved, "$id">;
 
 export type ShowSaved = {
   photoID: ShowPhotos;
+};
+
+export type Downloaded = {
+  $id: string;
+  $createdAt: string;
+  $updatedAt: string;
+  photoID: string;
+  userID: string;
+};
+
+export type CreateDownloaded = Omit<
+  Downloaded,
+  "$id" | "$createdAt" | "$updatedAt"
+>;
+
+export type ShowDownloaded = {
+  photoID: ShowDownloaded;
 };
 
 export type ErrorType = {

@@ -12,6 +12,7 @@ export const createNewPhoto = async (urls: Object) => {
     );
   } catch (error) {
     console.log("Error creating photo document:", error);
+    throw error;
   }
 };
 

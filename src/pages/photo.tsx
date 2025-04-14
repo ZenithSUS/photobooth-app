@@ -1,4 +1,4 @@
-import { useFetchAllPhoto } from "../hooks/saved";
+import { useGetAllSavedPhoto } from "../hooks/saved";
 import Axlot from "../components/stickers/axlot/cam";
 import Minecraft from "../components/stickers/minecraft/cam";
 import Cat from "../components/stickers/cat/cam";
@@ -14,7 +14,7 @@ export default function Photo() {
     data: savedPhotos,
     isLoading,
     error,
-  } = useFetchAllPhoto(id as string);
+  } = useGetAllSavedPhoto(id as string);
 
   if (isLoading) return <Loading />;
 
@@ -50,7 +50,7 @@ export default function Photo() {
               <img
                 src={photoID.image1Url as string}
                 alt={photoID.title}
-                className={`h-52 w-full rounded object-cover${
+                className={`h-52 w-full rounded object-cover ${
                   photoID.filters ? userFilter(photoID.filters as string[]) : ""
                 }`}
               />
