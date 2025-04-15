@@ -3,10 +3,8 @@ import { DownloadType } from "../types";
 
 export default async function downloadAllImages({
   photoBoothRef,
-  user,
 }: DownloadType) {
   const scale = 2;
-
   const options = {
     height: photoBoothRef.current.offsetHeight * scale,
     width: photoBoothRef.current.offsetWidth * scale,

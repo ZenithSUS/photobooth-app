@@ -1,7 +1,11 @@
-import { useGetPhoto } from "../../hooks/photos";
+import { useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useGetPhoto } from "../../hooks/photos";
 import { useCreateSavedPhoto } from "../../hooks/saved";
+import { useCreateDownloaded } from "../../hooks/downloaded";
+import { toast } from "react-toastify";
+import downloadAllImages from "../../utils/functions/download";
 import formatDate from "../../utils/functions/format-date";
 import userFilter from "../../utils/functions/userFilter";
 import userBackground from "../../utils/functions/userBackground";
@@ -11,15 +15,21 @@ import Minecraft from "../../components/stickers/minecraft/img";
 import Cat from "../../components/stickers/cat/img";
 import BackIcon from "../../assets/ui/back.svg";
 import SaveIcon from "../../assets/ui/save.png";
-import { toast } from "react-toastify";
+import DownloadIcon from "../../assets/ui/downloading.png";
 
 export default function PhotoUser() {
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  const userID = JSON.parse(localStorage.getItem("id") as string);
   const { mutate: createSaved } = useCreateSavedPhoto();
+  const { mutate: createDownload } = useCreateDownloaded();
   const { data: photo, isLoading, error } = useGetPhoto(id as string);
+  const photoBoothRef = useRef<HTMLDivElement>(null);
+
   let userFilters = "";
   let userBg = "";
-  const navigate = useNavigate();
+
   const handleBack = () => {
     navigate("/social");
   };
@@ -45,6 +55,20 @@ export default function PhotoUser() {
 
   const images = [photo.image1Url, photo.image2Url, photo.image3Url];
 
+  const handleDownload = async (photoID: string, userID: string) => {
+    try {
+      await downloadAllImages({
+        photoBoothRef: photoBoothRef as React.RefObject<HTMLDivElement>,
+      });
+      createDownload({
+        photoID: photoID,
+        userID: userID,
+      });
+    } catch (error) {
+      toast.error("There is something wrong when downloading an image");
+    }
+  };
+
   const handleSave = (photoID: string, userID: string) => {
     createSaved(
       {
@@ -69,6 +93,7 @@ export default function PhotoUser() {
     <div className="mx-auto flex min-h-screen flex-col items-center justify-center gap-2 p-4">
       <h1 className="text-2xl font-bold">{photo.title}</h1>
       <div
+        ref={photoBoothRef}
         className={`grid grid-cols-1 place-items-center ${userBg} gap-2 rounded-lg border-10 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-3.5 shadow-lg`}
       >
         {images.map((image, index) => (
@@ -105,6 +130,14 @@ export default function PhotoUser() {
         >
           <img src={SaveIcon} alt="Save" className="h-6 w-6" />
         </button>
+        {photo.userID === userID && (
+          <button
+            onClick={() => handleDownload(photo.$id ?? "", photo.userID ?? "")}
+            className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
+          >
+            <img src={DownloadIcon} alt="Save" className="h-6 w-6" />
+          </button>
+        )}
       </div>
     </div>
   );

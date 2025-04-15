@@ -1,9 +1,22 @@
 import { databases, DATABASE_ID, DOWNLOADED_COLLECTION_ID } from "./index.ts";
-import { Downloaded, CreateDownloaded } from "../utils/types.ts";
+import { ShowDownloaded, CreateDownloaded } from "../utils/types.ts";
 import { Query, ID } from "appwrite";
 
 export const createDownload = async (data: CreateDownloaded) => {
   try {
+    const { documents } = await databases.listDocuments(
+      DATABASE_ID,
+      DOWNLOADED_COLLECTION_ID,
+      [
+        Query.and([
+          Query.equal("photoID", data.photoID),
+          Query.equal("userID", data.userID),
+        ]),
+      ],
+    );
+
+    if (documents.length > 0) return;
+
     return await databases.createDocument(
       DATABASE_ID,
       DOWNLOADED_COLLECTION_ID,
@@ -11,14 +24,13 @@ export const createDownload = async (data: CreateDownloaded) => {
       data,
     );
   } catch (error) {
-    console.error(error);
     throw error;
   }
 };
 
 export const getAllDownloads = async (userID: string) => {
   try {
-    let allDownloads = [] as Downloaded[];
+    let allDownloads = [] as ShowDownloaded[];
     let offset = 0;
     const limit = 100;
 
@@ -43,9 +55,14 @@ export const getAllDownloads = async (userID: string) => {
           userID: docs.userID,
         })),
       ];
+
+      if (documents.length < limit) break;
+
+      offset += limit;
     }
+
+    return allDownloads;
   } catch (error) {
-    console.error(error);
     throw error;
   }
 };

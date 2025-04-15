@@ -34,7 +34,6 @@ export type Border = {
 
 export type DownloadType = {
   photoBoothRef: React.RefObject<HTMLDivElement>;
-  user: boolean;
 };
 
 export type User = {

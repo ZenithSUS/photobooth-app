@@ -1,10 +1,11 @@
+import { useGetAllPhotosByUser, useGetAllPhotos } from "../hooks/photos.ts";
+import { useGetAllSavedPhoto } from "../hooks/saved.ts";
+import { useGetAllDownloaded } from "../hooks/downloaded.ts";
+import { useNavigate } from "react-router-dom";
 import photoIcon from "../assets/ui/save.png";
 import downloadIcon from "../assets/ui/downloading.png";
 import heartIcon from "../assets/ui/heart.png";
 import sharedPhotoIcon from "../assets/ui/share-photo.png";
-import { useGetAllPhotosByUser, useGetAllPhotos } from "../hooks/photos.ts";
-import { useGetAllSavedPhoto } from "../hooks/saved.ts";
-import { useNavigate } from "react-router-dom";
 import Loading from "../components/ui/loading.tsx";
 import formatDate from "../utils/functions/format-date.ts";
 import userFilter from "../utils/functions/userFilter.ts";
@@ -15,13 +16,22 @@ import Cat from "../components/stickers/cat/cam.tsx";
 export default function Dashboard() {
   const navigate = useNavigate();
   const id = JSON.parse(localStorage.getItem("id") as string);
+
   const { data: userPhotos, isLoading: userPhotoLoading } =
     useGetAllPhotosByUser(id);
   const { data: photos, isLoading: photoLoading } = useGetAllPhotos();
   const { data: savedPhotos, isLoading: savedPhotoLoading } =
     useGetAllSavedPhoto(id);
+  const { data: downloadedPhotos, isLoading: downloadedLoading } =
+    useGetAllDownloaded(id);
 
-  if (userPhotoLoading || photoLoading || savedPhotoLoading) return <Loading />;
+  if (
+    userPhotoLoading ||
+    photoLoading ||
+    savedPhotoLoading ||
+    downloadedLoading
+  )
+    return <Loading />;
 
   const handleView = (id: string) => {
     navigate(`/photo-booth/${id}`);
@@ -41,7 +51,7 @@ export default function Dashboard() {
     {
       name: "Downloaded Photos",
       icon: downloadIcon,
-      value: 0,
+      value: downloadedPhotos?.length || 0,
       bg: "bg-gradient-to-br from-rose-400 via-pink-400 to-fuchsia-400",
     },
     {

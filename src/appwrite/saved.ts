@@ -7,7 +7,12 @@ export const createSavedPhoto = async (data: CreateSaved) => {
     const { documents } = await databases.listDocuments(
       DATABASE_ID,
       SAVED_COLLECTION_ID,
-      [Query.equal("photoID", [data.photoID])],
+      [
+        Query.and([
+          Query.equal("photoID", data.photoID),
+          Query.equal("userID", data.userID),
+        ]),
+      ],
     );
 
     if (documents.length > 0) {

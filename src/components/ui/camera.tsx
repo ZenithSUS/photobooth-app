@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useBoothContext } from "../../lib/context/booth.tsx";
 import { messages } from "../../utils/constants/message.ts";
 import { BlinkBlur } from "react-loading-indicators";
+import { UserFilters } from "../../utils/types.ts";
+import { toast } from "react-toastify";
 import Modal from "react-modal";
 import Webcam from "react-webcam";
-import { UserFilters } from "../../utils/types.ts";
 import filters from "../../utils/functions/filters.ts";
 import shareImages from "../../utils/functions/share.ts";
 import downloadAllImages from "../../utils/functions/download.ts";
@@ -14,7 +15,6 @@ import backPic from "../../assets/ui/back.svg";
 import Axlot from "../stickers/axlot/cam.tsx";
 import Minecraft from "../stickers/minecraft/cam.tsx";
 import Cat from "../stickers/cat/cam.tsx";
-import { toast } from "react-toastify";
 
 Modal.setAppElement("#root");
 
@@ -83,7 +83,6 @@ export default function Camera({
   const handleDownload = () => {
     downloadAllImages({
       photoBoothRef: photoBoothRef as React.RefObject<HTMLDivElement>,
-      user: user,
     });
   };
 
