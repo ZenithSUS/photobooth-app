@@ -27,6 +27,12 @@ export default function Photo() {
     const sadVoteCount = photoVotes.filter(
       (vote) => vote.voteType === "Sad",
     ).length;
+    const coolVoteCount = photoVotes.filter(
+      (vote) => vote.voteType === "Cool",
+    ).length;
+    const wowVoteCount = photoVotes.filter(
+      (vote) => vote.voteType === "Wow",
+    ).length;
 
     const voteType = photoVotes[0]?.voteType || "N/A";
 
@@ -34,6 +40,8 @@ export default function Photo() {
       ...photoID,
       heartVoteCount,
       sadVoteCount,
+      coolVoteCount,
+      wowVoteCount,
       voteType,
     };
   });

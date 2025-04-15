@@ -123,6 +123,14 @@ export type UpdateVote = {
   voteType: string;
 };
 
+export type VoteValues = {
+  $id?: string;
+  heartVoteCount?: number;
+  sadVoteCount?: number;
+  coolVoteCount?: number;
+  wowVoteCount?: number;
+};
+
 export type ErrorType = {
   code: number;
   message: string;

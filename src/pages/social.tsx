@@ -27,10 +27,23 @@ export default function Social() {
     const sadVoteCount = photoVotes.filter(
       (vote) => vote.voteType === "Sad",
     ).length;
+    const coolVoteCount = photoVotes.filter(
+      (vote) => vote.voteType === "Cool",
+    ).length;
+    const wowVoteCount = photoVotes.filter(
+      (vote) => vote.voteType === "Wow",
+    ).length;
 
     const voteType = photoVotes[0]?.voteType || "N/A";
 
-    return { ...photo, heartVoteCount, sadVoteCount, voteType };
+    return {
+      ...photo,
+      heartVoteCount,
+      sadVoteCount,
+      coolVoteCount,
+      wowVoteCount,
+      voteType,
+    };
   });
 
   return (

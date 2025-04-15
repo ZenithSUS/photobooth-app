@@ -25,6 +25,8 @@ import SaveIcon from "../../assets/ui/save.png";
 import DownloadIcon from "../../assets/ui/downloading.png";
 import HeartBtn from "../../assets/ui/heart2.png";
 import SadBtn from "../../assets/ui/sad.png";
+import CoolBtn from "../../assets/ui/cool.png";
+import WowBtn from "../../assets/ui/wow.png";
 
 export default function PhotoUser() {
   const { id } = useParams();
@@ -62,6 +64,12 @@ export default function PhotoUser() {
   ).length;
   const sadVoteCount = photoVotes.filter(
     (vote) => vote.voteType === "Sad",
+  ).length;
+  const coolVoteCount = photoVotes.filter(
+    (vote) => vote.voteType === "Cool",
+  ).length;
+  const wowVoteCount = photoVotes.filter(
+    (vote) => vote.voteType === "Wow",
   ).length;
 
   if (photo.filters && photo.border && photo.background) {
@@ -130,8 +138,10 @@ export default function PhotoUser() {
 
   return (
     <div className="mx-auto flex min-h-screen flex-col items-center justify-center gap-2 p-4">
-      <h1 className="text-2xl font-bold">{photo.title}</h1>
-      <div className="m1 m-1 grid grid-cols-1 place-items-center lg:grid-cols-2">
+      <h1 className="rounded-2xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-2 text-2xl font-bold">
+        {photo.title}
+      </h1>
+      <div className="m1 m-1 grid grid-cols-1 place-items-center gap-5 lg:grid-cols-2">
         <div
           ref={photoBoothRef}
           className={`grid grid-cols-1 place-items-center ${userBg} gap-2 rounded-lg border-10 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-3.5 shadow-lg`}
@@ -156,9 +166,9 @@ export default function PhotoUser() {
             </p>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-2">
+        <div className="grid grid-cols-1 gap-2 place-self-start">
           <h1 className="text-center text-3xl">Votes</h1>
-          <div className="flex items-center justify-center">
+          <div className="flex flex-col gap-2 lg:grid lg:grid-cols-2 lg:place-items-start">
             <div className="flex cursor-pointer items-center justify-center gap-4">
               <button
                 className="disabled:opacity-75"
@@ -168,7 +178,7 @@ export default function PhotoUser() {
                 <img
                   src={HeartBtn}
                   alt="heart"
-                  className="h-24 w-24 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120 lg:h-28 lg:w-28"
+                  className="h-20 w-20 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120 lg:h-28 lg:w-28"
                 />
               </button>
               <h2 className="text-md photobooth-text-italic font-bold">
@@ -189,6 +199,38 @@ export default function PhotoUser() {
               </button>
               <h2 className="text-md photobooth-text-italic font-bold">
                 {sadVoteCount || 0}
+              </h2>
+            </div>
+            <div className="flex items-center justify-center gap-4">
+              <button
+                className="disabled:opacity-75"
+                disabled={isPending}
+                onClick={() => handleVote("Wow", photo.$id as string)}
+              >
+                <img
+                  src={WowBtn}
+                  alt="wow"
+                  className="h-32 w-32 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+                />
+              </button>
+              <h2 className="text-md photobooth-text-italic font-bold">
+                {wowVoteCount || 0}
+              </h2>
+            </div>
+            <div className="flex items-center justify-center gap-4">
+              <button
+                className="disabled:opacity-75"
+                disabled={isPending}
+                onClick={() => handleVote("Cool", photo.$id as string)}
+              >
+                <img
+                  src={CoolBtn}
+                  alt="cool"
+                  className="h-32 w-32 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+                />
+              </button>
+              <h2 className="text-md photobooth-text-italic font-bold">
+                {coolVoteCount || 0}
               </h2>
             </div>
           </div>

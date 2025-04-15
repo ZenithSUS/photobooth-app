@@ -5,26 +5,20 @@ import {
   useGetAllVotes,
   useUpdateVote,
 } from "../hooks/votes";
+import { sleep } from "../utils/functions/sleep";
+import { useNavigate } from "react-router-dom";
+import { ShowPhotos, VoteValues } from "../utils/types";
 import formatDate from "../utils/functions/format-date";
 import userFilter from "../utils/functions/userFilter";
-import { ShowPhotos } from "../utils/types";
 import Axlot from "./stickers/axlot/cam";
 import Cat from "./stickers/cat/cam";
 import Minecraft from "./stickers/minecraft/cam";
-import { sleep } from "../utils/functions/sleep";
-import { useNavigate } from "react-router-dom";
 import HeartBtn from "../assets/ui/heart2.png";
 import SadBtn from "../assets/ui/sad.png";
+import CoolBtn from "../assets/ui/cool.png";
+import WowBtn from "../assets/ui/wow.png";
 
-export default function Card({
-  photo,
-}: {
-  photo: ShowPhotos & {
-    heartVoteCount?: number;
-    sadVoteCount?: number;
-    $id?: string;
-  };
-}) {
+export default function Card({ photo }: { photo: ShowPhotos & VoteValues }) {
   const [isPending, startTransition] = useTransition();
   const navigate = useNavigate();
   const { mutate: createVote } = useCreateVote();
@@ -82,45 +76,81 @@ export default function Card({
       <p className="text-sm text-gray-600">
         Shared on: {formatDate(photo.$createdAt)}
       </p>
-      <div className="gap- flex items-center">
-        <div className="flex cursor-pointer items-center justify-center gap-4">
-          <button
-            className="disabled:opacity-75"
-            disabled={isPending}
-            onClick={() => handleVote("Heart", photo.$id)}
-          >
-            <img
-              src={HeartBtn}
-              alt="heart"
-              className="h-8 w-8 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
-            />
-          </button>
-          <h2 className="text-md photobooth-text-italic font-bold">
-            {photo.heartVoteCount}
-          </h2>
-        </div>
-        <div className="flex items-center justify-center gap-4">
-          <button
-            className="disabled:opacity-75"
-            disabled={isPending}
-            onClick={() => handleVote("Sad", photo.$id)}
-          >
-            <img
-              src={SadBtn}
-              alt="sad"
-              className="h-10 w-10 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
-            />
-          </button>
-          <h2 className="text-md photobooth-text-italic font-bold">
-            {photo.sadVoteCount}
-          </h2>
+      <div className="flex items-center">
+        <div className="grid grid-cols-4 gap-4">
+          <div className="flex cursor-pointer items-center justify-center gap-4">
+            <button
+              className="disabled:opacity-75"
+              disabled={isPending}
+              onClick={() => handleVote("Heart", photo.$id)}
+            >
+              <img
+                src={HeartBtn}
+                alt="heart"
+                className="h-8 w-8 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+              />
+            </button>
+            <h2 className="text-md photobooth-text-italic font-bold">
+              {photo.heartVoteCount}
+            </h2>
+          </div>
+          <div className="flex cursor-pointer items-center justify-center gap-2">
+            <button
+              className="disabled:opacity-75"
+              disabled={isPending}
+              onClick={() => handleVote("Sad", photo.$id)}
+            >
+              <img
+                src={SadBtn}
+                alt="sad"
+                className="h-10 w-10 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+              />
+            </button>
+            <h2 className="text-md photobooth-text-italic font-bold">
+              {photo.sadVoteCount}
+            </h2>
+          </div>
+
+          <div className="flex cursor-pointer items-center justify-center gap-2">
+            <button
+              className="disabled:opacity-75"
+              disabled={isPending}
+              onClick={() => handleVote("Cool", photo.$id)}
+            >
+              <img
+                src={CoolBtn}
+                alt="cool"
+                className="h-10 w-10 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+              />
+            </button>
+            <h2 className="text-md photobooth-text-italic font-bold">
+              {photo.coolVoteCount}
+            </h2>
+          </div>
+
+          <div className="flex cursor-pointer items-center justify-center gap-2">
+            <button
+              className="disabled:opacity-75"
+              disabled={isPending}
+              onClick={() => handleVote("Wow", photo.$id)}
+            >
+              <img
+                src={WowBtn}
+                alt="wow"
+                className="h-10 w-10 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+              />
+            </button>
+            <h2 className="text-md photobooth-text-italic font-bold">
+              {photo.wowVoteCount}
+            </h2>
+          </div>
         </div>
       </div>
       <button
         onClick={() => handleView(photo.$id)}
-        className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+        className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-600"
       >
-        See Photo
+        See Full Photo
       </button>
     </div>
   );

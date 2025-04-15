@@ -41,11 +41,27 @@ export default function Dashboard() {
     const sadVoteCount = photoVotes.filter(
       (vote) => vote.voteType === "Sad",
     ).length;
+    const coolVoteCount = photoVotes.filter(
+      (vote) => vote.voteType === "Cool",
+    ).length;
+    const wowVoteCount = photoVotes.filter(
+      (vote) => vote.voteType === "Wow",
+    ).length;
 
     const voteType = photoVotes[0]?.voteType || "N/A";
 
-    return { ...photo, heartVoteCount, sadVoteCount, voteType };
+    return {
+      ...photo,
+
+      heartVoteCount,
+      sadVoteCount,
+      coolVoteCount,
+      wowVoteCount,
+      voteType,
+    };
   });
+
+  const userVotes = votes?.filter((vote) => vote.user.$id === id).length || 0;
 
   const latestPhoto = post
     ?.slice(0, 3)
@@ -67,7 +83,7 @@ export default function Dashboard() {
     {
       name: "Liked Photos",
       icon: heartIcon,
-      value: 0,
+      value: userVotes || 0,
       bg: "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400",
     },
     {
