@@ -59,6 +59,7 @@ export default function Card({
       }
     });
   };
+
   return (
     <div
       key={photo.$id}

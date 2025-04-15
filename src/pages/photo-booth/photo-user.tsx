@@ -1,10 +1,17 @@
-import { useRef } from "react";
+import { useRef, useTransition } from "react";
+import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useGetPhoto } from "../../hooks/photos";
 import { useCreateSavedPhoto } from "../../hooks/saved";
 import { useCreateDownloaded } from "../../hooks/downloaded";
-import { toast } from "react-toastify";
+import {
+  useCreateVote,
+  useDeleteVote,
+  useUpdateVote,
+  useGetAllVotes,
+} from "../../hooks/votes";
+import { sleep } from "../../utils/functions/sleep";
 import downloadAllImages from "../../utils/functions/download";
 import formatDate from "../../utils/functions/format-date";
 import userFilter from "../../utils/functions/userFilter";
@@ -17,15 +24,20 @@ import BackIcon from "../../assets/ui/back.svg";
 import SaveIcon from "../../assets/ui/save.png";
 import DownloadIcon from "../../assets/ui/downloading.png";
 import HeartBtn from "../../assets/ui/heart2.png";
+import SadBtn from "../../assets/ui/sad.png";
 
 export default function PhotoUser() {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const [isPending, startTransition] = useTransition();
   const userID = JSON.parse(localStorage.getItem("id") as string);
   const { mutate: createSaved } = useCreateSavedPhoto();
   const { mutate: createDownload } = useCreateDownloaded();
-  const { data: photo, isLoading, error } = useGetPhoto(id as string);
+  const { mutate: createVote } = useCreateVote();
+  const { mutate: deleteVote } = useDeleteVote();
+  const { mutate: updateVote } = useUpdateVote();
+  const { data: votes, isLoading: votesLoading } = useGetAllVotes();
+  const { data: photo, isLoading: photoLoading } = useGetPhoto(id as string);
   const photoBoothRef = useRef<HTMLDivElement>(null);
 
   let userFilters = "";
@@ -35,19 +47,22 @@ export default function PhotoUser() {
     navigate("/social");
   };
 
-  if (isLoading) return <Loading />;
+  if (photoLoading || votesLoading) return <Loading />;
 
-  if (!photo) {
+  if (!photo || !votes) {
     navigate("/social");
     return null;
   }
 
-  if (error)
-    return (
-      <div className="text-center text-3xl font-bold">
-        Error: {error.message}
-      </div>
-    );
+  const photoVotes =
+    votes?.filter((vote) => vote.photo.$id === photo.$id) || [];
+
+  const heartVoteCount = photoVotes.filter(
+    (vote) => vote.voteType === "Heart",
+  ).length;
+  const sadVoteCount = photoVotes.filter(
+    (vote) => vote.voteType === "Sad",
+  ).length;
 
   if (photo.filters && photo.border && photo.background) {
     userFilters = userFilter(photo.filters as string[]);
@@ -90,6 +105,29 @@ export default function PhotoUser() {
     );
   };
 
+  const handleVote = (voteType: string, photoId: string) => {
+    startTransition(async () => {
+      const user = userID;
+
+      const existingVote = votes?.find(
+        (vote) => vote.photo.$id === photoId && vote.user.$id === user,
+      );
+
+      if (existingVote) {
+        if (existingVote.voteType === voteType) {
+          deleteVote(existingVote.$id);
+          await sleep(1000);
+        } else {
+          updateVote({ documentID: existingVote.$id, voteType });
+          await sleep(1000);
+        }
+      } else {
+        createVote({ voteType, photo: photoId, user });
+        await sleep(1000);
+      }
+    });
+  };
+
   return (
     <div className="mx-auto flex min-h-screen flex-col items-center justify-center gap-2 p-4">
       <h1 className="text-2xl font-bold">{photo.title}</h1>
@@ -120,13 +158,39 @@ export default function PhotoUser() {
         </div>
         <div className="flex flex-col items-center gap-2">
           <h1 className="text-center text-3xl">Votes</h1>
-          <div className="flex items-center justify-center gap-4">
-            <img
-              src={HeartBtn}
-              alt="heart"
-              className="h-20 w-20 object-cover"
-            />
-            <h2 className="photobooth-text-italic text-2xl font-bold">0</h2>
+          <div className="flex items-center justify-center">
+            <div className="flex cursor-pointer items-center justify-center gap-4">
+              <button
+                className="disabled:opacity-75"
+                disabled={isPending}
+                onClick={() => handleVote("Heart", photo.$id as string)}
+              >
+                <img
+                  src={HeartBtn}
+                  alt="heart"
+                  className="h-24 w-24 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120 lg:h-28 lg:w-28"
+                />
+              </button>
+              <h2 className="text-md photobooth-text-italic font-bold">
+                {heartVoteCount || 0}
+              </h2>
+            </div>
+            <div className="flex items-center justify-center gap-4">
+              <button
+                className="disabled:opacity-75"
+                disabled={isPending}
+                onClick={() => handleVote("Sad", photo.$id as string)}
+              >
+                <img
+                  src={SadBtn}
+                  alt="sad"
+                  className="h-32 w-32 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+                />
+              </button>
+              <h2 className="text-md photobooth-text-italic font-bold">
+                {sadVoteCount || 0}
+              </h2>
+            </div>
           </div>
         </div>
       </div>
@@ -138,19 +202,24 @@ export default function PhotoUser() {
         >
           <img src={BackIcon} alt="Back" className="h-6 w-6" />
         </button>
-        <button
-          onClick={() => handleSave(photo.$id ?? "", photo.userID ?? "")}
-          className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
-        >
-          <img src={SaveIcon} alt="Save" className="h-6 w-6" />
-        </button>
+
         {photo.userID === userID && (
-          <button
-            onClick={() => handleDownload(photo.$id ?? "", photo.userID ?? "")}
-            className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
-          >
-            <img src={DownloadIcon} alt="Save" className="h-6 w-6" />
-          </button>
+          <>
+            <button
+              onClick={() => handleSave(photo.$id ?? "", photo.userID ?? "")}
+              className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
+            >
+              <img src={SaveIcon} alt="Save" className="h-6 w-6" />
+            </button>
+            <button
+              onClick={() =>
+                handleDownload(photo.$id ?? "", photo.userID ?? "")
+              }
+              className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
+            >
+              <img src={DownloadIcon} alt="Save" className="h-6 w-6" />
+            </button>
+          </>
         )}
       </div>
     </div>
