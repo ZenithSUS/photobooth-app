@@ -19,3 +19,4 @@ export const SHARED_COLLECTION_ID = import.meta.env.VITE_SHARED_COLLECTION_ID;
 export const SAVED_COLLECTION_ID = import.meta.env.VITE_SAVED_COLLECTION_ID;
 export const DOWNLOADED_COLLECTION_ID = import.meta.env
   .VITE_DOWNLOADED_COLLECTION_ID;
+export const VOTE_COLLECTION_ID = import.meta.env.VITE_VOTE_COLLECTION_ID;

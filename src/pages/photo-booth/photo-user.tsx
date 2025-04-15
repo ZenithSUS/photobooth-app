@@ -16,6 +16,7 @@ import Cat from "../../components/stickers/cat/img";
 import BackIcon from "../../assets/ui/back.svg";
 import SaveIcon from "../../assets/ui/save.png";
 import DownloadIcon from "../../assets/ui/downloading.png";
+import HeartBtn from "../../assets/ui/heart2.png";
 
 export default function PhotoUser() {
   const { id } = useParams();
@@ -92,28 +93,41 @@ export default function PhotoUser() {
   return (
     <div className="mx-auto flex min-h-screen flex-col items-center justify-center gap-2 p-4">
       <h1 className="text-2xl font-bold">{photo.title}</h1>
-      <div
-        ref={photoBoothRef}
-        className={`grid grid-cols-1 place-items-center ${userBg} gap-2 rounded-lg border-10 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-3.5 shadow-lg`}
-      >
-        {images.map((image, index) => (
-          <div className="relative p-0.5" key={index}>
-            {photo.sticker === "Axlot" && <Axlot set={index + 1} />}
-            {photo.sticker === "Minecraft" && <Minecraft set={index + 1} />}
-            {photo.sticker === "Cat" && <Cat set={index + 1} />}
-            <img
-              src={image as string}
-              alt={`Image ${index + 1}`}
-              className={`object-cover ${userFilters}`}
-              height={"300px"}
-              width={"300px"}
-            />
+      <div className="m1 m-1 grid grid-cols-1 place-items-center lg:grid-cols-2">
+        <div
+          ref={photoBoothRef}
+          className={`grid grid-cols-1 place-items-center ${userBg} gap-2 rounded-lg border-10 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-3.5 shadow-lg`}
+        >
+          {images.map((image, index) => (
+            <div className="relative p-0.5" key={index}>
+              {photo.sticker === "Axlot" && <Axlot set={index + 1} />}
+              {photo.sticker === "Minecraft" && <Minecraft set={index + 1} />}
+              {photo.sticker === "Cat" && <Cat set={index + 1} />}
+              <img
+                src={image as string}
+                alt={`Image ${index + 1}`}
+                className={`object-cover ${userFilters}`}
+                height={"300px"}
+                width={"300px"}
+              />
+            </div>
+          ))}
+          <div className="w-full bg-gradient-to-br from-white via-slate-300 to-zinc-300 p-3 text-center">
+            <p className="text-lg font-bold">
+              {formatDate(photo.$createdAt as string)}
+            </p>
           </div>
-        ))}
-        <div className="w-full bg-gradient-to-br from-white via-slate-300 to-zinc-300 p-3 text-center">
-          <p className="text-lg font-bold">
-            {formatDate(photo.$createdAt as string)}
-          </p>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <h1 className="text-center text-3xl">Votes</h1>
+          <div className="flex items-center justify-center gap-4">
+            <img
+              src={HeartBtn}
+              alt="heart"
+              className="h-20 w-20 object-cover"
+            />
+            <h2 className="photobooth-text-italic text-2xl font-bold">0</h2>
+          </div>
         </div>
       </div>
 

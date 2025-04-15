@@ -73,6 +73,7 @@ export type Saved = {
 export type CreateSaved = Omit<Saved, "$id">;
 
 export type ShowSaved = {
+  $id: string;
   photoID: ShowPhotos;
 };
 
@@ -91,6 +92,35 @@ export type CreateDownloaded = Omit<
 
 export type ShowDownloaded = {
   photoID: ShowDownloaded;
+};
+
+export type Vote = {
+  $id: string;
+  $createdAt: string;
+  $updatedAt: string;
+  photo: string;
+  user: string;
+  voteType: string;
+};
+
+export type ShowVote = {
+  $id: string;
+  $createdAt: string;
+  $updatedAt: string;
+  user: User;
+  photo: ShowPhotos;
+  voteType: string;
+};
+
+export type CreateVote = Omit<Vote, "$id" | "$createdAt" | "$updatedAt">;
+
+export type DeleteVote = {
+  documentID: string;
+};
+
+export type UpdateVote = {
+  documentID: string;
+  voteType: string;
 };
 
 export type ErrorType = {

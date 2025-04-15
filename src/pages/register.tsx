@@ -54,7 +54,12 @@ export default function Register() {
 
       console.log(data);
       const name = `${data.firstName} ${data.middleInitial} ${data.lastName}`;
-      await account.create(ID.unique(), data.email, data.password, name);
+      const acc = await account.create(
+        ID.unique(),
+        data.email,
+        data.password,
+        name,
+      );
 
       const session = await account.createEmailPasswordSession(
         data.email,
@@ -66,7 +71,7 @@ export default function Register() {
           name: name,
           email: data.email,
         },
-        session.$id,
+        acc.$id,
       );
 
       localStorage.setItem("session", JSON.stringify(session.current));
