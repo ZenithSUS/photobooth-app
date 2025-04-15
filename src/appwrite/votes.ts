@@ -108,6 +108,7 @@ export const updateVote = async (documentID: string, voteType: string) => {
 
 export const deleteVote = async (documentID: string) => {
   try {
+    console.log(documentID);
     return await databases.deleteDocument(
       DATABASE_ID,
       VOTE_COLLECTION_ID,

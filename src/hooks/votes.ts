@@ -13,7 +13,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { Models } from "appwrite";
-import { CreateVote, ShowVote, UpdateVote, DeleteVote } from "../utils/types";
+import { CreateVote, ShowVote, UpdateVote } from "../utils/types";
 
 export const useCreateVote = (): UseBaseMutationResult<
   Models.Document,
@@ -57,13 +57,15 @@ export const useGetVoteByPhoto = (
   });
 };
 
-export const useUpdateVote = (
-  documentID: string,
-  voteType: string,
-): UseBaseMutationResult<Models.Document, unknown, UpdateVote, unknown> => {
+export const useUpdateVote = (): UseBaseMutationResult<
+  Models.Document,
+  unknown,
+  UpdateVote,
+  unknown
+> => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: async ({ documentID, voteType }: UpdateVote) => {
       const response = await updateVote(documentID, voteType);
       return response;
     },
@@ -74,12 +76,15 @@ export const useUpdateVote = (
   });
 };
 
-export const useDeleteVote = (
-  documentID: string,
-): UseBaseMutationResult<{}, unknown, DeleteVote, unknown> => {
+export const useDeleteVote = (): UseBaseMutationResult<
+  {},
+  unknown,
+  string,
+  unknown
+> => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: async (documentID: string) => {
       const response = await deleteVote(documentID);
       return response;
     },

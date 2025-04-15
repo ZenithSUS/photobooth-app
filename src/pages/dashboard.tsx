@@ -2,22 +2,15 @@ import { useGetAllPhotosByUser, useGetAllPhotos } from "../hooks/photos.ts";
 import { useGetAllSavedPhoto } from "../hooks/saved.ts";
 import { useGetAllDownloaded } from "../hooks/downloaded.ts";
 import { useGetAllVotes } from "../hooks/votes.ts";
-import { useNavigate } from "react-router-dom";
+
 import photoIcon from "../assets/ui/save.png";
 import downloadIcon from "../assets/ui/downloading.png";
 import heartIcon from "../assets/ui/heart.png";
 import sharedPhotoIcon from "../assets/ui/share-photo.png";
-import HeartBtn from "../assets/ui/heart2.png";
-import SadBtn from "../assets/ui/sad.png";
 import Loading from "../components/ui/loading.tsx";
-import formatDate from "../utils/functions/format-date.ts";
-import userFilter from "../utils/functions/userFilter.ts";
-import Axlot from "../components/stickers/axlot/cam.tsx";
-import Minecraft from "../components/stickers/minecraft/cam.tsx";
-import Cat from "../components/stickers/cat/cam.tsx";
+import Card from "../components/card.tsx";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
   const id = JSON.parse(localStorage.getItem("id") as string);
 
   const { data: userPhotos, isLoading: userPhotoLoading } =
@@ -37,10 +30,6 @@ export default function Dashboard() {
     votesLoading
   )
     return <Loading />;
-
-  const handleView = (id: string) => {
-    navigate(`/photo-booth/${id}`);
-  };
 
   const post = photos?.map((photo) => {
     const photoVotes =
@@ -117,61 +106,7 @@ export default function Dashboard() {
         ) : null}
 
         <div className="grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-4">
-          {latestPhoto?.map((photo) => (
-            <div
-              key={photo.$id}
-              className="flex flex-col items-center gap-2.5 rounded border border-gray-200 bg-white p-4 shadow-md"
-            >
-              <div className="relative w-full p-0.5">
-                {photo.sticker === "Axlot" && <Axlot />}
-                {photo.sticker === "Minecraft" && <Minecraft />}
-                {photo.sticker === "Cat" && <Cat />}
-                <img
-                  src={photo.image1Url as string}
-                  alt={photo.title}
-                  className={`h-64 w-full rounded object-cover ${
-                    photo.filters ? userFilter(photo.filters as string[]) : ""
-                  }`}
-                />
-              </div>
-              <h2 className="text-2xl font-bold">{photo.title}</h2>
-              <p className="text-sm text-gray-600">
-                Shared on: {formatDate(photo.$createdAt)}
-              </p>
-              <div className="flex items-center gap-2">
-                <div className="flex items-center justify-center gap-4">
-                  <img
-                    src={HeartBtn}
-                    alt="heart"
-                    className="h-7 w-7 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
-                  />
-                  <h2 className="text-md photobooth-text-italic font-bold">
-                    {photo.heartVoteCount}
-                  </h2>
-                </div>
-                <div
-                  className="flex items-center justify-center gap-4"
-                  data-votetype={photo.voteType}
-                >
-                  <img
-                    src={SadBtn}
-                    alt="sad"
-                    className="h-10 w-10 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
-                  />
-                  <h2 className="text-md photobooth-text-italic font-bold">
-                    {photo.sadVoteCount}
-                  </h2>
-                </div>
-              </div>
-              <button
-                onClick={() => handleView(photo.$id)}
-                className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-              >
-                See Photo
-              </button>
-              <p className="text-gray-600"></p>
-            </div>
-          ))}
+          {latestPhoto?.map((photo) => <Card key={photo.$id} photo={photo} />)}
         </div>
       </div>
     </div>

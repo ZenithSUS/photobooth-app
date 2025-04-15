@@ -39,7 +39,7 @@ export const updateVote = async (documentID: string, voteType: string) => {
   }
 };
 
-export const deleteVote = async (documentID: string) => {
+export const deleteVote = async (documentID: string = "") => {
   try {
     return await removeVote(documentID);
   } catch (error) {
