@@ -96,7 +96,7 @@ export default function Register() {
       const userData = {
         name: name,
         email: data.email,
-        profileImage: "n/a",
+        profileImage: "",
       };
 
       if (data.image instanceof FileList && data.image.length > 0) {
