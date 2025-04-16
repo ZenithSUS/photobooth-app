@@ -140,9 +140,11 @@ export default function Register() {
 
   useEffect(() => {
     fetchAuthUser(user);
-  }, []);
 
-  if (user) return navigate("/dashboard");
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
 
   return (
     <main className="m-auto flex w-screen flex-col items-center justify-center md:h-screen">

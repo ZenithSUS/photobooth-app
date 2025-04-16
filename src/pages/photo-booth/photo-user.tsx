@@ -21,6 +21,7 @@ import Axlot from "../../components/stickers/axlot/img";
 import Minecraft from "../../components/stickers/minecraft/img";
 import Cat from "../../components/stickers/cat/img";
 import Bear from "../../components/stickers/bear/img";
+import Gamer from "../../components/stickers/gamer/img";
 import BackIcon from "../../assets/ui/back.svg";
 import SaveIcon from "../../assets/ui/save.png";
 import DownloadIcon from "../../assets/ui/downloading.png";
@@ -155,6 +156,7 @@ export default function PhotoUser() {
               {photo.sticker === "Minecraft" && <Minecraft set={index + 1} />}
               {photo.sticker === "Cat" && <Cat set={index + 1} />}
               {photo.sticker === "Bear" && <Bear set={index + 1} />}
+              {photo.sticker === "Gamer" && <Gamer set={index + 1} />}
               <img
                 src={image as string}
                 alt={`Image ${index + 1}`}

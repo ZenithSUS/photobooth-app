@@ -6,6 +6,7 @@ import AxlotStickers from "../../components/stickers/axlot/img";
 import MinecraftStickers from "../../components/stickers/minecraft/img";
 import CatStickers from "../../components/stickers/cat/img";
 import BearStickers from "../../components/stickers/bear/img";
+import GamerStickers from "../../components/stickers/gamer/img";
 
 export default function PhotoBooth() {
   const {
@@ -63,6 +64,9 @@ export default function PhotoBooth() {
                       )}
                       {sticker === "Bear" && (
                         <BearStickers set={(index + 1) as number} />
+                      )}
+                      {sticker === "Gamer" && (
+                        <GamerStickers set={(index + 1) as number} />
                       )}
                       <img
                         key={index}

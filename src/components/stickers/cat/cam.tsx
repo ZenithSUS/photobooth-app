@@ -1,4 +1,7 @@
-import { positionsCam } from "../../../utils/constants/image-position";
+import {
+  positionsCam,
+  imageFlipCam,
+} from "../../../utils/constants/image-position";
 import cat1 from "../../../assets/stickers/cat/smile.webp";
 import cat2 from "../../../assets/stickers/cat/family.webp";
 import cat3 from "../../../assets/stickers/cat/friends.webp";
@@ -18,6 +21,7 @@ export default function Cat() {
           className={`object-fit absolute z-10 w-15 md:w-20`}
           style={{
             ...positionsCam[index],
+            ...imageFlipCam[index],
           }}
         />
       ))}

@@ -14,6 +14,7 @@ import Axlot from "./stickers/axlot/cam";
 import Cat from "./stickers/cat/cam";
 import Bear from "./stickers/bear/cam";
 import Minecraft from "./stickers/minecraft/cam";
+import Gamer from "./stickers/gamer/cam";
 import HeartBtn from "../assets/ui/heart2.png";
 import SadBtn from "../assets/ui/sad.png";
 import CoolBtn from "../assets/ui/cool.png";
@@ -65,6 +66,7 @@ export default function Card({ photo }: { photo: ShowPhotos & VoteValues }) {
         {photo.sticker === "Minecraft" && <Minecraft />}
         {photo.sticker === "Cat" && <Cat />}
         {photo.sticker === "Bear" && <Bear />}
+        {photo.sticker === "Gamer" && <Gamer />}
         <img
           src={photo.image1Url as string}
           alt={photo.title}
