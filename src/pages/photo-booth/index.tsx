@@ -8,6 +8,7 @@ import MinecraftStickers from "../../components/stickers/minecraft/img";
 import CatStickers from "../../components/stickers/cat/img";
 import BearStickers from "../../components/stickers/bear/img";
 import GamerStickers from "../../components/stickers/gamer/img";
+import DemonSlayer from "../../components/stickers/demon-slayer/img";
 
 export default function PhotoBooth() {
   const navigate = useNavigate();
@@ -76,19 +77,40 @@ export default function PhotoBooth() {
                     <div className="relative p-0.5" key={index}>
                       {sticker === "N/A" && <></>}
                       {sticker === "Axlot" && (
-                        <AxlotStickers set={(index + 1) as number} />
+                        <AxlotStickers
+                          set={(index + 1) as number}
+                          type={"Image"}
+                        />
                       )}
                       {sticker === "Minecraft" && (
-                        <MinecraftStickers set={(index + 1) as number} />
+                        <MinecraftStickers
+                          set={(index + 1) as number}
+                          type={"Image"}
+                        />
                       )}
                       {sticker === "Cat" && (
-                        <CatStickers set={(index + 1) as number} />
+                        <CatStickers
+                          set={(index + 1) as number}
+                          type={"Image"}
+                        />
                       )}
                       {sticker === "Bear" && (
-                        <BearStickers set={(index + 1) as number} />
+                        <BearStickers
+                          set={(index + 1) as number}
+                          type={"Image"}
+                        />
                       )}
                       {sticker === "Gamer" && (
-                        <GamerStickers set={(index + 1) as number} />
+                        <GamerStickers
+                          set={(index + 1) as number}
+                          type={"Image"}
+                        />
+                      )}
+                      {sticker === "DemonSlayer" && (
+                        <DemonSlayer
+                          set={(index + 1) as number}
+                          type={"Image"}
+                        />
                       )}
                       <img
                         key={index}

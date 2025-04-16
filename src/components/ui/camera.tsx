@@ -12,11 +12,12 @@ import shareImages from "../../utils/functions/share.ts";
 import downloadAllImages from "../../utils/functions/download.ts";
 import resetPic from "../../assets/ui/reset.png";
 import backPic from "../../assets/ui/back.svg";
-import Axlot from "../stickers/axlot/cam.tsx";
-import Minecraft from "../stickers/minecraft/cam.tsx";
-import Cat from "../stickers/cat/cam.tsx";
-import Bear from "../stickers/bear/cam.tsx";
-import Gamer from "../stickers/gamer/cam.tsx";
+import Axlot from "../stickers/axlot/img.tsx";
+import Minecraft from "../stickers/minecraft/img.tsx";
+import Cat from "../stickers/cat/img.tsx";
+import Bear from "../stickers/bear/img.tsx";
+import Gamer from "../stickers/gamer/img.tsx";
+import DemonSlayer from "../stickers/demon-slayer/img.tsx";
 
 Modal.setAppElement("#root");
 
@@ -291,11 +292,24 @@ export default function Camera({
               </div>
             )}
 
-            {sticker === "Axlot" && <Axlot />}
-            {sticker === "Minecraft" && <Minecraft />}
-            {sticker === "Cat" && <Cat />}
-            {sticker === "Bear" && <Bear />}
-            {sticker === "Gamer" && <Gamer />}
+            {sticker === "Axlot" && (
+              <Axlot set={capturedImage.length + 1} type={"Cam"} />
+            )}
+            {sticker === "Minecraft" && (
+              <Minecraft set={capturedImage.length + 1} type={"Cam"} />
+            )}
+            {sticker === "Cat" && (
+              <Cat set={capturedImage.length + 1} type={"Cam"} />
+            )}
+            {sticker === "Bear" && (
+              <Bear set={capturedImage.length + 1} type={"Cam"} />
+            )}
+            {sticker === "Gamer" && (
+              <Gamer set={capturedImage.length + 1} type={"Cam"} />
+            )}
+            {sticker === "DemonSlayer" && (
+              <DemonSlayer set={capturedImage.length + 1} type={"Cam"} />
+            )}
             {sticker === "N/A" && <></>}
 
             <Webcam

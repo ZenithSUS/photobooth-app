@@ -6,7 +6,7 @@ export default function StickerSelection() {
   const { setSticker } = useBoothContext();
   return (
     <div className="grid place-items-center gap-5">
-      <div className="flex flex-wrap gap-5">
+      <div className="grid grid-cols-4 gap-5">
         {stickerPack.map((sticker: Sticker) => (
           <img
             onClick={() => setSticker(sticker.value)}

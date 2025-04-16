@@ -12,7 +12,13 @@ import minecraft11 from "../../../assets/stickers/minecraft/sword.webp";
 import minecraft12 from "../../../assets/stickers/minecraft/mining.webp";
 import { positionsCam } from "../../../utils/constants/image-position";
 
-export default function MinecraftStickers({ set }: { set: number }) {
+export default function MinecraftStickers({
+  set,
+  type,
+}: {
+  set: number;
+  type: string;
+}) {
   const stickers = [
     [minecraft1, minecraft2, minecraft3, minecraft4],
     [minecraft5, minecraft6, minecraft7, minecraft8],
@@ -33,7 +39,7 @@ export default function MinecraftStickers({ set }: { set: number }) {
             key={index}
             src={sticker}
             alt={stickerNames[set - 1][index]}
-            className={`object-fit absolute z-10 w-14 md:w-12`}
+            className={`object-fit absolute z-10 ${type === "Cam" ? "w-15 md:w-20" : "w-14 md:w-12"}`}
             style={{
               ...positionsCam[index],
             }}

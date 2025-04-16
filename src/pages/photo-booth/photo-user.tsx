@@ -22,6 +22,7 @@ import Minecraft from "../../components/stickers/minecraft/img";
 import Cat from "../../components/stickers/cat/img";
 import Bear from "../../components/stickers/bear/img";
 import Gamer from "../../components/stickers/gamer/img";
+import DemonSlayer from "../../components/stickers/demon-slayer/img";
 import BackIcon from "../../assets/ui/back.svg";
 import SaveIcon from "../../assets/ui/save.png";
 import DownloadIcon from "../../assets/ui/downloading.png";
@@ -152,11 +153,24 @@ export default function PhotoUser() {
         >
           {images.map((image, index) => (
             <div className="relative p-0.5" key={index}>
-              {photo.sticker === "Axlot" && <Axlot set={index + 1} />}
-              {photo.sticker === "Minecraft" && <Minecraft set={index + 1} />}
-              {photo.sticker === "Cat" && <Cat set={index + 1} />}
-              {photo.sticker === "Bear" && <Bear set={index + 1} />}
-              {photo.sticker === "Gamer" && <Gamer set={index + 1} />}
+              {photo.sticker === "Axlot" && (
+                <Axlot set={index + 1} type={"Image"} />
+              )}
+              {photo.sticker === "Minecraft" && (
+                <Minecraft set={index + 1} type={"Image"} />
+              )}
+              {photo.sticker === "Cat" && (
+                <Cat set={index + 1} type={"Image"} />
+              )}
+              {photo.sticker === "Bear" && (
+                <Bear set={index + 1} type={"Image"} />
+              )}
+              {photo.sticker === "Gamer" && (
+                <Gamer set={index + 1} type={"Image"} />
+              )}
+              {photo.sticker === "DemonSlayer" && (
+                <DemonSlayer set={index + 1} type={"Image"} />
+              )}
               <img
                 src={image as string}
                 alt={`Image ${index + 1}`}

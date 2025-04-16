@@ -12,7 +12,13 @@ import gamer11 from "../../../assets/stickers/gamer/gaming.webp";
 import gamer12 from "../../../assets/stickers/gamer/video-game2.webp";
 import { positionsCam } from "../../../utils/constants/image-position";
 
-export default function GamerStickers({ set }: { set: number }) {
+export default function GamerStickers({
+  set,
+  type,
+}: {
+  set: number;
+  type: string;
+}) {
   const stickers = [
     [gamer1, gamer2, gamer3, gamer4],
     [gamer5, gamer6, gamer7, gamer8],
@@ -32,7 +38,7 @@ export default function GamerStickers({ set }: { set: number }) {
             key={index}
             src={sticker}
             alt={stickerNames[set - 1][index]}
-            className={`object-fit absolute z-10 w-14 md:w-12`}
+            className={`object-fit absolute z-10 ${type === "Cam" ? "w-15 md:w-20" : "w-14 md:w-12"}`}
             style={{
               ...positionsCam[index],
             }}
