@@ -96,7 +96,7 @@ export default function PhotoBooth() {
                         alt={`Captured Image ${index}`}
                         height={"300px"}
                         width={"300px"}
-                        className={`p-0.5 grayscale-${prevFilter[index].grayscale} sepia-${prevFilter[index].sepia} hue-rotate-${prevFilter[index].hueRotate} invert-${prevFilter[index].invert} brightness-${prevFilter[index].brightness} contrast-${prevFilter[index].contrast}`}
+                        className={`p-0.5 grayscale-${prevFilter[index].grayscale} sepia-${prevFilter[index].sepia} hue-rotate-${prevFilter[index].hueRotate} ${prevFilter[index].invert === "100" ? "invert" : `invert-${prevFilter[index].invert}`} brightness-${prevFilter[index].brightness} contrast-${prevFilter[index].contrast}`}
                       />
                     </div>
                   );

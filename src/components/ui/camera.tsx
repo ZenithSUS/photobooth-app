@@ -316,7 +316,7 @@ export default function Camera({
             />
           </>
         ) : (
-          <div className="inset-0 grid h-[200px] w-[calc(100%-2rem)] place-items-center gap-4 bg-black text-center text-3xl font-bold text-white md:h-[300px] md:w-[480px]">
+          <div className="inset-0 grid h-[200px] w-[calc(100%-2rem)] place-items-center gap-4 bg-black p-5 text-center text-3xl font-bold text-white md:h-[300px] md:w-[480px]">
             <div className="p-3">
               {messages[Math.floor(Math.random() * messages.length)]}
             </div>
