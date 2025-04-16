@@ -4,6 +4,9 @@ import unknown from "../assets/ui/unknown.jpg";
 export default function Account() {
   const name = JSON.parse(localStorage.getItem("name") as string);
   const email = JSON.parse(localStorage.getItem("email") as string);
+  const profileImage = JSON.parse(
+    localStorage.getItem("profileImage") || ("" as string),
+  );
   const joined = formatDate(
     JSON.parse(localStorage.getItem("joined") as string),
   );
@@ -15,7 +18,7 @@ export default function Account() {
         <div className="flex flex-col gap-2 overflow-hidden">
           <div className="grid grid-cols-1 place-items-center gap-1.5 text-center">
             <img
-              src={unknown}
+              src={profileImage !== null || "" ? profileImage : unknown}
               alt="profile_img"
               className="h-24 w-24 rounded-full"
             />

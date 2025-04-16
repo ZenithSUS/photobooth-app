@@ -42,7 +42,7 @@ export type User = {
   $updatedAt: string;
   name: string;
   email: string;
-  photo: string;
+  profileImage: string;
 };
 
 export type Photos = {
@@ -125,6 +125,7 @@ export type UpdateVote = {
 
 export type VoteValues = {
   $id?: string;
+  voteType?: string;
   heartVoteCount?: number;
   sadVoteCount?: number;
   coolVoteCount?: number;

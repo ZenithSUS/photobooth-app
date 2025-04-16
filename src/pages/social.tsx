@@ -2,6 +2,7 @@ import { useGetAllPhotos } from "../hooks/photos";
 import { useGetAllVotes } from "../hooks/votes";
 import Loading from "../components/ui/loading";
 import Card from "../components/card";
+import posts from "../utils/functions/posts";
 
 export default function Social() {
   const { data: photos, isLoading: photosLoading } = useGetAllPhotos();
@@ -16,36 +17,7 @@ export default function Social() {
       <div className="text-center text-3xl font-bold">No photos available</div>
     );
   }
-
-  const post = photos.map((photo) => {
-    const photoVotes =
-      votes?.filter((vote) => vote.photo.$id === photo.$id) || [];
-
-    const heartVoteCount = photoVotes.filter(
-      (vote) => vote.voteType === "Heart",
-    ).length;
-    const sadVoteCount = photoVotes.filter(
-      (vote) => vote.voteType === "Sad",
-    ).length;
-    const coolVoteCount = photoVotes.filter(
-      (vote) => vote.voteType === "Cool",
-    ).length;
-    const wowVoteCount = photoVotes.filter(
-      (vote) => vote.voteType === "Wow",
-    ).length;
-
-    const voteType = photoVotes[0]?.voteType || "N/A";
-
-    return {
-      ...photo,
-      heartVoteCount,
-      sadVoteCount,
-      coolVoteCount,
-      wowVoteCount,
-      voteType,
-    };
-  });
-
+  const post = posts(photos, votes!);
   return (
     <div className="flex flex-col gap-5">
       <h1 className="text-center text-3xl font-bold">Socials</h1>

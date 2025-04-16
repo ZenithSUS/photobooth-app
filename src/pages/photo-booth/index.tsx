@@ -5,6 +5,7 @@ import { useRef } from "react";
 import AxlotStickers from "../../components/stickers/axlot/img";
 import MinecraftStickers from "../../components/stickers/minecraft/img";
 import CatStickers from "../../components/stickers/cat/img";
+import BearStickers from "../../components/stickers/bear/img";
 
 export default function PhotoBooth() {
   const {
@@ -59,6 +60,9 @@ export default function PhotoBooth() {
                       )}
                       {sticker === "Cat" && (
                         <CatStickers set={(index + 1) as number} />
+                      )}
+                      {sticker === "Bear" && (
+                        <BearStickers set={(index + 1) as number} />
                       )}
                       <img
                         key={index}

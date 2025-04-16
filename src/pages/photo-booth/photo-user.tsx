@@ -20,6 +20,7 @@ import Loading from "../../components/ui/loading";
 import Axlot from "../../components/stickers/axlot/img";
 import Minecraft from "../../components/stickers/minecraft/img";
 import Cat from "../../components/stickers/cat/img";
+import Bear from "../../components/stickers/bear/img";
 import BackIcon from "../../assets/ui/back.svg";
 import SaveIcon from "../../assets/ui/save.png";
 import DownloadIcon from "../../assets/ui/downloading.png";
@@ -71,6 +72,8 @@ export default function PhotoUser() {
   const wowVoteCount = photoVotes.filter(
     (vote) => vote.voteType === "Wow",
   ).length;
+
+  const voteType = photoVotes[0].voteType;
 
   if (photo.filters && photo.border && photo.background) {
     userFilters = userFilter(photo.filters as string[]);
@@ -151,6 +154,7 @@ export default function PhotoUser() {
               {photo.sticker === "Axlot" && <Axlot set={index + 1} />}
               {photo.sticker === "Minecraft" && <Minecraft set={index + 1} />}
               {photo.sticker === "Cat" && <Cat set={index + 1} />}
+              {photo.sticker === "Bear" && <Bear set={index + 1} />}
               <img
                 src={image as string}
                 alt={`Image ${index + 1}`}
@@ -166,10 +170,10 @@ export default function PhotoUser() {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-2 place-self-start">
+        <div className="grid grid-cols-1 gap-2 place-self-center lg:place-self-start">
           <h1 className="text-center text-3xl">Votes</h1>
-          <div className="flex flex-col gap-2 lg:grid lg:grid-cols-2 lg:place-items-start">
-            <div className="flex cursor-pointer items-center justify-center gap-4">
+          <div className="grid grid-cols-2 place-items-center gap-4 lg:grid-cols-1">
+            <div className="flex cursor-pointer items-center justify-center gap-7">
               <button
                 className="disabled:opacity-75"
                 disabled={isPending}
@@ -178,14 +182,20 @@ export default function PhotoUser() {
                 <img
                   src={HeartBtn}
                   alt="heart"
-                  className="h-20 w-20 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120 lg:h-28 lg:w-28"
+                  className="h-10 w-10 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120 lg:h-24 lg:w-24"
+                  style={{
+                    filter:
+                      voteType === "Heart"
+                        ? "drop-shadow(0 0 8px rgba(0,0,0,1))"
+                        : "none",
+                  }}
                 />
               </button>
-              <h2 className="text-md photobooth-text-italic font-bold">
+              <h2 className="photobooth-text-italic text-xl font-bold">
                 {heartVoteCount || 0}
               </h2>
             </div>
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex cursor-pointer items-center justify-center gap-7">
               <button
                 className="disabled:opacity-75"
                 disabled={isPending}
@@ -194,14 +204,20 @@ export default function PhotoUser() {
                 <img
                   src={SadBtn}
                   alt="sad"
-                  className="h-32 w-32 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+                  className="h-14 w-14 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120 lg:h-32 lg:w-32"
+                  style={{
+                    filter:
+                      voteType === "Sad"
+                        ? "drop-shadow(0 0 8px rgba(0,0,0,1))"
+                        : "none",
+                  }}
                 />
               </button>
-              <h2 className="text-md photobooth-text-italic font-bold">
+              <h2 className="photobooth-text-italic text-xl font-bold">
                 {sadVoteCount || 0}
               </h2>
             </div>
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex cursor-pointer items-center justify-center gap-7">
               <button
                 className="disabled:opacity-75"
                 disabled={isPending}
@@ -210,14 +226,20 @@ export default function PhotoUser() {
                 <img
                   src={WowBtn}
                   alt="wow"
-                  className="h-32 w-32 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+                  className="h-14 w-14 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120 lg:h-28 lg:w-28"
+                  style={{
+                    filter:
+                      voteType === "Wow"
+                        ? "drop-shadow(0 0 8px rgba(0,0,0,1))"
+                        : "none",
+                  }}
                 />
               </button>
-              <h2 className="text-md photobooth-text-italic font-bold">
+              <h2 className="photobooth-text-italic text-xl font-bold">
                 {wowVoteCount || 0}
               </h2>
             </div>
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex cursor-pointer items-center justify-center gap-7">
               <button
                 className="disabled:opacity-75"
                 disabled={isPending}
@@ -226,10 +248,16 @@ export default function PhotoUser() {
                 <img
                   src={CoolBtn}
                   alt="cool"
-                  className="h-32 w-32 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+                  className="h-14 w-14 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120 lg:h-32 lg:w-32"
+                  style={{
+                    filter:
+                      voteType === "Cool"
+                        ? "drop-shadow(0 0 8px rgba(0,0,0,1))"
+                        : "none",
+                  }}
                 />
               </button>
-              <h2 className="text-md photobooth-text-italic font-bold">
+              <h2 className="photobooth-text-italic text-xl font-bold">
                 {coolVoteCount || 0}
               </h2>
             </div>

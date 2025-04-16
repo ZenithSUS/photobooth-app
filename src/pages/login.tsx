@@ -26,6 +26,7 @@ export default function Login() {
       localStorage.setItem("id", JSON.stringify(data.$id));
       localStorage.setItem("name", JSON.stringify(data.name));
       localStorage.setItem("email", JSON.stringify(data.email));
+      localStorage.setItem("profileImage", JSON.stringify(data.prefs.imageUrl));
       toast.success("Logged in Successfully!");
       navigate("/dashboard");
     } catch (error: unknown) {

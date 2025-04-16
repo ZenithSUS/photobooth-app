@@ -9,6 +9,7 @@ import heartIcon from "../assets/ui/heart.png";
 import sharedPhotoIcon from "../assets/ui/share-photo.png";
 import Loading from "../components/ui/loading.tsx";
 import Card from "../components/card.tsx";
+import posts from "../utils/functions/posts.ts";
 
 export default function Dashboard() {
   const id = JSON.parse(localStorage.getItem("id") as string);
@@ -31,40 +32,12 @@ export default function Dashboard() {
   )
     return <Loading />;
 
-  const post = photos?.map((photo) => {
-    const photoVotes =
-      votes?.filter((vote) => vote.photo.$id === photo.$id) || [];
+  const post = posts(photos!, votes!);
 
-    const heartVoteCount = photoVotes.filter(
-      (vote) => vote.voteType === "Heart",
-    ).length;
-    const sadVoteCount = photoVotes.filter(
-      (vote) => vote.voteType === "Sad",
-    ).length;
-    const coolVoteCount = photoVotes.filter(
-      (vote) => vote.voteType === "Cool",
-    ).length;
-    const wowVoteCount = photoVotes.filter(
-      (vote) => vote.voteType === "Wow",
-    ).length;
-
-    const voteType = photoVotes[0]?.voteType || "N/A";
-
-    return {
-      ...photo,
-
-      heartVoteCount,
-      sadVoteCount,
-      coolVoteCount,
-      wowVoteCount,
-      voteType,
-    };
-  });
-
-  const userVotes = votes?.filter((vote) => vote.user.$id === id).length || 0;
+  const userVotes = votes?.filter((vote) => vote.photo.$id === id).length || 0;
 
   const latestPhoto = post
-    ?.slice(0, 3)
+    ?.slice(0, 4)
     .sort((a, b) => Number(b.$createdAt) - Number(a.$createdAt));
 
   const dashboardData = [
@@ -121,7 +94,7 @@ export default function Dashboard() {
           </div>
         ) : null}
 
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-4">
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-3">
           {latestPhoto?.map((photo) => <Card key={photo.$id} photo={photo} />)}
         </div>
       </div>

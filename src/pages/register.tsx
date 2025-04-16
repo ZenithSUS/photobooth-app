@@ -1,17 +1,27 @@
 import { ID } from "appwrite";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { account } from "../appwrite";
-import { useEffect } from "react";
+import {
+  account,
+  storage,
+  BUCKET_ID,
+  ENDPOINT as endpointUrl,
+  PROJECT_ID as projectId,
+} from "../appwrite";
+import { SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { v4 as uuidv4 } from "uuid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewUser } from "../actions/users";
 import fetchAuthUser from "../lib/services/getAuth";
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+
 const registerSchema = z
   .object({
-    email: z.string().email(),
+    email: z.string().min(3, { message: "Email is required" }).email(),
     password: z
       .string()
       .min(6, { message: "Password must be at least 6 characters" }),
@@ -22,6 +32,22 @@ const registerSchema = z
       .max(3, { message: "Middle initial is too long" })
       .optional(),
     lastName: z.string().min(1, { message: "Last name is required" }),
+    image: z
+      .instanceof(FileList)
+      .refine(
+        (files) => files.length === 0 || files.length === 1,
+        "Please upload exactly one file",
+      )
+      .refine(
+        (files) => files.length === 0 || files[0].size <= MAX_FILE_SIZE,
+        `Max file size is 5MB`,
+      )
+      .refine(
+        (files) =>
+          files.length === 0 || ACCEPTED_IMAGE_TYPES.includes(files[0].type),
+        "Only .jpg, .jpeg, and .png formats are supported",
+      )
+      .optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -35,6 +61,8 @@ export default function Register() {
     localStorage.getItem("session") || "false",
   ) as boolean;
   const navigate = useNavigate();
+  const [fileName, setFileName] =
+    useState<SetStateAction<string>>("No file chosen");
 
   const form = useForm<registerSchemaType>({
     resolver: zodResolver(registerSchema),
@@ -52,7 +80,6 @@ export default function Register() {
     try {
       if (Object.keys(form.formState.errors).length > 0) return;
 
-      console.log(data);
       const name = `${data.firstName} ${data.middleInitial} ${data.lastName}`;
       const acc = await account.create(
         ID.unique(),
@@ -66,20 +93,44 @@ export default function Register() {
         data.password,
       );
 
-      await createNewUser(
-        {
-          name: name,
-          email: data.email,
-        },
-        acc.$id,
-      );
+      const userData = {
+        name: name,
+        email: data.email,
+        profileImage: "",
+      };
+
+      if (data.image instanceof FileList && data.image.length > 0) {
+        const imageFile = new File(
+          [data.image[0]],
+          "zenithbooth_profile" + uuidv4() + ".jpg",
+          {
+            type: "image/jpeg",
+          },
+        );
+        const uploadedFile = await storage.createFile(
+          BUCKET_ID,
+          ID.unique(),
+          imageFile,
+        );
+
+        userData.profileImage = `${endpointUrl}/storage/buckets/${uploadedFile.bucketId}/files/${uploadedFile.$id}/view?project=${projectId}&mode=admin`;
+      }
+      account.updatePrefs({ imageUrl: userData.profileImage });
+      await createNewUser(userData, acc.$id);
 
       localStorage.setItem("session", JSON.stringify(session.current));
-      const userData = await account.get();
-      localStorage.setItem("id", JSON.stringify(userData.$id));
-      localStorage.setItem("name", JSON.stringify(userData.name));
-      localStorage.setItem("email", JSON.stringify(userData.email));
-      localStorage.setItem("joined", JSON.stringify(userData.$createdAt));
+      const userDataResponse = await account.get();
+      localStorage.setItem("id", JSON.stringify(userDataResponse.$id));
+      localStorage.setItem("name", JSON.stringify(userDataResponse.name));
+      localStorage.setItem("email", JSON.stringify(userDataResponse.email));
+      localStorage.setItem(
+        "profileImage",
+        JSON.stringify(userData.profileImage),
+      );
+      localStorage.setItem(
+        "joined",
+        JSON.stringify(userDataResponse.$createdAt),
+      );
       toast.success("Registered Successfully!");
     } catch (error) {
       console.log(error);
@@ -91,7 +142,7 @@ export default function Register() {
     fetchAuthUser(user);
   }, []);
 
-  if (user) return (window.location.href = "/dashboard");
+  if (user) return navigate("/dashboard");
 
   return (
     <main className="m-auto flex w-screen flex-col items-center justify-center md:h-screen">
@@ -142,7 +193,6 @@ export default function Register() {
               <span className="h-10"></span>
             )}
           </div>
-
           <div className="flex flex-col gap-1">
             <label htmlFor="lastName" className="text-xl font-bold">
               Last Name
@@ -163,7 +213,6 @@ export default function Register() {
               <span className="h-10"></span>
             )}
           </div>
-
           <div className="flex flex-col gap-1">
             <label htmlFor="email" className="text-xl font-bold">
               Email
@@ -204,7 +253,6 @@ export default function Register() {
               <span className="h-10"></span>
             )}
           </div>
-
           <div className="flex flex-col gap-1">
             <label htmlFor="confirmPassword" className="text-xl font-bold">
               Confirm Password
@@ -220,6 +268,46 @@ export default function Register() {
             {form.formState.errors.confirmPassword ? (
               <span className="h-10 text-red-500">
                 {form.formState.errors.confirmPassword.message}
+              </span>
+            ) : (
+              <span className="h-10"></span>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="profileImage" className="text-xl font-bold">
+              Profile Image
+            </label>
+
+            <div className="flex w-full">
+              <label className="flex cursor-pointer items-center rounded-l-md bg-amber-400 px-4 py-2 font-medium text-white hover:bg-amber-500">
+                Choose File
+                <input
+                  id="profileImage"
+                  type="file"
+                  accept="image/png, image/jpeg, image/jpg"
+                  className="hidden"
+                  {...form.register("image")}
+                  onChange={(e) => {
+                    form.register("image").onChange(e);
+                    setFileName(
+                      e.target.files && e.target.files[0]
+                        ? e.target.files[0].name
+                        : "No file chosen",
+                    );
+                  }}
+                  autoComplete="off"
+                />
+              </label>
+              <span className="flex w-full items-center rounded-r-md border border-gray-300 bg-white px-3 py-2">
+                {fileName as string}
+              </span>
+            </div>
+            <h3 className="text-md text-center">Max Size 5MB</h3>
+
+            {form.formState.errors.image ? (
+              <span className="h-10 text-red-500">
+                {form.formState.errors.image.message}
               </span>
             ) : (
               <span className="h-10"></span>

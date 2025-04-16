@@ -31,8 +31,6 @@ export default async function shareImages(
         return file;
       });
 
-      console.log(jpegFiles);
-
       const images = {
         image1: jpegFiles[0],
         image2: jpegFiles[1],

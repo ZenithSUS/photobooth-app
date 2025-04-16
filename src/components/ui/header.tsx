@@ -1,4 +1,6 @@
 import Burger from "../../assets/ui/burger.png";
+import unknown from "../../assets/ui/unknown.jpg";
+import { useNavigate } from "react-router-dom";
 
 type HeaderProps = {
   isMobile: boolean;
@@ -11,7 +13,11 @@ export default function Header({
   isMobileMenuOpen,
   toggleMobileMenu,
 }: HeaderProps) {
+  const navigate = useNavigate();
   const name = JSON.parse(localStorage.getItem("name") as string);
+  const profileImage = JSON.parse(
+    localStorage.getItem("profileImage") || ("" as string),
+  );
 
   return (
     <header className="sticky top-0 right-0 left-0 z-30 flex flex-col items-center gap-1.5 border-b-2 border-amber-400 bg-gradient-to-br from-sky-300 via-blue-300 to-indigo-400 p-4 text-black shadow-md lg:flex-row lg:justify-between lg:gap-0">
@@ -30,7 +36,17 @@ export default function Header({
         </div>
       )}
       <h1 className="text-3xl font-bold">ZenithBooth</h1>
-      <p className="text-center text-2xl font-bold">Hello, {name}</p>
+      <div
+        className="flex cursor-pointer items-center justify-center gap-2"
+        onClick={() => navigate("account")}
+      >
+        <p className="text-center text-2xl font-bold">Hello, {name}</p>
+        <img
+          src={profileImage !== null || "" ? profileImage : unknown}
+          alt="profile_img"
+          className="h-12 w-12 rounded-full hover:scale-105"
+        />
+      </div>
     </header>
   );
 }

@@ -1,8 +1,9 @@
 import { databases, USER_COLLECTION_ID, DATABASE_ID } from "./index.ts";
+import { User } from "../utils/types.ts";
 import { Query } from "appwrite";
 
 export const getAllUsers = async () => {
-  let allusers: Object[] = [];
+  let allusers: User[] = [];
   let offset = 0;
   const limit = 100;
   while (true) {
@@ -11,7 +12,17 @@ export const getAllUsers = async () => {
       USER_COLLECTION_ID[(Query.limit(limit), Query.offset(offset))],
     );
 
-    allusers = [...allusers, ...documents];
+    allusers = [
+      ...allusers,
+      ...documents.map((docs) => ({
+        $id: docs.$id,
+        $createdAt: docs.$createdAt,
+        $updatedAt: docs.$updatedAt,
+        name: docs.name,
+        email: docs.email,
+        profileImage: docs.profileImage,
+      })),
+    ];
 
     if (documents.length === 0) break;
     offset += limit;
@@ -30,6 +41,7 @@ export const getUser = async (id: string) => {
 
 export const createUser = async (data: Object, id: string) => {
   try {
+    console.log(data);
     return await databases.createDocument(
       DATABASE_ID,
       USER_COLLECTION_ID,

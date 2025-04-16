@@ -15,6 +15,7 @@ import backPic from "../../assets/ui/back.svg";
 import Axlot from "../stickers/axlot/cam.tsx";
 import Minecraft from "../stickers/minecraft/cam.tsx";
 import Cat from "../stickers/cat/cam.tsx";
+import Bear from "../stickers/bear/cam.tsx";
 
 Modal.setAppElement("#root");
 
@@ -292,6 +293,7 @@ export default function Camera({
             {sticker === "Axlot" && <Axlot />}
             {sticker === "Minecraft" && <Minecraft />}
             {sticker === "Cat" && <Cat />}
+            {sticker === "Bear" && <Bear />}
             {sticker === "N/A" && <></>}
 
             <Webcam

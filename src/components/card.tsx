@@ -12,6 +12,7 @@ import formatDate from "../utils/functions/format-date";
 import userFilter from "../utils/functions/userFilter";
 import Axlot from "./stickers/axlot/cam";
 import Cat from "./stickers/cat/cam";
+import Bear from "./stickers/bear/cam";
 import Minecraft from "./stickers/minecraft/cam";
 import HeartBtn from "../assets/ui/heart2.png";
 import SadBtn from "../assets/ui/sad.png";
@@ -63,6 +64,7 @@ export default function Card({ photo }: { photo: ShowPhotos & VoteValues }) {
         {photo.sticker === "Axlot" && <Axlot />}
         {photo.sticker === "Minecraft" && <Minecraft />}
         {photo.sticker === "Cat" && <Cat />}
+        {photo.sticker === "Bear" && <Bear />}
         <img
           src={photo.image1Url as string}
           alt={photo.title}
@@ -88,6 +90,12 @@ export default function Card({ photo }: { photo: ShowPhotos & VoteValues }) {
                 src={HeartBtn}
                 alt="heart"
                 className="h-8 w-8 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+                style={{
+                  filter:
+                    photo.voteType === "Heart"
+                      ? "drop-shadow(0 0 8px rgba(0,0,0,1))"
+                      : "none",
+                }}
               />
             </button>
             <h2 className="text-md photobooth-text-italic font-bold">
@@ -104,6 +112,12 @@ export default function Card({ photo }: { photo: ShowPhotos & VoteValues }) {
                 src={SadBtn}
                 alt="sad"
                 className="h-10 w-10 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+                style={{
+                  filter:
+                    photo.voteType === "Sad"
+                      ? "drop-shadow(0 0 8px rgba(0,0,0,1))"
+                      : "none",
+                }}
               />
             </button>
             <h2 className="text-md photobooth-text-italic font-bold">
@@ -121,6 +135,12 @@ export default function Card({ photo }: { photo: ShowPhotos & VoteValues }) {
                 src={CoolBtn}
                 alt="cool"
                 className="h-10 w-10 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+                style={{
+                  filter:
+                    photo.voteType === "Cool"
+                      ? "drop-shadow(0 0 8px rgba(0,0,0,1))"
+                      : "none",
+                }}
               />
             </button>
             <h2 className="text-md photobooth-text-italic font-bold">
@@ -138,6 +158,12 @@ export default function Card({ photo }: { photo: ShowPhotos & VoteValues }) {
                 src={WowBtn}
                 alt="wow"
                 className="h-10 w-10 cursor-pointer object-cover transition duration-300 ease-in-out hover:scale-120"
+                style={{
+                  filter:
+                    photo.voteType === "Wow"
+                      ? "drop-shadow(0 0 8px rgba(0,0,0,1))"
+                      : "none",
+                }}
               />
             </button>
             <h2 className="text-md photobooth-text-italic font-bold">

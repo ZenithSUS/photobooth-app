@@ -8,6 +8,7 @@ export default async function fetchAuthUser(user: boolean) {
       localStorage.setItem("session", JSON.stringify(session.current));
       user = session.current;
       const data = await account.get();
+
       localStorage.setItem("id", JSON.stringify(data.$id));
       localStorage.setItem("name", JSON.stringify(data.name));
       localStorage.setItem("email", JSON.stringify(data.email));
