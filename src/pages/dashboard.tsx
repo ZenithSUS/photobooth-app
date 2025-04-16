@@ -2,7 +2,6 @@ import { useGetAllPhotosByUser, useGetAllPhotos } from "../hooks/photos.ts";
 import { useGetAllSavedPhoto } from "../hooks/saved.ts";
 import { useGetAllDownloaded } from "../hooks/downloaded.ts";
 import { useGetAllVotes } from "../hooks/votes.ts";
-
 import photoIcon from "../assets/ui/save.png";
 import downloadIcon from "../assets/ui/downloading.png";
 import heartIcon from "../assets/ui/heart.png";
@@ -12,7 +11,7 @@ import Card from "../components/card.tsx";
 import posts from "../utils/functions/posts.ts";
 
 export default function Dashboard() {
-  const id = JSON.parse(localStorage.getItem("id") as string);
+  const id = JSON.parse(localStorage.getItem("id") as string) || null;
 
   const { data: userPhotos, isLoading: userPhotoLoading } =
     useGetAllPhotosByUser(id);

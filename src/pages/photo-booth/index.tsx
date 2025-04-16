@@ -1,7 +1,8 @@
 import Camera from "../../components/ui/camera";
-import Customization from "../../components/ui/customization";
 import { useBoothContext } from "../../lib/context/booth";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import Customization from "../../components/ui/customization";
 import AxlotStickers from "../../components/stickers/axlot/img";
 import MinecraftStickers from "../../components/stickers/minecraft/img";
 import CatStickers from "../../components/stickers/cat/img";
@@ -9,6 +10,7 @@ import BearStickers from "../../components/stickers/bear/img";
 import GamerStickers from "../../components/stickers/gamer/img";
 
 export default function PhotoBooth() {
+  const navigate = useNavigate();
   const {
     capturedImage,
     prevFilter,
@@ -18,10 +20,30 @@ export default function PhotoBooth() {
     isCapturing,
   } = useBoothContext();
   const photoBoothRef = useRef<HTMLDivElement>(null);
+  const name = JSON.parse(localStorage.getItem("name") as string) || null;
 
   return (
     <>
-      <h1 className="mt-4 text-center text-3xl font-bold">ZenithBooth</h1>
+      <div className="flex flex-col place-items-center gap-1.5 md:grid md:grid-cols-3">
+        <div className="hidden md:block"></div>
+
+        <h1 className="text-center text-3xl font-bold">ZenithBooth</h1>
+
+        <div className="m-2 flex flex-col items-center justify-center gap-2 md:flex-row md:justify-end">
+          <h1 className="text-2xl">
+            {name !== null || "" ? name : "Guest User"}
+          </h1>
+          {name === null && (
+            <button
+              className="cursor-pointer rounded-md bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-1 text-lg transition duration-300 ease-in-out hover:scale-95 hover:from-blue-500 hover:via-blue-500 hover:to-indigo-500"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </button>
+          )}
+        </div>
+      </div>
+
       <div className="m-4 place-items-start place-self-center">
         <div className="grid gap-10 lg:grid-cols-2">
           <div className="flex flex-col items-center gap-2 self-start">
