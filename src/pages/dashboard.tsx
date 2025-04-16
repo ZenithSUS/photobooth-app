@@ -34,7 +34,7 @@ export default function Dashboard() {
 
   const post = posts(photos!, votes!);
 
-  const userVotes = votes?.filter((vote) => vote.photo.$id === id).length || 0;
+  const userVotes = votes?.filter((vote) => vote.user.$id === id).length || 0;
 
   const latestPhoto = post
     ?.slice(0, 4)
