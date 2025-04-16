@@ -102,7 +102,7 @@ export default function Register() {
       if (data.image instanceof FileList && data.image.length > 0) {
         const imageFile = new File(
           [data.image[0]],
-          "zenithbooth_profile" + uuidv4() + ".jpg",
+          "zenithbooth_profile_" + uuidv4() + ".jpg",
           {
             type: "image/jpeg",
           },
