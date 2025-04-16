@@ -64,13 +64,13 @@ export default function Account() {
         isOpen={isModalOpen}
         parentSelector={() => document.querySelector("#root") as HTMLElement}
         className={
-          "absolute top-1/8 z-50 mx-auto grid w-full max-w-lg place-items-center p-4 sm:inset-x-8 sm:top-1/4 sm:max-w-md md:max-w-lg lg:max-w-xl"
+          "bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-black/50 p-4 backdrop-blur-sm"
         }
         overlayClassName={
           "fixed inset-0 z-40 bg-black/50 bg-opacity-50 backdrop-blur-sm"
         }
       >
-        <div className="flex w-full flex-col">
+        <div className="flex min-w-screen flex-col md:min-w-[400px]">
           <form
             onSubmit={form.handleSubmit(handleChangePassword)}
             className="grid grid-cols-1 place-items-center rounded-2xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4"
@@ -165,7 +165,7 @@ export default function Account() {
             <h2 className="text-2xl font-bold">{name}</h2>
           </div>
 
-          <div className="grid grid-cols-1 place-items-center md:grid-cols-2 md:place-items-stretch">
+          <div className="grid grid-cols-1 place-items-center gap-1.5">
             <div className="flex flex-col gap-2">
               <h2 className="text-lg">Email: {email}</h2>
               <h2 className="text-lg">Joined: {joined}</h2>

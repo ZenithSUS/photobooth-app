@@ -99,8 +99,12 @@ export default function Sidebar({
         parentSelector={() => document.querySelector("#root") as HTMLElement}
         isOpen={isModalOpen}
         onRequestClose={closeLogoutModal}
-        className="absolute top-1/8 z-[150] mx-auto grid max-h-screen w-full max-w-lg place-items-center p-4 sm:inset-x-8 sm:top-1/4 sm:max-w-md md:max-w-lg lg:max-w-xl"
-        overlayClassName="fixed inset-0 z-[100] bg-black/50"
+        className={
+          "bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-black/50 p-4 backdrop-blur-sm"
+        }
+        overlayClassName={
+          "fixed inset-0 z-40 bg-black/50 bg-opacity-50 backdrop-blur-sm"
+        }
       >
         <div className="z-20 flex flex-col items-center gap-4 rounded-xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-5">
           <h1>Are you sure you want to logout?</h1>

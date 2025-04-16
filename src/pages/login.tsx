@@ -3,42 +3,75 @@ import { useNavigate, Navigate } from "react-router-dom";
 import { account } from "../appwrite";
 import { useState, useEffect } from "react";
 import { ErrorType } from "../utils/types";
+import Loading from "../components/ui/loading";
 import CameraIcon from "../assets/ui/camera.png";
 import fetchAuthUser from "../lib/services/getAuth";
 
 export default function Login() {
-  let user = JSON.parse(localStorage.getItem("session") || "false") as boolean;
-  useEffect(() => {
-    fetchAuthUser(user);
-  }, []);
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  // Check authentication status on component mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      let userSession = JSON.parse(localStorage.getItem("session") || "false");
+      if (userSession) {
+        const authResult = await fetchAuthUser(userSession);
+        setIsAuthenticated(!!authResult);
+      }
+      setIsAuthChecking(false);
+    };
+
+    checkAuth();
+  }, []);
+
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      if (!email || !password) {
+        toast.error("Please fill in all fields");
+        return;
+      }
+
       const session = await account.createEmailPasswordSession(email, password);
-      localStorage.setItem("session", JSON.stringify(session.current));
+
+      localStorage.setItem("session", JSON.stringify(session));
+
       const data = await account.get();
+
+      // Store user data
       localStorage.setItem("id", JSON.stringify(data.$id));
       localStorage.setItem("name", JSON.stringify(data.name));
       localStorage.setItem("email", JSON.stringify(data.email));
-      localStorage.setItem("profileImage", JSON.stringify(data.prefs.imageUrl));
+      localStorage.setItem("joined", JSON.stringify(data.$createdAt));
+      localStorage.setItem(
+        "profileImage",
+        JSON.stringify(data.prefs?.imageUrl || ""),
+      );
+
       toast.success("Logged in Successfully!");
-      navigate("/dashboard");
+
+      window.location.href = "/dashboard";
     } catch (error: unknown) {
       const err = error as ErrorType;
       if (err.code === 400) toast.error("Invalid Credentials!");
       if (err.code === 404) toast.error("User not found!");
       if (err.code === 401) toast.error("Invalid Credentials!");
-      return;
+      console.error("Login error:", error);
     }
   };
 
-  if (user) return <Navigate to="/dashboard" />;
+  if (isAuthChecking) {
+    return <Loading />;
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" />;
+  }
 
   return (
     <main className="flex h-screen w-screen flex-col items-center justify-center">
@@ -83,6 +116,7 @@ export default function Login() {
         <button
           className="cursor-pointer rounded bg-amber-200 p-2 text-lg transition duration-300 ease-in-out hover:scale-95 hover:bg-amber-300"
           onClick={login}
+          type="submit"
         >
           Login
         </button>

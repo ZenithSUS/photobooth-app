@@ -75,7 +75,9 @@ export default function PhotoUser() {
     (vote) => vote.voteType === "Wow",
   ).length;
 
-  const voteType = photoVotes[0].voteType;
+  const voteType = photoVotes.find(
+    (vote) => vote.user.$id === userID,
+  )?.voteType;
 
   if (photo.filters && photo.border && photo.background) {
     userFilters = userFilter(photo.filters as string[]);

@@ -3,20 +3,30 @@ import Sidebar from "../components/ui/sidebar";
 import { Outlet } from "react-router-dom";
 import { useEffect, useState, useLayoutEffect } from "react";
 import { Navigate } from "react-router-dom";
+import Loading from "../components/ui/loading";
 import fetchAuthUser from "../lib/services/getAuth";
 
 export default function UserLayout() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 1024);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  let user = JSON.parse(localStorage.getItem("session") || "false") as boolean;
-  const guestMode = !user;
+  const [authChecked, setAuthChecked] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    if (guestMode) return;
-    const getAuth = async () => {
-      user = await fetchAuthUser(user);
+    const checkAuth = async () => {
+      let userSession = JSON.parse(localStorage.getItem("session") || "false");
+
+      if (userSession) {
+        const authResult = await fetchAuthUser(userSession);
+        setIsAuthenticated(!!authResult);
+      } else {
+        setIsAuthenticated(false);
+      }
+
+      setAuthChecked(true);
     };
-    getAuth();
+
+    checkAuth();
   }, []);
 
   useLayoutEffect(() => {
@@ -28,6 +38,7 @@ export default function UserLayout() {
     };
 
     handleResize();
+
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -43,8 +54,12 @@ export default function UserLayout() {
     setMobileMenuOpen(false);
   };
 
-  if (!user) {
+  if (authChecked && !isAuthenticated) {
     return <Navigate to="/login" />;
+  }
+
+  if (!authChecked) {
+    return <Loading />;
   }
 
   return (
