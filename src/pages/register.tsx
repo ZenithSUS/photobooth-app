@@ -275,46 +275,45 @@ export default function Register() {
               <span className="h-10"></span>
             )}
           </div>
+        </div>
+        <div className="flex flex-col items-center justify-center gap-1">
+          <label htmlFor="profileImage" className="text-xl font-bold">
+            Profile Image
+          </label>
 
-          <div className="flex flex-col gap-1">
-            <label htmlFor="profileImage" className="text-xl font-bold">
-              Profile Image
+          <div className="flex">
+            <label className="flex cursor-pointer items-center rounded-l-md bg-amber-400 px-4 py-2 font-medium text-white hover:bg-amber-500">
+              Choose File
+              <input
+                id="profileImage"
+                type="file"
+                accept="image/png, image/jpeg, image/jpg"
+                className="hidden"
+                {...form.register("image")}
+                onChange={(e) => {
+                  form.register("image").onChange(e);
+                  setFileName(
+                    e.target.files && e.target.files[0]
+                      ? e.target.files[0].name
+                      : "No file chosen",
+                  );
+                }}
+                autoComplete="off"
+              />
             </label>
-
-            <div className="flex w-full">
-              <label className="flex cursor-pointer items-center rounded-l-md bg-amber-400 px-4 py-2 font-medium text-white hover:bg-amber-500">
-                Choose File
-                <input
-                  id="profileImage"
-                  type="file"
-                  accept="image/png, image/jpeg, image/jpg"
-                  className="hidden"
-                  {...form.register("image")}
-                  onChange={(e) => {
-                    form.register("image").onChange(e);
-                    setFileName(
-                      e.target.files && e.target.files[0]
-                        ? e.target.files[0].name
-                        : "No file chosen",
-                    );
-                  }}
-                  autoComplete="off"
-                />
-              </label>
-              <span className="flex w-full items-center rounded-r-md border border-gray-300 bg-white px-3 py-2">
-                {fileName as string}
-              </span>
-            </div>
-            <h3 className="text-md text-center">Max Size 5MB</h3>
-
-            {form.formState.errors.image ? (
-              <span className="h-10 text-red-500">
-                {form.formState.errors.image.message}
-              </span>
-            ) : (
-              <span className="h-10"></span>
-            )}
+            <span className="flex w-full items-center rounded-r-md border border-gray-300 bg-white px-3 py-2">
+              {fileName as string}
+            </span>
           </div>
+          <h3 className="text-md text-center">Max Size 5MB</h3>
+
+          {form.formState.errors.image ? (
+            <span className="h-10 text-red-500">
+              {form.formState.errors.image.message}
+            </span>
+          ) : (
+            <span className="h-10"></span>
+          )}
         </div>
         <button
           className="cursor-pointer rounded bg-amber-200 p-2 text-lg transition duration-300 ease-in-out hover:scale-95 hover:bg-amber-300"
