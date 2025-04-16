@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { account } from "../../appwrite";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Modal from "react-modal";
 import accountIcon from "../../assets/ui/account.png";
 import cameraIcon from "../../assets/ui/camera.png";
@@ -32,6 +32,7 @@ export default function Sidebar({
   isMobile,
 }: SidebarProps) {
   const navigate = useNavigate();
+  const [isPending, startTransition] = useTransition();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navItems: NavItem[] = [
@@ -59,10 +60,12 @@ export default function Sidebar({
 
   const logout = async () => {
     try {
-      await account.deleteSession("current");
-      localStorage.clear();
+      startTransition(async () => {
+        await account.deleteSession("current");
+        localStorage.clear();
+        navigate("/login");
+      });
       toast.success("Logged out successfully!");
-      navigate("/login");
     } catch (error) {
       toast.error("Failed to log out. Please try again.");
       console.error("Logout error:", error);
@@ -103,15 +106,18 @@ export default function Sidebar({
           <h1>Are you sure you want to logout?</h1>
           <div className="flex gap-4">
             <button
-              className="cursor-pointer rounded-xl bg-gradient-to-br from-rose-400 via-pink-400 to-fuchsia-400 p-2 hover:scale-105 hover:bg-gradient-to-br hover:from-fuchsia-400 hover:via-purple-400 hover:to-violet-400"
+              className="cursor-pointer rounded-xl bg-gradient-to-br from-rose-400 via-pink-400 to-fuchsia-400 p-2 hover:scale-105 hover:bg-gradient-to-br hover:from-fuchsia-400 hover:via-purple-400 hover:to-violet-400 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
               onClick={logout}
+              disabled={isPending}
               type="button"
             >
               Confirm
             </button>
             <button
               onClick={closeLogoutModal}
-              className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 hover:scale-105 hover:bg-gradient-to-br hover:from-red-400 hover:via-rose-400 hover:to-pink-400"
+              type="button"
+              disabled={isPending}
+              className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 hover:scale-105 hover:bg-gradient-to-br hover:from-red-400 hover:via-rose-400 hover:to-pink-400 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
             >
               Cancel
             </button>

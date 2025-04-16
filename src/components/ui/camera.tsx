@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, useTransition } from "react";
 import { useNavigate } from "react-router-dom";
 import { useBoothContext } from "../../lib/context/booth.tsx";
 import { messages } from "../../utils/constants/message.ts";
@@ -32,6 +32,7 @@ export default function Camera({
   const navigate = useNavigate();
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isPending, startTransition] = useTransition();
   const [webCamReady, setWebCamReady] = useState(false);
   const [timer, setTimer] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -204,18 +205,22 @@ export default function Camera({
       }
 
       userFilters = Object.values(filterValues).map((f) => String(f));
-      console.log(userFilters);
-      await shareImages(
-        capturedImage as Blob[],
-        setCapturedImage,
-        setIsModalOpen,
-        name,
-        title,
-        sticker,
-        backgroundValue,
-        borderValue,
-        userFilters,
-      );
+
+      startTransition(async () => {
+        await shareImages(
+          capturedImage as Blob[],
+          setCapturedImage,
+          setIsModalOpen,
+          name,
+          title,
+          sticker,
+          backgroundValue,
+          borderValue,
+          userFilters,
+        );
+      });
+
+      return navigate("/social");
     } catch (error) {
       console.log(error);
     }
@@ -254,14 +259,18 @@ export default function Camera({
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="submit"
-                  className="cursor-pointer rounded-xl bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 p-2 transition duration-300 ease-in-out hover:from-green-500 hover:via-emerald-500 hover:to-teal-500"
+                  name="share"
+                  disabled={isPending}
+                  className="cursor-pointer rounded-xl bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 p-2 transition duration-300 ease-in-out hover:from-green-500 hover:via-emerald-500 hover:to-teal-500 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
                 >
                   Share
                 </button>
                 <button
                   type="button"
+                  name="cancel"
+                  disabled={isPending}
                   onClick={() => setIsModalOpen(false)}
-                  className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 transition duration-300 ease-in-out hover:from-amber-500 hover:via-orange-500 hover:to-red-500"
+                  className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 transition duration-300 ease-in-out hover:from-amber-500 hover:via-orange-500 hover:to-red-500 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
                 >
                   Cancel
                 </button>

@@ -20,9 +20,7 @@ export default function posts(photos: ShowPhotos[], votes: ShowVote[]) {
       (vote) => vote.voteType === "Wow",
     ).length;
 
-    const voteType = photoVotes.filter((vote) => {
-      return vote.user.$id === id;
-    })[0].voteType;
+    const voteType = photoVotes.find((vote) => vote.user.$id === id)?.voteType;
 
     return {
       ...photo,
