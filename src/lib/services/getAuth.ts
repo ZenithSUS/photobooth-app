@@ -17,7 +17,14 @@ export default async function fetchAuthUser(user: boolean) {
         localStorage.setItem("name", JSON.stringify(data.name));
         localStorage.setItem("email", JSON.stringify(data.email));
         localStorage.setItem("joined", JSON.stringify(data.$createdAt));
-
+        localStorage.setItem(
+          "profileImage",
+          JSON.stringify(data.prefs?.imageUrl || ""),
+        );
+        localStorage.setItem(
+          "profileId",
+          JSON.stringify(data.prefs?.imageId || ""),
+        );
         return user;
       } else {
         await cleanupSession();

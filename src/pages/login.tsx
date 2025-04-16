@@ -15,7 +15,6 @@ export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  // Check authentication status on component mount
   useEffect(() => {
     const checkAuth = async () => {
       let userSession = JSON.parse(localStorage.getItem("session") || "false");
@@ -43,7 +42,6 @@ export default function Login() {
 
       const data = await account.get();
 
-      // Store user data
       localStorage.setItem("id", JSON.stringify(data.$id));
       localStorage.setItem("name", JSON.stringify(data.name));
       localStorage.setItem("email", JSON.stringify(data.email));
@@ -51,6 +49,10 @@ export default function Login() {
       localStorage.setItem(
         "profileImage",
         JSON.stringify(data.prefs?.imageUrl || ""),
+      );
+      localStorage.setItem(
+        "profileId",
+        JSON.stringify(data.prefs?.imageId || ""),
       );
 
       toast.success("Logged in Successfully!");

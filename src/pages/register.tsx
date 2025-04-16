@@ -14,6 +14,8 @@ import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewUser } from "../actions/users";
+import { ErrorType } from "../utils/types";
+import { useTransition } from "react";
 import fetchAuthUser from "../lib/services/getAuth";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -63,6 +65,7 @@ export default function Register() {
   const navigate = useNavigate();
   const [fileName, setFileName] =
     useState<SetStateAction<string>>("No file chosen");
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<registerSchemaType>({
     resolver: zodResolver(registerSchema),
@@ -80,61 +83,78 @@ export default function Register() {
     try {
       if (Object.keys(form.formState.errors).length > 0) return;
 
-      const name = `${data.firstName} ${data.middleInitial} ${data.lastName}`;
-      const acc = await account.create(
-        ID.unique(),
-        data.email,
-        data.password,
-        name,
-      );
-
-      const session = await account.createEmailPasswordSession(
-        data.email,
-        data.password,
-      );
-
-      const userData = {
-        name: name,
-        email: data.email,
-        profileImage: "",
-      };
-
-      if (data.image instanceof FileList && data.image.length > 0) {
-        const imageFile = new File(
-          [data.image[0]],
-          "zenithbooth_profile_" + uuidv4() + ".jpg",
-          {
-            type: "image/jpeg",
-          },
-        );
-        const uploadedFile = await storage.createFile(
-          BUCKET_ID,
+      startTransition(async () => {
+        const name = `${data.firstName} ${data.middleInitial} ${data.lastName}`;
+        const acc = await account.create(
           ID.unique(),
-          imageFile,
+          data.email,
+          data.password,
+          name,
         );
 
-        userData.profileImage = `${endpointUrl}/storage/buckets/${uploadedFile.bucketId}/files/${uploadedFile.$id}/view?project=${projectId}&mode=admin`;
-      }
-      account.updatePrefs({ imageUrl: userData.profileImage });
-      await createNewUser(userData, acc.$id);
+        const session = await account.createEmailPasswordSession(
+          data.email,
+          data.password,
+        );
 
-      localStorage.setItem("session", JSON.stringify(session.current));
-      const userDataResponse = await account.get();
-      localStorage.setItem("id", JSON.stringify(userDataResponse.$id));
-      localStorage.setItem("name", JSON.stringify(userDataResponse.name));
-      localStorage.setItem("email", JSON.stringify(userDataResponse.email));
-      localStorage.setItem(
-        "profileImage",
-        JSON.stringify(userData.profileImage),
-      );
-      localStorage.setItem(
-        "joined",
-        JSON.stringify(userDataResponse.$createdAt),
-      );
-      toast.success("Registered Successfully!");
+        const userData = {
+          name: name,
+          email: data.email,
+          profileImage: "",
+          profileId: "",
+        };
+
+        if (data.image instanceof FileList && data.image.length > 0) {
+          const imageFile = new File(
+            [data.image[0]],
+            "zenithbooth_profile_" + uuidv4() + ".jpg",
+            {
+              type: "image/jpeg",
+            },
+          );
+          const uploadedFile = await storage.createFile(
+            BUCKET_ID,
+            ID.unique(),
+            imageFile,
+          );
+
+          userData.profileImage = `${endpointUrl}/storage/buckets/${uploadedFile.bucketId}/files/${uploadedFile.$id}/view?project=${projectId}&mode=admin`;
+          userData.profileId = uploadedFile.$id;
+        }
+        account.updatePrefs({
+          imageUrl: userData.profileImage,
+          imageId: userData.profileId,
+        });
+        await createNewUser(userData, acc.$id);
+
+        localStorage.setItem("session", JSON.stringify(session.current));
+        const userDataResponse = await account.get();
+        localStorage.setItem("id", JSON.stringify(userDataResponse.$id));
+        localStorage.setItem("name", JSON.stringify(userDataResponse.name));
+        localStorage.setItem("email", JSON.stringify(userDataResponse.email));
+        localStorage.setItem(
+          "profileImage",
+          JSON.stringify(userData.profileImage),
+        );
+        localStorage.setItem("profileId", JSON.stringify(userData.profileId));
+        localStorage.setItem(
+          "joined",
+          JSON.stringify(userDataResponse.$createdAt),
+        );
+        toast.success("Registered Successfully!");
+      });
     } catch (error) {
-      console.log(error);
-      toast.error("There was an error registering");
+      const err = error as ErrorType;
+      if (err.code === 409) {
+        toast.error("Email already in use");
+        return;
+      } else if (err.code === 400) {
+        toast.error(err.message);
+        return;
+      } else {
+        toast.error("There was an error registering");
+      }
+      console.log(err);
     }
   };
 
@@ -316,8 +336,9 @@ export default function Register() {
           )}
         </div>
         <button
-          className="cursor-pointer rounded bg-amber-200 p-2 text-lg transition duration-300 ease-in-out hover:scale-95 hover:bg-amber-300"
+          className="cursor-pointer rounded bg-amber-200 p-2 text-lg transition duration-300 ease-in-out hover:scale-95 hover:bg-amber-300 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
           type="submit"
+          disabled={isPending}
         >
           Submit
         </button>
