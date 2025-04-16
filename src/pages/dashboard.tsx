@@ -11,7 +11,7 @@ import Card from "../components/card.tsx";
 import posts from "../utils/functions/posts.ts";
 
 export default function Dashboard() {
-  const id = JSON.parse(localStorage.getItem("id") as string) || null;
+  const id = JSON.parse(localStorage.getItem("id") as string) as string;
 
   const { data: userPhotos, isLoading: userPhotoLoading } =
     useGetAllPhotosByUser(id);
