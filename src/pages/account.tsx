@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "react-toastify";
 import changePassword from "../utils/functions/change-password";
 import formatDate from "../utils/functions/format-date";
@@ -29,7 +29,7 @@ type changePasswordSchemaType = z.infer<typeof changePasswordSchema>;
 
 export default function Account() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
+  const [isPending, startTransition] = useTransition();
   const name = JSON.parse(localStorage.getItem("name") as string);
   const email = JSON.parse(localStorage.getItem("email") as string);
   const profileImage = JSON.parse(
@@ -50,8 +50,11 @@ export default function Account() {
   const handleChangePassword = async (data: changePasswordSchemaType) => {
     try {
       if (!data.oldPassword || !data.confirmPassword) return;
-
-      await changePassword(data.oldPassword, data.newPassword);
+      startTransition(async () => {
+        await changePassword(data.oldPassword, data.newPassword);
+      });
+      setIsModalOpen(false);
+      form.reset();
     } catch (error) {
       console.error(error);
       toast.error("There is something changing your password");
@@ -137,14 +140,16 @@ export default function Account() {
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="submit"
-                  className="cursor-pointer rounded-xl bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 p-2 transition duration-300 ease-in-out hover:from-green-500 hover:via-emerald-500 hover:to-teal-500"
+                  disabled={isPending}
+                  className="cursor-pointer rounded-xl bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 p-2 transition duration-300 ease-in-out hover:from-green-500 hover:via-emerald-500 hover:to-teal-500 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
                 >
                   Submit
                 </button>
                 <button
                   type="button"
+                  disabled={isPending}
                   onClick={() => setIsModalOpen(false)}
-                  className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 transition duration-300 ease-in-out hover:from-amber-500 hover:via-orange-500 hover:to-red-500"
+                  className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 transition duration-300 ease-in-out hover:from-amber-500 hover:via-orange-500 hover:to-red-500 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
                 >
                   Cancel
                 </button>
@@ -171,12 +176,15 @@ export default function Account() {
               <h2 className="text-lg">Joined: {joined}</h2>
             </div>
 
-            <div className="m-2 flex flex-col items-center justify-center gap-2 md:m-0 md:items-start md:justify-start">
+            <div className="m-2 flex flex-col items-center justify-center gap-2">
               <button
-                className="cursor-pointer rounded-md bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 text-lg hover:from-amber-500 hover:via-orange-500 hover:to-red-500"
+                className="cursor-pointer rounded-md bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 text-lg duration-300 ease-in-out hover:scale-105 hover:from-amber-500 hover:via-orange-500 hover:to-red-500"
                 onClick={() => setIsModalOpen(true)}
               >
                 Change Password
+              </button>
+              <button className="cursor-pointer rounded-md bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 text-lg duration-300 ease-in-out hover:scale-105 hover:from-amber-500 hover:via-orange-500 hover:to-red-500">
+                Change Image
               </button>
             </div>
           </div>
