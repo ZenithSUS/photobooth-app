@@ -36,6 +36,13 @@ export type ShareType = {
   capturedImage: Blob[];
   setCapturedImage: React.Dispatch<React.SetStateAction<Blob[]>>;
   setFilterValues: React.Dispatch<React.SetStateAction<FiltersType>>;
+  setFilter: React.Dispatch<React.SetStateAction<FiltersType>>;
+  setPrevFilter: React.Dispatch<React.SetStateAction<FiltersType[]>>;
+  setSticker: React.Dispatch<React.SetStateAction<string>>;
+  setBorderValue: React.Dispatch<React.SetStateAction<string>>;
+  setBackgroundValue: React.Dispatch<React.SetStateAction<string>>;
+  setBorderColor: React.Dispatch<React.SetStateAction<string>>;
+  setBackgroundColor: React.Dispatch<React.SetStateAction<string>>;
   name: string;
   sticker: string;
   backgroundValue: string;

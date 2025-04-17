@@ -211,6 +211,13 @@ export function ShareModal({
           shareData.capturedImage as Blob[],
           shareData.setCapturedImage,
           shareData.setFilterValues,
+          shareData.setFilter,
+          shareData.setPrevFilter,
+          shareData.setSticker,
+          shareData.setBorderValue,
+          shareData.setBackgroundValue,
+          shareData.setBorderColor,
+          shareData.setBackgroundColor,
           setIsModalOpen,
           shareData.name,
           title,
@@ -221,7 +228,7 @@ export function ShareModal({
         );
       });
 
-      return navigate("/social");
+      return navigate("/");
     } catch (error) {
       console.log(error);
     }

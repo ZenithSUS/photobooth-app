@@ -64,6 +64,7 @@ export default function Camera({
   } = filters;
 
   const resetFilter = () => {
+    setCapturedImage([]);
     setFilter({
       sepia: 0,
       grayscale: 0,
@@ -72,11 +73,22 @@ export default function Camera({
       brightness: 100,
       contrast: 100,
     });
+    setFilterValues({
+      sepia: "sepia-0",
+      grayscale: "grayscale-0",
+      hueRotate: "hue-rotate-0",
+      invert: "invert-0",
+      brightness: "brightness-100",
+      contrast: "contrast-100",
+    });
     setPrevFilter([]);
+    setSticker("N/A");
     setBackgroundColor(
       "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400",
     );
+    setBackgroundValue("1");
     setBorderColor("border-sky-400");
+    setBorderValue("0");
   };
 
   const handleDownload = () => {
@@ -89,31 +101,8 @@ export default function Camera({
     if (capturedImage.length > 0) {
       if (!window.confirm("Are you sure you want to go back?")) return;
     }
-
-    setFilterValues({
-      sepia: 0,
-      grayscale: 0,
-      hueRotate: 0,
-      invert: 0,
-      brightness: 100,
-      contrast: 100,
-    });
-    setFilter({
-      sepia: 0,
-      grayscale: 0,
-      hueRotate: 0,
-      invert: 0,
-      brightness: 100,
-      contrast: 100,
-    });
-    setBackgroundColor("");
-    setBorderColor("");
-    setBorderValue("");
-    setBackgroundValue("");
-    setCapturedImage([]);
-    setPrevFilter([]);
     resetFilter();
-    setSticker("N/A");
+
     navigate("/dashboard");
   };
 
@@ -161,20 +150,7 @@ export default function Camera({
   }, [capture]);
 
   const resetImage = useCallback(() => {
-    setFilterValues({
-      sepia: 0,
-      grayscale: 0,
-      hueRotate: 0,
-      invert: 0,
-      brightness: 100,
-      contrast: 100,
-    });
-    setBorderValue("");
-    setBackgroundValue("");
-    setCapturedImage([]);
-    setPrevFilter([]);
     resetFilter();
-    setSticker("N/A");
   }, [setCapturedImage]);
 
   const handleShare = async () => {
@@ -202,6 +178,27 @@ export default function Camera({
           >,
           setFilterValues: setFilterValues as React.Dispatch<
             React.SetStateAction<FiltersType>
+          >,
+          setPrevFilter: setPrevFilter as React.Dispatch<
+            React.SetStateAction<FiltersType[]>
+          >,
+          setSticker: setSticker as React.Dispatch<
+            React.SetStateAction<string>
+          >,
+          setFilter: setFilter as React.Dispatch<
+            React.SetStateAction<FiltersType>
+          >,
+          setBorderValue: setBorderValue as React.Dispatch<
+            React.SetStateAction<string>
+          >,
+          setBackgroundValue: setBackgroundValue as React.Dispatch<
+            React.SetStateAction<string>
+          >,
+          setBorderColor: setBorderColor as React.Dispatch<
+            React.SetStateAction<string>
+          >,
+          setBackgroundColor: setBackgroundColor as React.Dispatch<
+            React.SetStateAction<string>
           >,
           sticker,
           name,

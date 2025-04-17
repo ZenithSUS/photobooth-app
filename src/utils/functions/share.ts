@@ -14,6 +14,13 @@ export default async function shareImages(
   capturedImage: Blob[],
   setCapturedImage: (images: Blob[]) => void,
   setFilterValues: (values: FiltersType) => void,
+  setFilter: (values: FiltersType) => void,
+  setPrevFilter: (values: FiltersType[]) => void,
+  setSticker: (sticker: string) => void,
+  setBorderValue: (value: string) => void,
+  setBackgroundValue: (value: string) => void,
+  setBorderColor: (value: string) => void,
+  setBackgroundColor: (value: string) => void,
   setIsModalOpen: (isOpen: boolean) => void,
   name: string,
   title: string,
@@ -107,6 +114,16 @@ export default async function shareImages(
       );
 
       setCapturedImage([]);
+
+      setFilter({
+        sepia: 0,
+        grayscale: 0,
+        hueRotate: 0,
+        invert: 0,
+        brightness: 100,
+        contrast: 100,
+      });
+
       setFilterValues({
         sepia: "sepia-0",
         grayscale: "grayscale-0",
@@ -115,6 +132,15 @@ export default async function shareImages(
         brightness: "brightness-100",
         contrast: "contrast-100",
       });
+
+      setBackgroundColor(
+        "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400",
+      );
+      setBorderColor("border-sky-400");
+      setBackgroundValue("1");
+      setBorderValue("0");
+      setSticker("N/A");
+      setPrevFilter([]);
       setIsModalOpen(false);
       toast.success("Images shared successfully!");
     }
