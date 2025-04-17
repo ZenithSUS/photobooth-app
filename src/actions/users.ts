@@ -1,4 +1,4 @@
-import { createUser } from "../appwrite/users";
+import { createUser, getUser } from "../appwrite/users";
 
 export const createNewUser = async (data: Object, id: string) => {
   try {
@@ -7,3 +7,13 @@ export const createNewUser = async (data: Object, id: string) => {
     throw error;
   }
 };
+
+export const fetchUser = async (id: string) => {
+  try {
+    return await getUser(id);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export default { createNewUser, fetchUser };

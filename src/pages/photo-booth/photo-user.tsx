@@ -61,7 +61,6 @@ export default function PhotoUser() {
     window.location.href = "/social";
     return null;
   }
-
   const photoVotes =
     votes?.filter((vote) => vote.photo.$id === photo.$id) || [];
 

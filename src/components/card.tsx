@@ -78,7 +78,12 @@ export default function Card({ photo }: { photo: ShowPhotos & VoteValues }) {
         />
       </div>
       <h1 className="text-center font-bold">{photo.title}</h1>
-      <h2 className="text-center font-bold">Author: {photo.author}</h2>
+      <h2
+        className="cursor-pointer text-center font-bold hover:underline"
+        onClick={() => navigate(`/account/${photo.userID}`)}
+      >
+        Author: {photo.author}
+      </h2>
       <p className="text-sm text-gray-600">
         Shared on: {formatDate(photo.$createdAt)}
       </p>

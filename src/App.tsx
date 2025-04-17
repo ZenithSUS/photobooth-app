@@ -13,6 +13,7 @@ const PhotoBooth = lazy(() => import("./pages/photo-booth/index.tsx"));
 const PhotoUser = lazy(() => import("./pages/photo-booth/photo-user.tsx"));
 const Photo = lazy(() => import("./pages/photo"));
 const Account = lazy(() => import("./pages/account"));
+const Visit = lazy(() => import("./pages/visit"));
 const NotFound = lazy(() => import("./pages/not-found"));
 
 function App() {
@@ -89,6 +90,15 @@ function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <Account />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="/account/:id"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Visit />
               </Suspense>
             }
           />

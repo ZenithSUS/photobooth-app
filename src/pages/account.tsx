@@ -94,7 +94,7 @@ export default function Account() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2 p-5">
+      <div className="flex flex-col gap-2">
         <h1 className="text-center text-3xl font-bold">Your Posts</h1>
         {userPosts.length === 0 && (
           <h2 className="text-center text-2xl">No posts</h2>

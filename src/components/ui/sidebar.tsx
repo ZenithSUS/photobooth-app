@@ -93,7 +93,7 @@ export default function Sidebar({
         isMobile && !isMobileMenuOpen ? "hidden" : "lg:block"
       } top-0 left-0 z-20 flex-col pl-4 ${
         isMobile ? "w-full pt-35 md:pt-30" : "w-[300px]"
-      } h-screen overflow-auto border-r-2 border-amber-400 bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400`}
+      } h-screen overflow-auto bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 lg:border-r-2 lg:border-amber-400`}
     >
       <Modal
         parentSelector={() => document.querySelector("#root") as HTMLElement}

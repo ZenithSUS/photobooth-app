@@ -33,7 +33,13 @@ export const getAllUsers = async () => {
 
 export const getUser = async (id: string) => {
   try {
-    await databases.getDocument(DATABASE_ID, USER_COLLECTION_ID, id);
+    const result = await databases.getDocument(
+      DATABASE_ID,
+      USER_COLLECTION_ID,
+      id,
+    );
+
+    return result;
   } catch (error) {
     console.log(error);
   }
