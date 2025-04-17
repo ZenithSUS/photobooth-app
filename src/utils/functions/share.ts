@@ -106,13 +106,6 @@ export default async function shareImages(
         return;
       }
 
-      navigator.clipboard.writeText(
-        import.meta.env.PROD
-          ? ""
-          : import.meta.env.VITE_WEBSITE_URL_DEV +
-              `/photo-booth/${response?.$id}`,
-      );
-
       setCapturedImage([]);
 
       setFilter({
