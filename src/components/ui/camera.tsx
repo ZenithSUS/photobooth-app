@@ -16,6 +16,7 @@ import Cat from "../stickers/cat/img.tsx";
 import Bear from "../stickers/bear/img.tsx";
 import Gamer from "../stickers/gamer/img.tsx";
 import DemonSlayer from "../stickers/demon-slayer/img.tsx";
+import { FiltersType } from "../../utils/types.ts";
 
 export default function Camera({
   photoBoothRef,
@@ -198,6 +199,9 @@ export default function Camera({
           capturedImage: capturedImage as Blob[],
           setCapturedImage: setCapturedImage as React.Dispatch<
             React.SetStateAction<Blob[]>
+          >,
+          setFilterValues: setFilterValues as React.Dispatch<
+            React.SetStateAction<FiltersType>
           >,
           sticker,
           name,

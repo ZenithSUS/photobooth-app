@@ -8,11 +8,12 @@ import {
 } from "../../appwrite/index.ts";
 import { ID } from "appwrite";
 import { toast } from "react-toastify";
-import { UserFilters } from "../types.ts";
+import { UserFilters, FiltersType } from "../types.ts";
 
 export default async function shareImages(
   capturedImage: Blob[],
   setCapturedImage: (images: Blob[]) => void,
+  setFilterValues: (values: FiltersType) => void,
   setIsModalOpen: (isOpen: boolean) => void,
   name: string,
   title: string,
@@ -86,6 +87,11 @@ export default async function shareImages(
         image1Url: `${endpointUrl}/storage/buckets/${imageData1.bucketId}/files/${imageData1.$id}/view?project=${projectId}&mode=admin`,
         image2Url: `${endpointUrl}/storage/buckets/${imageData2.bucketId}/files/${imageData2.$id}/view?project=${projectId}&mode=admin`,
         image3Url: `${endpointUrl}/storage/buckets/${imageData3.bucketId}/files/${imageData3.$id}/view?project=${projectId}&mode=admin`,
+        imagesId: [
+          `${imageData1.$id}`,
+          `${imageData2.$id}`,
+          `${imageData3.$id}`,
+        ],
       });
 
       if (!response) {
@@ -101,6 +107,14 @@ export default async function shareImages(
       );
 
       setCapturedImage([]);
+      setFilterValues({
+        sepia: "sepia-0",
+        grayscale: "grayscale-0",
+        hueRotate: "hue-rotate-0",
+        invert: "invert-0",
+        brightness: "brightness-100",
+        contrast: "contrast-100",
+      });
       setIsModalOpen(false);
       toast.success("Images shared successfully!");
     }

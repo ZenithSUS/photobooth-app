@@ -2,7 +2,7 @@ import { useRef, useTransition } from "react";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useGetPhoto } from "../../hooks/photos";
+import { useDeletePhoto, useGetPhoto } from "../../hooks/photos";
 import { useCreateSavedPhoto } from "../../hooks/saved";
 import { useCreateDownloaded } from "../../hooks/downloaded";
 import {
@@ -12,6 +12,7 @@ import {
   useGetAllVotes,
 } from "../../hooks/votes";
 import { sleep } from "../../utils/functions/sleep";
+import deletePhotos from "../../utils/functions/delete-photo";
 import downloadAllImages from "../../utils/functions/download";
 import formatDate from "../../utils/functions/format-date";
 import userFilter from "../../utils/functions/userFilter";
@@ -25,6 +26,7 @@ import Gamer from "../../components/stickers/gamer/img";
 import DemonSlayer from "../../components/stickers/demon-slayer/img";
 import BackIcon from "../../assets/ui/back.svg";
 import SaveIcon from "../../assets/ui/save.png";
+import DeleteIcon from "../../assets/ui/bin.png";
 import DownloadIcon from "../../assets/ui/downloading.png";
 import HeartBtn from "../../assets/ui/heart2.png";
 import SadBtn from "../../assets/ui/sad.png";
@@ -41,6 +43,7 @@ export default function PhotoUser() {
   const { mutate: createVote } = useCreateVote();
   const { mutate: deleteVote } = useDeleteVote();
   const { mutate: updateVote } = useUpdateVote();
+  const { mutate: deletePhoto } = useDeletePhoto(id as string);
   const { data: votes, isLoading: votesLoading } = useGetAllVotes();
   const { data: photo, isLoading: photoLoading } = useGetPhoto(id as string);
   const photoBoothRef = useRef<HTMLDivElement>(null);
@@ -55,7 +58,7 @@ export default function PhotoUser() {
   if (photoLoading || votesLoading) return <Loading />;
 
   if (!photo || !votes) {
-    navigate("/social");
+    window.location.href = "/social";
     return null;
   }
 
@@ -101,23 +104,26 @@ export default function PhotoUser() {
   };
 
   const handleSave = (photoID: string, userID: string) => {
-    createSaved(
-      {
-        photoID: photoID,
-        userID: userID,
-      },
-      {
-        onSuccess: () => {
-          toast.success("Saved Successfully");
+    startTransition(async () => {
+      createSaved(
+        {
+          photoID: photoID,
+          userID: userID,
         },
-        onError: (error) => {
-          if (error instanceof Error) {
-            toast.error(error.message);
-            console.error("Error adding user", error);
-          }
+        {
+          onSuccess: () => {
+            toast.success("Saved Successfully");
+          },
+          onError: (error) => {
+            if (error instanceof Error) {
+              toast.error(error.message);
+              console.error("Error adding user", error);
+            }
+          },
         },
-      },
-    );
+      );
+      await sleep(1200);
+    });
   };
 
   const handleVote = (voteType: string, photoId: string) => {
@@ -140,6 +146,34 @@ export default function PhotoUser() {
         createVote({ voteType, photo: photoId, user });
         await sleep(1000);
       }
+    });
+  };
+
+  const handleDelete = (photoID: string) => {
+    if (!window.confirm("Are you sure you want to delete this photo?")) return;
+
+    startTransition(async () => {
+      if (!photoID || !photo.imagesId) return;
+      const imagesId = [
+        photo.imagesId[0],
+        photo.imagesId[1],
+        photo.imagesId[2],
+      ];
+      deletePhotos(imagesId);
+      deletePhoto(photoID, {
+        onSuccess: () => {
+          navigate("/social");
+          toast.success("Deleted Successfully");
+        },
+        onError: (error) => {
+          if (error instanceof Error) {
+            toast.error(error.message);
+            console.error("Error deleting photo", error);
+          }
+        },
+      });
+
+      await sleep(2000);
     });
   };
 
@@ -295,7 +329,8 @@ export default function PhotoUser() {
           <>
             <button
               onClick={() => handleSave(photo.$id ?? "", photo.userID ?? "")}
-              className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
+              disabled={isPending}
+              className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
             >
               <img src={SaveIcon} alt="Save" className="h-6 w-6" />
             </button>
@@ -306,6 +341,13 @@ export default function PhotoUser() {
               className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
             >
               <img src={DownloadIcon} alt="Save" className="h-6 w-6" />
+            </button>
+            <button
+              onClick={() => handleDelete(photo.$id ?? "")}
+              disabled={isPending}
+              className="cursor-pointer rounded bg-red-500 px-4 py-2 text-white transition duration-300 hover:bg-red-600 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+            >
+              <img src={DeleteIcon} alt="Save" className="h-6 w-6" />
             </button>
           </>
         )}

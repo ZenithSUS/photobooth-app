@@ -210,6 +210,7 @@ export function ShareModal({
         await shareImages(
           shareData.capturedImage as Blob[],
           shareData.setCapturedImage,
+          shareData.setFilterValues,
           setIsModalOpen,
           shareData.name,
           title,

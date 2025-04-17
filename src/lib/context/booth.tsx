@@ -79,9 +79,9 @@ export const BoothProvider = ({ children }: Props) => {
   const [backgroundColor, setBackgroundColor] = useState<string>(
     "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400",
   );
-  const [backgroundValue, setBackgroundValue] = useState<string>("2");
+  const [backgroundValue, setBackgroundValue] = useState<string>("1");
   const [borderColor, setBorderColor] = useState<string>("border-sky-400");
-  const [borderValue, setBorderValue] = useState<string>("1");
+  const [borderValue, setBorderValue] = useState<string>("0");
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
   const [filter, setFilter] = useState<FiltersType>({
     sepia: 0,

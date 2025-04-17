@@ -35,8 +35,8 @@ export type Border = {
 export type ShareType = {
   capturedImage: Blob[];
   setCapturedImage: React.Dispatch<React.SetStateAction<Blob[]>>;
+  setFilterValues: React.Dispatch<React.SetStateAction<FiltersType>>;
   name: string;
-
   sticker: string;
   backgroundValue: string;
   borderValue: string;
@@ -70,6 +70,7 @@ export type Photos = {
   image1Url: string | File;
   image2Url: string | File;
   image3Url: string | File;
+  imagesId: string[];
 };
 
 export type CreatePhoto = Omit<Photos, "$id" | "$createdAt" | "$updatedAt">;

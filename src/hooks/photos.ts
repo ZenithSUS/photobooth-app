@@ -2,8 +2,15 @@ import {
   fetchAllPhotos,
   fetchPhoto,
   fetchPhotosByUser,
+  removePhoto,
 } from "../actions/photos";
-import { QueryObserverResult, useQuery } from "@tanstack/react-query";
+import {
+  useQueryClient,
+  QueryObserverResult,
+  useQuery,
+  useMutation,
+  UseBaseMutationResult,
+} from "@tanstack/react-query";
 import { ShowPhotos } from "../utils/types";
 
 export const useGetAllPhotos = (): QueryObserverResult<ShowPhotos[]> => {
@@ -46,5 +53,23 @@ export const useGetPhoto = (
       return result;
     },
     queryKey: ["photo", id],
+  });
+};
+
+export const useDeletePhoto = (
+  id: string,
+): UseBaseMutationResult<{} | undefined, unknown, string, unknown> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async () => {
+      const response = await removePhoto(id);
+      return response;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["photos"] });
+    },
+    onError: (error) => {
+      throw error;
+    },
   });
 };

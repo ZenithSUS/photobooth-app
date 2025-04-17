@@ -45,6 +45,7 @@ export const getAllPhotos = async () => {
           image1Url: doc.image1Url,
           image2Url: doc.image2Url,
           image3Url: doc.image3Url,
+          imagesId: doc.imagesId,
         })),
       ];
 
@@ -93,6 +94,7 @@ export const getAllPhotosByUser = async (userID: string) => {
           image1Url: doc.image1Url,
           image2Url: doc.image2Url,
           image3Url: doc.image3Url,
+          imagesId: doc.imagesId,
         })),
       ];
 
@@ -119,6 +121,15 @@ export const getPhoto = async (id: string) => {
     return result;
   } catch (error) {
     console.error("Error fetching photos:", error);
+    throw error;
+  }
+};
+
+export const deletePhoto = async (id: string) => {
+  try {
+    return await databases.deleteDocument(DATABASE_ID, PHOTO_COLLECTION_ID, id);
+  } catch (error) {
+    console.error("Error deleting photo:", error);
     throw error;
   }
 };

@@ -3,6 +3,7 @@ import {
   getAllPhotos,
   getAllPhotosByUser,
   getPhoto,
+  deletePhoto,
 } from "../appwrite/photos";
 import { CreatePhoto } from "../utils/types";
 
@@ -35,5 +36,13 @@ export const fetchPhoto = async (id: string) => {
     return await getPhoto(id);
   } catch (error) {
     console.log("Error fetching photo:", error);
+  }
+};
+
+export const removePhoto = async (id: string) => {
+  try {
+    return await deletePhoto(id);
+  } catch (error) {
+    console.log("Error deleting photo:", error);
   }
 };

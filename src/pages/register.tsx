@@ -168,13 +168,12 @@ export default function Register() {
   }, [user, navigate]);
 
   return (
-    <main className="m-auto flex w-screen flex-col items-center justify-center md:h-screen">
+    <main className="flex w-screen flex-col items-center justify-center md:h-screen">
       <form
-        className="m-1.5 flex min-w-[calc(100vw-2rem)] flex-col justify-center gap-5 rounded-md bg-sky-400 p-5 ring-2 ring-amber-400 md:max-w-4xl lg:w-[800px]"
+        className="flex min-h-[calc(100vh)] min-w-[calc(100vw)] flex-col justify-center gap-5 bg-sky-400 p-8 md:max-w-4xl lg:w-[800px]"
         onSubmit={form.handleSubmit(register)}
       >
         <h1 className="text-center text-3xl font-bold">Register</h1>
-
         <div className="flex flex-col gap-2 md:grid md:grid-cols-2 md:gap-2 lg:grid-cols-3 lg:gap-5">
           <div className="flex flex-col gap-1">
             <label htmlFor="firstName" className="text-xl font-bold">

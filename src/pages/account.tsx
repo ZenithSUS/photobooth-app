@@ -6,12 +6,20 @@ import {
   ChangePasswordModal,
   ChangeProfileModal,
 } from "../components/ui/modals";
+import { useGetAllPhotosByUser } from "../hooks/photos";
+import { useGetAllVotes } from "../hooks/votes";
+import Loading from "../components/ui/loading";
+import Card from "../components/card";
+import posts from "../utils/functions/posts";
 
 Modal.setAppElement("#root");
 
 export default function Account() {
+  const userID = JSON.parse(localStorage.getItem("id") as string);
   const [activeModal, setActiveModal] = useState<string | null>(null);
-
+  const { data: photos, isLoading: photosLoading } =
+    useGetAllPhotosByUser(userID);
+  const { data: votes, isLoading: votesLoading } = useGetAllVotes();
   const name = JSON.parse(localStorage.getItem("name") as string);
   const email = JSON.parse(localStorage.getItem("email") as string);
   const profileImage = JSON.parse(
@@ -21,6 +29,10 @@ export default function Account() {
   const joined = formatDate(
     JSON.parse(localStorage.getItem("joined") as string),
   );
+
+  if (photosLoading || votesLoading) return <Loading />;
+
+  const userPosts = posts(photos!, votes!);
 
   const openModal = (modalType: string) => {
     setActiveModal(modalType);
@@ -79,6 +91,16 @@ export default function Account() {
               </button>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <h1 className="text-center text-3xl font-bold">Your Posts</h1>
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+          {userPosts.length === 0 && <h2 className="text-center">No posts</h2>}
+          {userPosts.map((post) => (
+            <Card key={post.$id} photo={post} />
+          ))}
         </div>
       </div>
     </div>
