@@ -316,7 +316,6 @@ export function ChangeProfileModal({
           await changeImage(data.image[0] as File);
         });
       }
-      setIsModalOpen(false);
     } catch (error) {
       console.log(error);
     }
