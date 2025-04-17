@@ -1,14 +1,12 @@
-import { useCallback, useRef, useState, useTransition } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useBoothContext } from "../../lib/context/booth.tsx";
 import { messages } from "../../utils/constants/message.ts";
 import { BlinkBlur } from "react-loading-indicators";
-import { UserFilters } from "../../utils/types.ts";
 import { toast } from "react-toastify";
-import Modal from "react-modal";
+import { ShareModal } from "./modals.tsx";
 import Webcam from "react-webcam";
 import filters from "../../utils/functions/filters.ts";
-import shareImages from "../../utils/functions/share.ts";
 import downloadAllImages from "../../utils/functions/download.ts";
 import resetPic from "../../assets/ui/reset.png";
 import backPic from "../../assets/ui/back.svg";
@@ -19,24 +17,20 @@ import Bear from "../stickers/bear/img.tsx";
 import Gamer from "../stickers/gamer/img.tsx";
 import DemonSlayer from "../stickers/demon-slayer/img.tsx";
 
-Modal.setAppElement("#root");
-
 export default function Camera({
   photoBoothRef,
 }: {
   photoBoothRef: React.RefObject<HTMLDivElement | null>;
 }) {
-  let userFilters: UserFilters[] = [];
   let user = JSON.parse(localStorage.getItem("session") || "false") as boolean;
   const name = JSON.parse(localStorage.getItem("name") as string);
   const navigate = useNavigate();
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isPending, startTransition] = useTransition();
+
   const [webCamReady, setWebCamReady] = useState(false);
   const [timer, setTimer] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const title = useRef<HTMLInputElement>(null);
 
   const {
     capturedImage,
@@ -195,90 +189,23 @@ export default function Camera({
     }
   };
 
-  const shareImage = async (e: React.FormEvent, title: string) => {
-    try {
-      e.preventDefault();
-
-      if (title.length === 0) {
-        toast.error("Please enter a title");
-        return;
-      }
-
-      userFilters = Object.values(filterValues).map((f) => String(f));
-
-      startTransition(async () => {
-        await shareImages(
-          capturedImage as Blob[],
-          setCapturedImage,
-          setIsModalOpen,
-          name,
-          title,
-          sticker,
-          backgroundValue,
-          borderValue,
-          userFilters,
-        );
-      });
-
-      return navigate("/social");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <Modal
-        isOpen={isModalOpen}
-        parentSelector={() => document.querySelector("#root") as HTMLElement}
-        className={
-          "absolute top-1/8 z-50 mx-auto grid w-full max-w-lg place-items-center p-4 sm:inset-x-8 sm:top-1/4 sm:max-w-md md:max-w-lg lg:max-w-xl"
-        }
-        overlayClassName={
-          "fixed inset-0 z-40 bg-black/50 bg-opacity-50 backdrop-blur-sm"
-        }
-      >
-        <div className="flex w-full flex-col">
-          <form
-            onSubmit={(e) => shareImage(e, title.current?.value as string)}
-            className="grid grid-cols-1 place-items-center rounded-2xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4"
-          >
-            <h2 className="text-center text-lg font-bold">Share PhotoBooth</h2>
-            <div className="flex w-full flex-col gap-2">
-              <label htmlFor="title" className="text-lg font-bold">
-                Title
-              </label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                autoComplete="off"
-                ref={title}
-                className="w-full rounded-sm bg-white p-2"
-              />
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="submit"
-                  name="share"
-                  disabled={isPending}
-                  className="cursor-pointer rounded-xl bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 p-2 transition duration-300 ease-in-out hover:from-green-500 hover:via-emerald-500 hover:to-teal-500"
-                >
-                  Share
-                </button>
-                <button
-                  type="button"
-                  name="cancel"
-                  disabled={isPending}
-                  onClick={() => setIsModalOpen(false)}
-                  className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 transition duration-300 ease-in-out hover:from-amber-500 hover:via-orange-500 hover:to-red-500"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </Modal>
+      <ShareModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={() => setIsModalOpen(false)}
+        shareData={{
+          capturedImage: capturedImage as Blob[],
+          setCapturedImage: setCapturedImage as React.Dispatch<
+            React.SetStateAction<Blob[]>
+          >,
+          sticker,
+          name,
+          borderValue,
+          backgroundValue,
+          filterValues,
+        }}
+      />
       <div
         className={`relative flex flex-1 items-center justify-center ${backgroundColor} border-10 ${borderColor} rounded-2xl p-3.5`}
       >

@@ -16,10 +16,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewUser } from "../actions/users";
 import { ErrorType } from "../utils/types";
 import { useTransition } from "react";
+import {
+  MAX_FILE_SIZE,
+  ACCEPTED_IMAGE_TYPES,
+} from "../utils/constants/image-file";
 import fetchAuthUser from "../lib/services/getAuth";
-
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 const registerSchema = z
   .object({
@@ -100,8 +101,8 @@ export default function Register() {
         const userData = {
           name: name,
           email: data.email,
-          profileImage: "",
-          profileId: "",
+          profileImage: "N/A",
+          profileId: "N/A",
         };
 
         if (data.image instanceof FileList && data.image.length > 0) {

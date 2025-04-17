@@ -32,6 +32,17 @@ export type Border = {
   value: number;
 };
 
+export type ShareType = {
+  capturedImage: Blob[];
+  setCapturedImage: React.Dispatch<React.SetStateAction<Blob[]>>;
+  name: string;
+
+  sticker: string;
+  backgroundValue: string;
+  borderValue: string;
+  filterValues: FiltersType;
+};
+
 export type DownloadType = {
   photoBoothRef: React.RefObject<HTMLDivElement>;
 };

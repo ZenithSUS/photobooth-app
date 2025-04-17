@@ -42,7 +42,11 @@ export default function Header({
       >
         <p className="text-center text-2xl font-bold">Hello, {name}</p>
         <img
-          src={profileImage !== null || "" ? profileImage : unknown}
+          src={
+            profileImage !== null && profileImage != "N/A"
+              ? profileImage
+              : unknown
+          }
           alt="profile_img"
           className="h-12 w-12 rounded-full hover:scale-105"
         />
