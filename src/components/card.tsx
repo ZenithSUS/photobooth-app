@@ -8,14 +8,9 @@ import {
 import { sleep } from "../utils/functions/sleep";
 import { useNavigate } from "react-router-dom";
 import { ShowPhotos, VoteValues } from "../utils/types";
+import { getCurrentImgSticker } from "./ui/img-sticker";
 import formatDate from "../utils/functions/format-date";
 import userFilter from "../utils/functions/userFilter";
-import Axlot from "./stickers/axlot/cam";
-import Cat from "./stickers/cat/cam";
-import Bear from "./stickers/bear/cam";
-import Minecraft from "./stickers/minecraft/cam";
-import Gamer from "./stickers/gamer/cam";
-import DemonSlayer from "./stickers/demon-slayer/cam";
 import HeartBtn from "../assets/ui/heart2.png";
 import SadBtn from "../assets/ui/sad.png";
 import CoolBtn from "../assets/ui/cool.png";
@@ -63,12 +58,7 @@ export default function Card({ photo }: { photo: ShowPhotos & VoteValues }) {
       className="flex flex-col items-center gap-2.5 rounded border border-gray-200 bg-white p-4 shadow-md"
     >
       <div className="relative w-full p-0.5">
-        {photo.sticker === "Axlot" && <Axlot />}
-        {photo.sticker === "Minecraft" && <Minecraft />}
-        {photo.sticker === "Cat" && <Cat />}
-        {photo.sticker === "Bear" && <Bear />}
-        {photo.sticker === "Gamer" && <Gamer />}
-        {photo.sticker === "DemonSlayer" && <DemonSlayer />}
+        {getCurrentImgSticker({ sticker: photo.sticker })}
         <img
           src={photo.image1Url as string}
           alt={photo.title}

@@ -10,12 +10,7 @@ import filters from "../../utils/functions/filters.ts";
 import downloadAllImages from "../../utils/functions/download.ts";
 import resetPic from "../../assets/ui/reset.png";
 import backPic from "../../assets/ui/back.svg";
-import Axlot from "../stickers/axlot/img.tsx";
-import Minecraft from "../stickers/minecraft/img.tsx";
-import Cat from "../stickers/cat/img.tsx";
-import Bear from "../stickers/bear/img.tsx";
-import Gamer from "../stickers/gamer/img.tsx";
-import DemonSlayer from "../stickers/demon-slayer/img.tsx";
+import getCurrentSticker from "./cam-sticker.tsx";
 import { FiltersType } from "../../utils/types.ts";
 
 export default function Camera({
@@ -229,25 +224,11 @@ export default function Camera({
               </div>
             )}
 
-            {sticker === "Axlot" && (
-              <Axlot set={capturedImage.length + 1} type={"Cam"} />
-            )}
-            {sticker === "Minecraft" && (
-              <Minecraft set={capturedImage.length + 1} type={"Cam"} />
-            )}
-            {sticker === "Cat" && (
-              <Cat set={capturedImage.length + 1} type={"Cam"} />
-            )}
-            {sticker === "Bear" && (
-              <Bear set={capturedImage.length + 1} type={"Cam"} />
-            )}
-            {sticker === "Gamer" && (
-              <Gamer set={capturedImage.length + 1} type={"Cam"} />
-            )}
-            {sticker === "DemonSlayer" && (
-              <DemonSlayer set={capturedImage.length + 1} type={"Cam"} />
-            )}
-            {sticker === "N/A" && <></>}
+            {getCurrentSticker({
+              sticker: sticker,
+              set: capturedImage.length + 1,
+              type: "Cam",
+            })}
 
             <Webcam
               ref={webcamRef}

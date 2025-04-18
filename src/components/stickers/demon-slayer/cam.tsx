@@ -23,7 +23,7 @@ export default function DemonSlayer() {
           key={index}
           src={sticker}
           alt={stickerNames[index]}
-          className={`object-fit absolute z-10 w-15 md:w-20`}
+          className={`object-fit absolute z-10 w-12`}
           style={{
             ...positionsCam[index],
             ...imageFlipCam[index],

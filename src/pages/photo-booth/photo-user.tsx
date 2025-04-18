@@ -1,4 +1,4 @@
-import { useRef, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -18,12 +18,6 @@ import formatDate from "../../utils/functions/format-date";
 import userFilter from "../../utils/functions/userFilter";
 import userBackground from "../../utils/functions/userBackground";
 import Loading from "../../components/ui/loading";
-import Axlot from "../../components/stickers/axlot/img";
-import Minecraft from "../../components/stickers/minecraft/img";
-import Cat from "../../components/stickers/cat/img";
-import Bear from "../../components/stickers/bear/img";
-import Gamer from "../../components/stickers/gamer/img";
-import DemonSlayer from "../../components/stickers/demon-slayer/img";
 import BackIcon from "../../assets/ui/back.svg";
 import SaveIcon from "../../assets/ui/save.png";
 import DeleteIcon from "../../assets/ui/bin.png";
@@ -32,11 +26,16 @@ import HeartBtn from "../../assets/ui/heart2.png";
 import SadBtn from "../../assets/ui/sad.png";
 import CoolBtn from "../../assets/ui/cool.png";
 import WowBtn from "../../assets/ui/wow.png";
+import getCurrentSticker from "../../components/ui/cam-sticker";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 export default function PhotoUser() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isPending, startTransition] = useTransition();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const userID = JSON.parse(localStorage.getItem("id") as string);
   const { mutate: createSaved } = useCreateSavedPhoto();
   const { mutate: createDownload } = useCreateDownloaded();
@@ -148,9 +147,11 @@ export default function PhotoUser() {
     });
   };
 
-  const handleDelete = (photoID: string) => {
-    if (!window.confirm("Are you sure you want to delete this photo?")) return;
+  const handleDelete = () => {
+    setIsModalOpen(true);
+  };
 
+  const executeDelete = (photoID: string) => {
     startTransition(async () => {
       if (!photoID || !photo.imagesId) return;
       const imagesId = [
@@ -178,6 +179,42 @@ export default function PhotoUser() {
 
   return (
     <div className="mx-auto flex min-h-screen flex-col items-center justify-center gap-2 p-4">
+      <Modal
+        isOpen={isModalOpen}
+        parentSelector={() => document.querySelector("#root") as HTMLElement}
+        className={
+          "bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-black/50 p-4 backdrop-blur-sm"
+        }
+        overlayClassName={
+          "fixed inset-0 z-40 bg-black/50 bg-opacity-50 backdrop-blur-sm"
+        }
+      >
+        <div className="flex min-w-screen flex-col md:min-w-[400px]">
+          <form className="grid grid-cols-1 place-items-center gap-3 rounded-2xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4">
+            <h2 className="text-center text-2xl font-bold">Delete Photo?</h2>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                name="delete"
+                disabled={isPending}
+                onClick={() => executeDelete(photo.$id as string)}
+                className="cursor-pointer rounded-xl bg-gradient-to-br from-rose-400 via-pink-400 to-fuchsia-400 p-2 hover:scale-105 hover:bg-gradient-to-br hover:from-fuchsia-400 hover:via-purple-400 hover:to-violet-400 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+              >
+                Delete Photo
+              </button>
+              <button
+                type="button"
+                name="cancel"
+                disabled={isPending}
+                onClick={() => setIsModalOpen(false)}
+                className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 transition duration-300 ease-in-out hover:from-amber-500 hover:via-orange-500 hover:to-red-500 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </Modal>
       <h1 className="rounded-2xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-2 text-2xl font-bold">
         {photo.title}
       </h1>
@@ -188,24 +225,11 @@ export default function PhotoUser() {
         >
           {images.map((image, index) => (
             <div className="relative p-0.5" key={index}>
-              {photo.sticker === "Axlot" && (
-                <Axlot set={index + 1} type={"Image"} />
-              )}
-              {photo.sticker === "Minecraft" && (
-                <Minecraft set={index + 1} type={"Image"} />
-              )}
-              {photo.sticker === "Cat" && (
-                <Cat set={index + 1} type={"Image"} />
-              )}
-              {photo.sticker === "Bear" && (
-                <Bear set={index + 1} type={"Image"} />
-              )}
-              {photo.sticker === "Gamer" && (
-                <Gamer set={index + 1} type={"Image"} />
-              )}
-              {photo.sticker === "DemonSlayer" && (
-                <DemonSlayer set={index + 1} type={"Image"} />
-              )}
+              {getCurrentSticker({
+                sticker: photo.sticker as string,
+                set: index + 1,
+                type: "Image",
+              })}
               <img
                 src={image as string}
                 alt={`Image ${index + 1}`}
@@ -342,7 +366,7 @@ export default function PhotoUser() {
               <img src={DownloadIcon} alt="Save" className="h-6 w-6" />
             </button>
             <button
-              onClick={() => handleDelete(photo.$id ?? "")}
+              onClick={handleDelete}
               disabled={isPending}
               className="cursor-pointer rounded bg-red-500 px-4 py-2 text-white transition duration-300 hover:bg-red-600 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
             >

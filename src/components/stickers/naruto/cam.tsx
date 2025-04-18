@@ -4,7 +4,7 @@ import Naruto2 from "../../../assets/stickers/naruto/sasuke.webp";
 import Naruto3 from "../../../assets/stickers/naruto/sakura.webp";
 import Naruto4 from "../../../assets/stickers/naruto/kakashi.webp";
 
-export default function Minecraft() {
+export default function Naruto() {
   const stickers = [Naruto1, Naruto2, Naruto3, Naruto4];
   const stickerNames = ["Naruto", "Sasuke", "Sakura", "Kakashi"];
 
