@@ -12,7 +12,7 @@ export const createNewPhoto = async (data: CreatePhoto) => {
       [Permission.read(Role.any()), Permission.write(Role.user(data.userID))],
     );
   } catch (error) {
-    console.log("Error creating photo document:", error);
+    console.error("Error creating photo document:", error);
     throw error;
   }
 };

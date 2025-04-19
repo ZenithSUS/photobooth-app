@@ -230,7 +230,7 @@ export function ShareModal({
 
       return navigate("/");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   return (
@@ -317,7 +317,7 @@ export function ChangeProfileModal({
         });
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

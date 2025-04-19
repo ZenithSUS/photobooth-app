@@ -146,7 +146,7 @@ export default async function shareImages(
       toast.success("Images shared successfully!");
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     toast.error("There was an error sharing images");
   }
 }

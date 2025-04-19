@@ -155,7 +155,7 @@ export default function Register() {
       } else {
         toast.error("There was an error registering");
       }
-      console.log(err);
+      console.error(err);
     }
   };
 

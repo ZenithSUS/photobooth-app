@@ -41,13 +41,12 @@ export const getUser = async (id: string) => {
 
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
 export const createUser = async (data: Object, id: string) => {
   try {
-    console.log(data);
     return await databases.createDocument(
       DATABASE_ID,
       USER_COLLECTION_ID,
@@ -56,6 +55,6 @@ export const createUser = async (data: Object, id: string) => {
       [Permission.read(Role.any()), Permission.write(Role.user(id))],
     );
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };

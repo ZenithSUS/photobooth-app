@@ -157,7 +157,7 @@ export default function Camera({
       }
       setIsModalOpen(true);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
