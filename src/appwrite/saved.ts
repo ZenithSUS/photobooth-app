@@ -1,5 +1,5 @@
 import { databases, SAVED_COLLECTION_ID, DATABASE_ID } from "./index.ts";
-import { Query, ID } from "appwrite";
+import { Query, ID, Permission, Role } from "appwrite";
 import { CreateSaved, ShowSaved as ShowSavedPhotos } from "../utils/types.ts";
 
 export const createSavedPhoto = async (data: CreateSaved) => {
@@ -24,6 +24,7 @@ export const createSavedPhoto = async (data: CreateSaved) => {
       SAVED_COLLECTION_ID,
       ID.unique(),
       data,
+      [Permission.read(Role.any()), Permission.write(Role.user(data.userID))],
     );
   } catch (error) {
     throw error;

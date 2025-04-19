@@ -6,7 +6,7 @@ import {
   storage,
   BUCKET_ID,
 } from "../../appwrite/index.ts";
-import { ID } from "appwrite";
+import { ID, Permission, Role } from "appwrite";
 import { toast } from "react-toastify";
 import { UserFilters, FiltersType } from "../types.ts";
 
@@ -30,6 +30,11 @@ export default async function shareImages(
   userFilters: UserFilters[],
 ) {
   try {
+    const userId = JSON.parse(localStorage.getItem("id") as string);
+
+    if (userId === null || userId === undefined || userId === "")
+      return toast.error("Please login to share images");
+
     if (capturedImage.length === 3) {
       const jpegFiles = capturedImage.map((blob, index) => {
         const uniqueFilename = `photo_${index + 1}_${uuidv4()}.jpeg`;
@@ -71,16 +76,19 @@ export default async function shareImages(
         BUCKET_ID,
         ID.unique(),
         file1,
+        [Permission.read(Role.any()), Permission.write(Role.user(userId))],
       );
       const imageData2 = await storage.createFile(
         BUCKET_ID,
         ID.unique(),
         file2,
+        [Permission.read(Role.any()), Permission.write(Role.user(userId))],
       );
       const imageData3 = await storage.createFile(
         BUCKET_ID,
         ID.unique(),
         file3,
+        [Permission.read(Role.any()), Permission.write(Role.user(userId))],
       );
 
       const response = await createPhoto({

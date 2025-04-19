@@ -67,6 +67,7 @@ export type Photos = {
   $id: string;
   $createdAt: string;
   $updatedAt: string;
+  $permissions: string[];
   author: string;
   title: string;
   userID: string;
@@ -80,7 +81,10 @@ export type Photos = {
   imagesId: string[];
 };
 
-export type CreatePhoto = Omit<Photos, "$id" | "$createdAt" | "$updatedAt">;
+export type CreatePhoto = Omit<
+  Photos,
+  "$id" | "$createdAt" | "$updatedAt" | "$permissions"
+>;
 export type ShowPhotos = Photos;
 
 export type Saved = {

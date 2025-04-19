@@ -1,5 +1,5 @@
 import { databases, DATABASE_ID, VOTE_COLLECTION_ID } from "./index.ts";
-import { Query, ID } from "appwrite";
+import { Query, ID, Permission, Role } from "appwrite";
 import { CreateVote, ShowVote } from "../utils/types.ts";
 
 export const createVote = async (data: CreateVote) => {
@@ -10,6 +10,7 @@ export const createVote = async (data: CreateVote) => {
       VOTE_COLLECTION_ID,
       ID.unique(),
       data,
+      [Permission.read(Role.any()), Permission.write(Role.user(data.user))],
     );
   } catch (error) {
     throw error;

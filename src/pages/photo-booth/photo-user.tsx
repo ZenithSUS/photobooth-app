@@ -33,6 +33,7 @@ Modal.setAppElement("#root");
 
 export default function PhotoUser() {
   const { id } = useParams();
+  const userId = JSON.parse(localStorage.getItem("id") as string);
   const navigate = useNavigate();
   const [isPending, startTransition] = useTransition();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -348,32 +349,33 @@ export default function PhotoUser() {
           <img src={BackIcon} alt="Back" className="h-6 w-6" />
         </button>
 
-        {photo.userID === userID && (
-          <>
-            <button
-              onClick={() => handleSave(photo.$id ?? "", photo.userID ?? "")}
-              disabled={isPending}
-              className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
-            >
-              <img src={SaveIcon} alt="Save" className="h-6 w-6" />
-            </button>
-            <button
-              onClick={() =>
-                handleDownload(photo.$id ?? "", photo.userID ?? "")
-              }
-              className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
-            >
-              <img src={DownloadIcon} alt="Save" className="h-6 w-6" />
-            </button>
-            <button
-              onClick={handleDelete}
-              disabled={isPending}
-              className="cursor-pointer rounded bg-red-500 px-4 py-2 text-white transition duration-300 hover:bg-red-600 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
-            >
-              <img src={DeleteIcon} alt="Save" className="h-6 w-6" />
-            </button>
-          </>
-        )}
+        {photo.$permissions?.includes(`delete("user:${userID}")`) &&
+          photo.$permissions?.includes(`update("user:${userId}")`) && (
+            <>
+              <button
+                onClick={() => handleSave(photo.$id ?? "", photo.userID ?? "")}
+                disabled={isPending}
+                className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+              >
+                <img src={SaveIcon} alt="Save" className="h-6 w-6" />
+              </button>
+              <button
+                onClick={() =>
+                  handleDownload(photo.$id ?? "", photo.userID ?? "")
+                }
+                className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
+              >
+                <img src={DownloadIcon} alt="Save" className="h-6 w-6" />
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={isPending}
+                className="cursor-pointer rounded bg-red-500 px-4 py-2 text-white transition duration-300 hover:bg-red-600 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+              >
+                <img src={DeleteIcon} alt="Save" className="h-6 w-6" />
+              </button>
+            </>
+          )}
       </div>
     </div>
   );

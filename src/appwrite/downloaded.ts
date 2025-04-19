@@ -1,6 +1,6 @@
 import { databases, DATABASE_ID, DOWNLOADED_COLLECTION_ID } from "./index.ts";
 import { ShowDownloaded, CreateDownloaded } from "../utils/types.ts";
-import { Query, ID } from "appwrite";
+import { Query, ID, Permission, Role } from "appwrite";
 
 export const createDownload = async (data: CreateDownloaded) => {
   try {
@@ -22,6 +22,7 @@ export const createDownload = async (data: CreateDownloaded) => {
       DOWNLOADED_COLLECTION_ID,
       ID.unique(),
       data,
+      [Permission.read(Role.any()), Permission.write(Role.user(data.userID))],
     );
   } catch (error) {
     throw error;

@@ -9,7 +9,7 @@ import {
   ENDPOINT as endpointUrl,
   PROJECT_ID as projectId,
 } from "../../appwrite";
-import { ID } from "appwrite";
+import { ID, Permission, Role } from "appwrite";
 import { v4 as uuidv4 } from "uuid";
 import { ErrorType } from "../types";
 
@@ -35,6 +35,7 @@ export default async function changeImage(image: File) {
       BUCKET_ID,
       ID.unique(),
       imageFile,
+      [Permission.read(Role.any()), Permission.write(Role.user(userID))],
     );
     const imageUrl = `${endpointUrl}/storage/buckets/${uploadedFile.bucketId}/files/${uploadedFile.$id}/view?project=${projectId}&mode=admin`;
 

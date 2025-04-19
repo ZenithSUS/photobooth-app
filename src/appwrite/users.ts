@@ -1,6 +1,6 @@
 import { databases, USER_COLLECTION_ID, DATABASE_ID } from "./index.ts";
 import { User } from "../utils/types.ts";
-import { Query } from "appwrite";
+import { Query, Permission, Role } from "appwrite";
 
 export const getAllUsers = async () => {
   let allusers: User[] = [];
@@ -53,6 +53,7 @@ export const createUser = async (data: Object, id: string) => {
       USER_COLLECTION_ID,
       id,
       data,
+      [Permission.read(Role.any()), Permission.write(Role.user(id))],
     );
   } catch (error) {
     console.log(error);

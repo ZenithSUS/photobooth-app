@@ -1,14 +1,15 @@
 import { databases, PHOTO_COLLECTION_ID, DATABASE_ID } from "./index.ts";
-import { Query, ID } from "appwrite";
-import { ShowPhotos } from "../utils/types";
+import { Query, ID, Permission, Role } from "appwrite";
+import { ShowPhotos, CreatePhoto } from "../utils/types";
 
-export const createNewPhoto = async (urls: Object) => {
+export const createNewPhoto = async (data: CreatePhoto) => {
   try {
     return await databases.createDocument(
       DATABASE_ID,
       PHOTO_COLLECTION_ID,
       ID.unique(),
-      urls,
+      data,
+      [Permission.read(Role.any()), Permission.write(Role.user(data.userID))],
     );
   } catch (error) {
     console.log("Error creating photo document:", error);
@@ -35,6 +36,7 @@ export const getAllPhotos = async () => {
           $id: doc.$id,
           $createdAt: doc.$createdAt,
           $updatedAt: doc.$updatedAt,
+          $permissions: doc.$permissions,
           userID: doc.userID,
           title: doc.title,
           author: doc.author,
@@ -84,6 +86,7 @@ export const getAllPhotosByUser = async (userID: string) => {
           $id: doc.$id,
           $createdAt: doc.$createdAt,
           $updatedAt: doc.$updatedAt,
+          $permissions: doc.$permissions,
           userID: doc.userID,
           title: doc.title,
           author: doc.author,
