@@ -62,7 +62,7 @@ export default function PhotoUser() {
     return null;
   }
   const photoVotes =
-    votes?.filter((vote) => vote.photo.$id === photo.$id) || [];
+    votes?.filter((vote) => vote.photo && vote.photo.$id === photo.$id) || [];
 
   const heartVoteCount = photoVotes.filter(
     (vote) => vote.voteType === "Heart",

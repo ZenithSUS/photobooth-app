@@ -4,8 +4,9 @@ export default function posts(photos: ShowPhotos[], votes: ShowVote[]) {
   const id = JSON.parse(localStorage.getItem("id") as string);
 
   return photos.map((photo) => {
+    console.log(photo.$id);
     const photoVotes =
-      votes?.filter((vote) => vote.photo.$id === photo.$id) || [];
+      votes?.filter((vote) => vote.photo && vote.photo.$id === photo.$id) || [];
 
     const heartVoteCount = photoVotes.filter(
       (vote) => vote.voteType === "Heart",
