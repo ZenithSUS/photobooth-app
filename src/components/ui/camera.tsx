@@ -101,11 +101,6 @@ export default function Camera({
     navigate("/dashboard");
   };
 
-  const startCapture = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-    console.log("oSADSAD");
-    if (e.key === "Enter") return startTimer();
-  };
-
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
     if (imageSrc) {
@@ -276,7 +271,6 @@ export default function Camera({
             <button
               className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-blue-700 disabled:bg-gray-500 lg:col-span-2"
               onClick={startTimer}
-              onKeyDown={startCapture}
               disabled={timer !== null || !webCamReady}
             >
               <p className="text-3xl">📸</p>
@@ -306,7 +300,7 @@ export default function Camera({
           </>
         )}
         <button
-          className="col-span-2 cursor-pointer rounded bg-red-500 p-2 text-center text-lg text-white transition duration-300 ease-in-out hover:scale-95 hover:bg-red-600 disabled:bg-gray-500 md:col-span-1"
+          className={`${capturedImage.length === 3 ? "col-span-1" : "col-span-2"} cursor-pointer rounded bg-red-500 p-2 text-center text-lg text-white transition duration-300 ease-in-out hover:scale-95 hover:bg-red-600 disabled:bg-gray-500 md:col-span-1`}
           disabled={isCapturing || !user}
           onClick={() => GoBack()}
         >
