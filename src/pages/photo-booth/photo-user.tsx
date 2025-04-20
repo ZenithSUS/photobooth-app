@@ -241,13 +241,13 @@ export default function PhotoUser() {
             </div>
           ))}
           <div className="w-full bg-gradient-to-br from-white via-slate-300 to-zinc-300 p-3 text-center">
-            <p className="text-lg font-bold">
+            <p className="photobooth-text-italic text-lg">
               {formatDate(photo.$createdAt as string)}
             </p>
           </div>
         </div>
         <div className="grid grid-cols-1 gap-2 place-self-center lg:place-self-start">
-          <h1 className="text-center text-3xl">Votes</h1>
+          <h1 className="mb-1.5 text-center text-3xl font-bold">Votes</h1>
           <div className="grid grid-cols-2 place-items-center gap-4 lg:grid-cols-1">
             <div className="flex cursor-pointer items-center justify-center gap-7">
               <button

@@ -20,7 +20,7 @@ export default function Header({
   );
 
   return (
-    <header className="sticky top-0 right-0 left-0 z-30 flex flex-col items-center gap-1.5 border-b-2 border-amber-400 bg-gradient-to-br from-sky-300 via-blue-300 to-indigo-400 p-4 text-black shadow-md lg:flex-row lg:justify-between lg:gap-0">
+    <header className="sticky top-0 right-0 left-0 z-30 flex flex-col items-center gap-1.5 bg-gradient-to-br from-sky-300 via-blue-300 to-indigo-400 p-4 text-black shadow-lg shadow-black/40 lg:flex-row lg:justify-between lg:gap-0">
       {isMobile && (
         <div className="absolute top-4 right-4 z-30">
           <button
@@ -35,7 +35,7 @@ export default function Header({
           </button>
         </div>
       )}
-      <h1 className="text-3xl font-bold">ZenithBooth</h1>
+      <h1 className="photobooth-text-italic text-3xl font-bold">ZenithBooth</h1>
       <div
         className="flex cursor-pointer items-center justify-center gap-2"
         onClick={() => navigate("account")}

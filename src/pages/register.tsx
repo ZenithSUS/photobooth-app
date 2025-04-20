@@ -325,7 +325,7 @@ export default function Register() {
               {fileName as string}
             </span>
           </div>
-          <h3 className="text-md text-center">Max Size 5MB</h3>
+          <h3 className="text-md text-center font-medium">Max Size 5MB</h3>
 
           {form.formState.errors.image ? (
             <span className="h-10 text-red-500">
@@ -336,13 +336,13 @@ export default function Register() {
           )}
         </div>
         <button
-          className="cursor-pointer rounded bg-amber-200 p-2 text-lg transition duration-300 ease-in-out hover:scale-95 hover:bg-amber-300 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+          className="cursor-pointer rounded bg-amber-200 p-2 text-lg font-semibold transition duration-300 ease-in-out hover:scale-95 hover:bg-amber-300 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
           type="submit"
           disabled={isPending}
         >
           Submit
         </button>
-        <p className="text-center">
+        <p className="text-center font-medium">
           Already have an account?{" "}
           <span
             className="cursor-pointer underline hover:text-blue-500"

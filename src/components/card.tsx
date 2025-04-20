@@ -68,12 +68,14 @@ export default function Card({ photo }: { photo: ShowPhotos & VoteValues }) {
         />
       </div>
       <h1 className="text-center font-bold">{photo.title}</h1>
-      <h2
-        className="cursor-pointer text-center font-bold hover:underline"
+      <button
+        className="cursor-pointer bg-transparent"
         onClick={() => navigate(`/account/${photo.userID}`)}
       >
-        Author: {photo.author}
-      </h2>
+        <h2 className="text-center font-bold hover:underline">
+          Author: {photo.author}
+        </h2>
+      </button>
       <p className="text-sm text-gray-600">
         Shared on: {formatDate(photo.$createdAt)}
       </p>
@@ -173,7 +175,7 @@ export default function Card({ photo }: { photo: ShowPhotos & VoteValues }) {
       </div>
       <button
         onClick={() => handleView(photo.$id)}
-        className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-600"
+        className="cursor-pointer rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-600"
       >
         See Full Photo
       </button>

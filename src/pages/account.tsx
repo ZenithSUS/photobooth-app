@@ -55,7 +55,7 @@ export default function Account() {
       />
 
       <h1 className="text-center text-3xl font-bold">Account</h1>
-      <div className="relative flex flex-col gap-2 rounded-md bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4 shadow-md shadow-sky-400">
+      <div className="relative flex flex-col gap-2 rounded-md bg-gradient-to-b from-sky-400 via-blue-400 to-indigo-400 p-4 shadow-md shadow-black/50">
         <div className="flex flex-col gap-2 overflow-hidden">
           <div className="grid grid-cols-1 place-items-center gap-1.5 text-center">
             <img
@@ -72,19 +72,23 @@ export default function Account() {
 
           <div className="grid grid-cols-1 place-items-center gap-1.5">
             <div className="flex flex-col gap-2">
-              <h2 className="text-lg">Email: {email}</h2>
-              <h2 className="text-lg">Joined: {joined}</h2>
+              <h2 className="text-lg font-bold">
+                Email: <span className="font-medium">{email}</span>
+              </h2>
+              <h2 className="text-lg font-bold">
+                Joined: <span className="font-medium">{joined}</span>
+              </h2>
             </div>
 
             <div className="m-2 flex flex-col items-center justify-center gap-2">
               <button
-                className="cursor-pointer rounded-md bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 text-lg duration-300 ease-in-out hover:scale-105 hover:from-amber-500 hover:via-orange-500 hover:to-red-500"
+                className="cursor-pointer rounded-md bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 text-lg font-semibold duration-300 ease-in-out hover:scale-105 hover:from-amber-500 hover:via-orange-500 hover:to-red-500"
                 onClick={() => openModal("password")}
               >
                 Change Password
               </button>
               <button
-                className="cursor-pointer rounded-md bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 text-lg duration-300 ease-in-out hover:scale-105 hover:from-amber-500 hover:via-orange-500 hover:to-red-500"
+                className="cursor-pointer rounded-md bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 text-lg font-semibold duration-300 ease-in-out hover:scale-105 hover:from-amber-500 hover:via-orange-500 hover:to-red-500"
                 onClick={() => openModal("profile")}
               >
                 Change Image

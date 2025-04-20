@@ -44,25 +44,25 @@ export default function Dashboard() {
       name: "Saved Photos",
       icon: photoIcon,
       value: savedPhotos?.length || 0,
-      bg: "bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400",
+      bg: "bg-sky-400",
     },
     {
       name: "Downloaded Photos",
       icon: downloadIcon,
       value: downloadedPhotos?.length || 0,
-      bg: "bg-gradient-to-br from-rose-400 via-pink-400 to-fuchsia-400",
+      bg: "bg-rose-400",
     },
     {
       name: "Liked Photos",
       icon: heartIcon,
       value: userVotes || 0,
-      bg: "bg-gradient-to-br from-amber-400 via-orange-400 to-red-400",
+      bg: "bg-amber-400",
     },
     {
       name: "Shared Photos",
       icon: sharedPhotoIcon,
       value: userPhotos?.length || 0,
-      bg: "bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400",
+      bg: "bg-green-400",
     },
   ];
 
@@ -74,7 +74,7 @@ export default function Dashboard() {
         {dashboardData.map((data, index) => (
           <div
             key={index}
-            className={`flex flex-col bg-gradient-to-br p-4 ${data.bg}`}
+            className={`flex flex-col bg-gradient-to-br p-4 ${data.bg} rounded-2xl shadow-lg shadow-black/50`}
           >
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold">{data.name}</h2>

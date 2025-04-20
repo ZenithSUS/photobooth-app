@@ -101,6 +101,11 @@ export default function Camera({
     navigate("/dashboard");
   };
 
+  const startCapture = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    console.log("oSADSAD");
+    if (e.key === "Enter") return startTimer();
+  };
+
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
     if (imageSrc) {
@@ -209,7 +214,9 @@ export default function Camera({
           <>
             {isCapturing && timer !== null && (
               <div className="absolute inset-0 z-50 grid place-items-center gap-4 bg-black/35 text-3xl font-bold text-white opacity-90">
-                <div className="animate-ping text-6xl">{timer}</div>
+                <div className="photobooth-text-italic animate-ping text-6xl">
+                  {timer}
+                </div>
               </div>
             )}
 
@@ -249,31 +256,30 @@ export default function Camera({
           </>
         ) : (
           <div className="inset-0 grid h-[200px] w-[calc(100%-2rem)] place-items-center gap-4 bg-black p-5 text-center text-3xl font-bold text-white md:h-[300px] md:w-[480px]">
-            <div className="p-3">
+            <div className="photobooth-text-italic p-3">
               {messages[Math.floor(Math.random() * messages.length)]}
             </div>
           </div>
         )}
       </div>
 
-      <div
-        className={`grid grid-cols-2 gap-4 md:grid-cols-3 lg:${capturedImage.length < 3 ? "grid-cols-3" : "grid-cols-4"}`}
-      >
+      <div className={`grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4`}>
         {capturedImage.length !== 3 ? (
           <>
             <button
-              className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-blue-700 disabled:bg-gray-500"
-              onClick={startTimer}
-              disabled={timer !== null || !webCamReady}
-            >
-              📸
-            </button>
-            <button
-              className="cursor-pointer rounded bg-red-500 px-4 py-2 text-center text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-red-600 disabled:bg-gray-500"
+              className="flex cursor-pointer items-center rounded bg-sky-500 px-4 py-2 text-center text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-sky-300 disabled:bg-gray-500"
               onClick={resetFilter}
               disabled={isCapturing || !webCamReady}
             >
               <img src={resetPic} alt="reset" className="h-7 w-7" />
+            </button>
+            <button
+              className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-blue-700 disabled:bg-gray-500 lg:col-span-2"
+              onClick={startTimer}
+              onKeyDown={startCapture}
+              disabled={timer !== null || !webCamReady}
+            >
+              <p className="text-3xl">📸</p>
             </button>
           </>
         ) : (
@@ -300,14 +306,14 @@ export default function Camera({
           </>
         )}
         <button
-          className="cursor-pointer rounded bg-red-500 p-2 text-center text-lg text-white transition duration-300 ease-in-out hover:scale-95 hover:bg-red-600 disabled:bg-gray-500"
+          className="col-span-2 cursor-pointer rounded bg-red-500 p-2 text-center text-lg text-white transition duration-300 ease-in-out hover:scale-95 hover:bg-red-600 disabled:bg-gray-500 md:col-span-1"
           disabled={isCapturing || !user}
           onClick={() => GoBack()}
         >
           <img src={backPic} alt="back" className="mx-auto h-7 w-7" />
         </button>
       </div>
-      <span className="text-center text-lg">
+      <span className="text-center text-lg font-semibold">
         Images Captured: {capturedImage.length} of 3
       </span>
     </div>

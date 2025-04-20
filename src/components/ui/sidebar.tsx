@@ -93,7 +93,7 @@ export default function Sidebar({
         isMobile && !isMobileMenuOpen ? "hidden" : "lg:block"
       } top-0 left-0 z-20 flex-col pl-4 ${
         isMobile ? "w-full pt-35 md:pt-30" : "w-[300px]"
-      } h-screen overflow-auto bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 lg:border-r-2 lg:border-amber-400`}
+      } h-screen overflow-auto bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 lg:border-r-2 lg:border-black/45`}
     >
       <Modal
         parentSelector={() => document.querySelector("#root") as HTMLElement}
@@ -106,8 +106,10 @@ export default function Sidebar({
           "fixed inset-0 z-40 bg-black/50 bg-opacity-50 backdrop-blur-sm"
         }
       >
-        <div className="z-20 flex flex-col items-center gap-4 rounded-xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-5">
-          <h1>Are you sure you want to logout?</h1>
+        <div className="z-20 flex flex-col items-center gap-4 rounded-xl bg-gradient-to-b from-sky-400 via-blue-400 to-indigo-400 p-5">
+          <h1 className="photobooth-text-bold text-2xl">
+            Are you sure you want to logout?
+          </h1>
           <div className="flex gap-4">
             <button
               className="cursor-pointer rounded-xl bg-gradient-to-br from-rose-400 via-pink-400 to-fuchsia-400 p-2 hover:scale-105 hover:bg-gradient-to-br hover:from-fuchsia-400 hover:via-purple-400 hover:to-violet-400 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"

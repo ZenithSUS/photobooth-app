@@ -116,7 +116,7 @@ export default function Login() {
           />
         </div>
         <button
-          className="cursor-pointer rounded bg-amber-200 p-2 text-lg transition duration-300 ease-in-out hover:scale-95 hover:bg-amber-300"
+          className="cursor-pointer rounded bg-amber-200 p-2 text-lg font-semibold transition duration-300 ease-in-out hover:scale-95 hover:bg-amber-300"
           onClick={login}
           type="submit"
         >
