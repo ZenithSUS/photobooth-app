@@ -20,7 +20,7 @@ export default function Header({
   );
 
   return (
-    <header className="bg-primary-light sticky top-0 right-0 left-0 z-30 flex flex-col items-center gap-1.5 p-4 text-black shadow-lg shadow-black/40 lg:flex-row lg:justify-between lg:gap-0">
+    <header className="bg-primary-light sticky top-0 right-0 left-0 z-30 flex flex-col items-center gap-1.5 p-4 text-black shadow-sm shadow-black/40 lg:flex-row lg:justify-between lg:gap-0">
       {isMobile && (
         <div className="absolute top-4 right-4 z-30">
           <button

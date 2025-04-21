@@ -143,6 +143,7 @@ export default function Register() {
           "joined",
           JSON.stringify(userDataResponse.$createdAt),
         );
+        window.location.reload();
         toast.success("Registered Successfully!");
       });
     } catch (error) {
