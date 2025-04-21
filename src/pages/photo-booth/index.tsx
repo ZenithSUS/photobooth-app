@@ -109,7 +109,7 @@ export default function PhotoBooth() {
           </h1>
           {name === null && (
             <button
-              className="cursor-pointer rounded-md bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-1 text-lg font-semibold transition duration-300 ease-in-out hover:scale-95 hover:from-blue-500 hover:via-blue-500 hover:to-indigo-500"
+              className="bg-secondary-dark hover:bg-secondary-darker/80 cursor-pointer rounded p-2 text-lg font-semibold text-white transition duration-300 ease-in-out hover:scale-95"
               onClick={() => navigate("/login")}
             >
               Login
