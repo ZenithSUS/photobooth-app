@@ -1,6 +1,7 @@
 import Header from "../components/ui/header";
 import Sidebar from "../components/ui/sidebar";
 import { Outlet } from "react-router-dom";
+import { account } from "../appwrite";
 import { useEffect, useState, useLayoutEffect } from "react";
 import { Navigate } from "react-router-dom";
 import Loading from "../components/ui/loading";
@@ -20,7 +21,19 @@ export default function UserLayout() {
         const authResult = await fetchAuthUser(userSession);
         setIsAuthenticated(!!authResult);
       } else {
-        setIsAuthenticated(false);
+        try {
+          const session = await account.getSession("current");
+          if (session && session.current) {
+            userSession = session.current;
+            localStorage.setItem("session", JSON.stringify(userSession));
+            setIsAuthenticated(true);
+          } else {
+            setIsAuthenticated(false);
+          }
+        } catch (error) {
+          console.error("Session error:", error);
+          setIsAuthenticated(false);
+        }
       }
 
       setAuthChecked(true);
