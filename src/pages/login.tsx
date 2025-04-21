@@ -21,6 +21,20 @@ export default function Login() {
       if (userSession) {
         const authResult = await fetchAuthUser(userSession);
         setIsAuthenticated(!!authResult);
+      } else {
+        try {
+          const session = await account.getSession("current");
+          if (session && session.current) {
+            userSession = session.current;
+            localStorage.setItem("session", JSON.stringify(userSession));
+            setIsAuthenticated(true);
+          } else {
+            setIsAuthenticated(false);
+          }
+        } catch (error) {
+          console.error("Session error:", error);
+          setIsAuthenticated(false);
+        }
       }
       setIsAuthChecking(false);
     };
@@ -77,7 +91,7 @@ export default function Login() {
 
   return (
     <main className="flex h-screen w-screen flex-col items-center justify-center">
-      <form className="relative flex w-[300px] flex-col justify-center gap-5 rounded-md bg-sky-400 p-4 ring-2 ring-amber-400 md:w-[400px]">
+      <form className="bg-primary-light relative flex w-[300px] flex-col justify-center gap-5 rounded-md p-4 ring-2 ring-black md:w-[400px]">
         <img
           src={CameraIcon}
           alt="camera"
@@ -90,7 +104,7 @@ export default function Login() {
             Email
           </label>
           <input
-            className="rounded-md bg-white p-2 ring-2 ring-amber-400"
+            className="rounded-md bg-white p-2 ring-2 ring-black/55"
             name="email"
             id="email"
             type="text"
@@ -105,7 +119,7 @@ export default function Login() {
             Password
           </label>
           <input
-            className="rounded-md bg-white p-2 ring-2 ring-amber-400"
+            className="rounded-md bg-white p-2 ring-2 ring-black/55"
             name="password"
             id="password"
             type="password"
@@ -116,7 +130,7 @@ export default function Login() {
           />
         </div>
         <button
-          className="cursor-pointer rounded bg-amber-200 p-2 text-lg font-semibold transition duration-300 ease-in-out hover:scale-95 hover:bg-amber-300"
+          className="bg-secondary-dark hover:bg-secondary-darker/80 cursor-pointer rounded p-2 text-lg font-semibold text-white transition duration-300 ease-in-out hover:scale-95"
           onClick={login}
           type="submit"
         >

@@ -175,7 +175,7 @@ export default function Card({ photo }: { photo: ShowPhotos & VoteValues }) {
       </div>
       <button
         onClick={() => handleView(photo.$id)}
-        className="cursor-pointer rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-600"
+        className="bg-button-secondary-bg-dark hover:bg-button-secondary-hover-bg-darker/80 cursor-pointer rounded px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:scale-105"
       >
         See Full Photo
       </button>

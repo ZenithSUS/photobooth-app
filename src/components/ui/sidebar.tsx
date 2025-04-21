@@ -80,7 +80,7 @@ export default function Sidebar({
     <Link
       to={item.to}
       onClick={isMobile ? closeMobileMenu : undefined}
-      className="flex items-center gap-2 rounded p-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-amber-400"
+      className="hover:bg-secondary flex items-center gap-7 rounded p-2 transition-all duration-300 ease-in-out hover:scale-105"
     >
       <img src={item.icon} alt={item.alt} className="h-8 w-8" />
       {item.label}
@@ -93,7 +93,7 @@ export default function Sidebar({
         isMobile && !isMobileMenuOpen ? "hidden" : "lg:block"
       } top-0 left-0 z-20 flex-col pl-4 ${
         isMobile ? "w-full pt-35 md:pt-30" : "w-[300px]"
-      } h-screen overflow-auto bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 lg:border-r-2 lg:border-black/45`}
+      } bg-primary h-screen overflow-auto lg:border-black/45`}
     >
       <Modal
         parentSelector={() => document.querySelector("#root") as HTMLElement}
@@ -106,26 +106,26 @@ export default function Sidebar({
           "fixed inset-0 z-40 bg-black/50 bg-opacity-50 backdrop-blur-sm"
         }
       >
-        <div className="z-20 flex flex-col items-center gap-4 rounded-xl bg-gradient-to-b from-sky-400 via-blue-400 to-indigo-400 p-5">
-          <h1 className="photobooth-text-bold text-2xl">
+        <div className="bg-primary z-20 flex flex-col items-center gap-4 rounded-xl p-5">
+          <h1 className="text-2xl font-semibold">
             Are you sure you want to logout?
           </h1>
           <div className="flex gap-4">
             <button
-              className="cursor-pointer rounded-xl bg-gradient-to-br from-rose-400 via-pink-400 to-fuchsia-400 p-2 hover:scale-105 hover:bg-gradient-to-br hover:from-fuchsia-400 hover:via-purple-400 hover:to-violet-400 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+              onClick={closeLogoutModal}
+              type="button"
+              disabled={isPending}
+              className="bg-button-info-bg hover:bg-button-info-hover-bg text-button-accent-text hover:text-button-accent-hover-text cursor-pointer rounded-xl p-2 transition duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400"
+            >
+              Cancel
+            </button>
+            <button
+              className="bg-button-success-bg hover:bg-button-success-hover-bg text-button-accent-text hover:text-button-accent-hover-text cursor-pointer rounded-xl p-2 transition duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400"
               onClick={logout}
               disabled={isPending}
               type="button"
             >
               Confirm
-            </button>
-            <button
-              onClick={closeLogoutModal}
-              type="button"
-              disabled={isPending}
-              className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 hover:scale-105 hover:bg-gradient-to-br hover:from-red-400 hover:via-rose-400 hover:to-pink-400 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
-            >
-              Cancel
             </button>
           </div>
         </div>
@@ -148,7 +148,7 @@ export default function Sidebar({
 
         <button
           onClick={handleLogout}
-          className="flex cursor-pointer items-center gap-2 rounded p-2 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-amber-400"
+          className="hover:bg-secondary flex cursor-pointer items-center gap-7 rounded p-2 transition-all duration-300 ease-in-out hover:scale-105"
         >
           <img src={logoutIcon} alt="logout" className="h-8 w-8" />
           Logout

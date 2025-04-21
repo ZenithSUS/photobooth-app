@@ -100,7 +100,7 @@ export function ChangePasswordModal({
       <div className="flex min-w-screen flex-col md:min-w-[400px]">
         <form
           onSubmit={form.handleSubmit(handleChangePassword)}
-          className="grid grid-cols-1 place-items-center rounded-2xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4"
+          className="bg-primary-light grid grid-cols-1 place-items-center rounded-2xl p-4"
         >
           <h2 className="text-center text-lg font-bold">Change Password</h2>
           <div className="flex w-full flex-col gap-2">
@@ -113,7 +113,7 @@ export function ChangePasswordModal({
                 id="oldpassword"
                 autoComplete="off"
                 {...form.register("oldPassword")}
-                className="w-full rounded-sm bg-white p-2"
+                className="w-full rounded-sm bg-white p-2 shadow-md ring-2 ring-black/55"
               />
               {form.formState.errors.oldPassword ? (
                 <span className="h-7 text-red-500">
@@ -132,7 +132,7 @@ export function ChangePasswordModal({
                 id="newpassword"
                 autoComplete="off"
                 {...form.register("newPassword")}
-                className="w-full rounded-sm bg-white p-2"
+                className="w-full rounded-sm bg-white p-2 shadow-md ring-2 ring-black/55"
               />
               {form.formState.errors.newPassword ? (
                 <span className="h-7 text-red-500">
@@ -151,7 +151,7 @@ export function ChangePasswordModal({
                 id="confirmpassword"
                 autoComplete="off"
                 {...form.register("confirmPassword")}
-                className="w-full rounded-sm bg-white p-2"
+                className="w-full rounded-sm bg-white p-2 shadow-md ring-2 ring-black/55"
               />
               {form.formState.errors.confirmPassword ? (
                 <span className="h-7 text-red-500">
@@ -165,7 +165,7 @@ export function ChangePasswordModal({
               <button
                 type="submit"
                 disabled={isPending}
-                className="cursor-pointer rounded-xl bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 p-2 transition duration-300 ease-in-out hover:from-green-500 hover:via-emerald-500 hover:to-teal-500 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+                className="bg-button-success-bg hover:bg-button-success-hover-bg text-button-accent-text hover:text-button-accent-hover-text cursor-pointer rounded-xl p-2 transition duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400"
               >
                 Submit
               </button>
@@ -173,7 +173,7 @@ export function ChangePasswordModal({
                 type="button"
                 disabled={isPending}
                 onClick={() => setIsModalOpen(false)}
-                className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 transition duration-300 ease-in-out hover:from-amber-500 hover:via-orange-500 hover:to-red-500 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+                className="bg-info hover:bg-button-info-hover-bg cursor-pointer rounded-xl p-2 text-white transition duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400"
               >
                 Cancel
               </button>
@@ -247,12 +247,12 @@ export function ShareModal({
       <div className="flex w-full flex-col">
         <form
           onSubmit={(e) => shareImage(e, title.current?.value as string)}
-          className="grid grid-cols-1 place-items-center rounded-2xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4"
+          className="bg-primary grid grid-cols-1 place-items-center rounded-2xl p-4"
         >
           <h2 className="text-center text-lg font-bold">Share PhotoBooth</h2>
           <div className="flex w-full flex-col gap-2">
             <label htmlFor="title" className="text-lg font-bold">
-              Title
+              PhotoBooth Title
             </label>
             <input
               type="text"
@@ -267,7 +267,7 @@ export function ShareModal({
                 type="submit"
                 name="share"
                 disabled={isPending}
-                className="cursor-pointer rounded-xl bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 p-2 transition duration-300 ease-in-out hover:from-green-500 hover:via-emerald-500 hover:to-teal-500 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+                className="bg-button-success-bg hover:bg-button-success-hover-bg text-button-accent-text hover:text-button-accent-hover-text cursor-pointer rounded-xl p-2 transition duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400"
               >
                 Share
               </button>
@@ -276,7 +276,7 @@ export function ShareModal({
                 name="cancel"
                 disabled={isPending}
                 onClick={() => setIsModalOpen(false)}
-                className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 transition duration-300 ease-in-out hover:from-amber-500 hover:via-orange-500 hover:to-red-500 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+                className="bg-info hover:bg-button-info-hover-bg cursor-pointer rounded-xl p-2 text-white transition duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400"
               >
                 Cancel
               </button>
@@ -353,7 +353,7 @@ export function ChangeProfileModal({
       <div className="flex min-w-screen flex-col md:min-w-[400px]">
         <form
           onSubmit={form.handleSubmit(handleChangeImage)}
-          className="grid grid-cols-1 place-items-center rounded-2xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4"
+          className="bg-primary-light grid grid-cols-1 place-items-center rounded-2xl p-4 shadow-md shadow-black/50"
         >
           <h2 className="text-center text-lg font-bold">Change Profile</h2>
 
@@ -371,7 +371,7 @@ export function ChangeProfileModal({
             <div className="flex">
               <label
                 htmlFor="image"
-                className="flex cursor-pointer items-center rounded-l-md bg-amber-400 px-4 py-2 font-medium text-white hover:bg-amber-500"
+                className="bg-secondary-dark hover:bg-secondary-darker/80 flex cursor-pointer items-center rounded-l-md px-4 py-2 font-medium text-white transition duration-300 ease-in-out hover:scale-105"
               >
                 Profile Image
               </label>
@@ -399,7 +399,7 @@ export function ChangeProfileModal({
               <button
                 type="submit"
                 name="change"
-                className="cursor-pointer rounded-xl bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 p-2 font-semibold transition duration-300 ease-in-out hover:from-green-500 hover:via-emerald-500 hover:to-teal-500 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+                className="bg-button-success-bg hover:bg-button-success-hover-bg text-button-accent-text hover:text-button-accent-hover-text cursor-pointer rounded-xl p-2 transition duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400"
                 disabled={isPending}
               >
                 Change Profile
@@ -407,7 +407,7 @@ export function ChangeProfileModal({
               <button
                 type="button"
                 name="cancel"
-                className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 font-semibold transition duration-300 ease-in-out hover:from-amber-500 hover:via-orange-500 hover:to-red-500 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+                className="bg-info hover:bg-button-info-hover-bg cursor-pointer rounded-xl p-2 text-white transition duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400"
                 disabled={isPending}
                 onClick={() => setIsModalOpen(false)}
               >

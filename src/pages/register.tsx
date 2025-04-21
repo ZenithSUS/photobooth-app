@@ -1,6 +1,6 @@
 import { ID } from "appwrite";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import {
   account,
   storage,
@@ -21,6 +21,7 @@ import {
   ACCEPTED_IMAGE_TYPES,
 } from "../utils/constants/image-file";
 import fetchAuthUser from "../lib/services/getAuth";
+import Loading from "../components/ui/loading";
 
 const registerSchema = z
   .object({
@@ -60,9 +61,9 @@ const registerSchema = z
 type registerSchemaType = z.infer<typeof registerSchema>;
 
 export default function Register() {
-  const user = JSON.parse(
-    localStorage.getItem("session") || "false",
-  ) as boolean;
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
+
   const navigate = useNavigate();
   const [fileName, setFileName] =
     useState<SetStateAction<string>>("No file chosen");
@@ -160,17 +161,44 @@ export default function Register() {
   };
 
   useEffect(() => {
-    fetchAuthUser(user);
+    const checkAuth = async () => {
+      let userSession = JSON.parse(localStorage.getItem("session") || "false");
+      if (userSession) {
+        const authResult = await fetchAuthUser(userSession);
+        setIsAuthenticated(!!authResult);
+      } else {
+        try {
+          const session = await account.getSession("current");
+          if (session && session.current) {
+            userSession = session.current;
+            localStorage.setItem("session", JSON.stringify(userSession));
+            setIsAuthenticated(true);
+          } else {
+            setIsAuthenticated(false);
+          }
+        } catch (error) {
+          console.error("Session error:", error);
+          setIsAuthenticated(false);
+        }
+      }
+      setIsAuthChecking(false);
+    };
 
-    if (user) {
-      navigate("/dashboard");
-    }
-  }, [user, navigate]);
+    checkAuth();
+  }, []);
+
+  if (isAuthChecking) {
+    return <Loading />;
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" />;
+  }
 
   return (
     <main className="flex w-screen flex-col items-center justify-center md:h-screen">
       <form
-        className="flex min-h-[calc(100vh)] min-w-[calc(100vw)] flex-col justify-center gap-5 bg-sky-400 p-8 md:max-w-4xl lg:w-[800px]"
+        className="bg-primary-light flex min-h-[calc(100vh)] min-w-[calc(100vw)] flex-col justify-center gap-5 p-8 md:max-w-4xl lg:w-[800px]"
         onSubmit={form.handleSubmit(register)}
       >
         <h1 className="text-center text-3xl font-bold">Register</h1>
@@ -181,7 +209,7 @@ export default function Register() {
             </label>
             <input
               id="firstName"
-              className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
+              className="w-full rounded-md bg-white p-2 ring-2 ring-black/55"
               type="text"
               {...form.register("firstName")}
               placeholder="First Name"
@@ -201,7 +229,7 @@ export default function Register() {
             </label>
             <input
               id="middleInitial"
-              className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
+              className="w-full rounded-md bg-white p-2 ring-2 ring-black/55"
               type="text"
               {...form.register("middleInitial")}
               placeholder="Middle Initial"
@@ -221,7 +249,7 @@ export default function Register() {
             </label>
             <input
               id="lastName"
-              className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
+              className="w-full rounded-md bg-white p-2 ring-2 ring-black/55"
               type="text"
               {...form.register("lastName")}
               placeholder="Last Name"
@@ -241,7 +269,7 @@ export default function Register() {
             </label>
             <input
               id="email"
-              className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
+              className="w-full rounded-md bg-white p-2 ring-2 ring-black/55"
               type="text"
               {...form.register("email")}
               placeholder="Email"
@@ -261,7 +289,7 @@ export default function Register() {
             </label>
             <input
               id="password"
-              className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
+              className="w-full rounded-md bg-white p-2 ring-2 ring-black/55"
               type="password"
               {...form.register("password")}
               placeholder="Password"
@@ -281,7 +309,7 @@ export default function Register() {
             </label>
             <input
               id="confirmPassword"
-              className="w-full rounded-md bg-white p-2 ring-2 ring-amber-400"
+              className="w-full rounded-md bg-white p-2 ring-2 ring-black/55"
               type="password"
               {...form.register("confirmPassword")}
               placeholder="Confirm Password"
@@ -302,7 +330,7 @@ export default function Register() {
           </label>
 
           <div className="flex">
-            <label className="flex cursor-pointer items-center rounded-l-md bg-amber-400 px-4 py-2 font-medium text-white hover:bg-amber-500">
+            <label className="bg-secondary-dark hover:bg-secondary-darker/80 flex cursor-pointer items-center rounded-l-md px-4 py-2 font-medium text-white transition duration-300 ease-in-out hover:scale-105">
               Choose File
               <input
                 id="profileImage"
@@ -325,7 +353,9 @@ export default function Register() {
               {fileName as string}
             </span>
           </div>
-          <h3 className="text-md text-center font-medium">Max Size 5MB</h3>
+          <h3 className="text-md mt-1.5 text-center font-medium">
+            Max Size 5MB
+          </h3>
 
           {form.formState.errors.image ? (
             <span className="h-10 text-red-500">
@@ -336,7 +366,7 @@ export default function Register() {
           )}
         </div>
         <button
-          className="cursor-pointer rounded bg-amber-200 p-2 text-lg font-semibold transition duration-300 ease-in-out hover:scale-95 hover:bg-amber-300 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+          className="bg-secondary-dark hover:bg-secondary-darker/80 cursor-pointer rounded p-2 text-lg font-semibold text-white transition duration-300 ease-in-out hover:scale-95 disabled:bg-gray-400"
           type="submit"
           disabled={isPending}
         >

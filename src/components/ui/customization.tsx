@@ -51,7 +51,7 @@ export default function Customization() {
           })
         }
         disabled={isCapturing || capturedImage.length > 0}
-        className="cursor-pointer rounded bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 px-4 py-2 text-white transition-all duration-300 ease-in-out hover:scale-105 hover:bg-gradient-to-br hover:from-amber-400 hover:via-orange-400 hover:to-red-400 disabled:cursor-not-allowed disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+        className="bg-button-secondary-bg-dark text-button-secondary-text hover:bg-button-secondary-hover-bg-darker cursor-pointer rounded px-4 py-2 transition-all duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400 hover:disabled:cursor-not-allowed"
       >
         Filters
       </button>
@@ -79,7 +79,7 @@ export default function Customization() {
           })
         }
         disabled={isCapturing || capturedImage.length > 0}
-        className="cursor-pointer rounded bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 px-4 py-2 text-white transition-all duration-300 ease-in-out hover:scale-105 hover:bg-gradient-to-br hover:from-amber-400 hover:via-orange-400 hover:to-red-400 disabled:cursor-not-allowed disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+        className="bg-button-secondary-bg-dark text-button-secondary-text hover:bg-button-secondary-hover-bg-darker cursor-pointer rounded px-4 py-2 transition-all duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400 hover:disabled:cursor-not-allowed"
       >
         Backgrounds
       </button>
@@ -102,7 +102,7 @@ export default function Customization() {
           })
         }
         disabled={isCapturing || capturedImage.length > 0}
-        className="cursor-pointer rounded bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 px-4 py-2 text-white transition-all duration-300 ease-in-out hover:scale-105 hover:bg-gradient-to-br hover:from-amber-400 hover:via-orange-400 hover:to-red-400 disabled:cursor-not-allowed disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+        className="bg-button-secondary-bg-dark text-button-secondary-text hover:bg-button-secondary-hover-bg-darker cursor-pointer rounded px-4 py-2 transition-all duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400 hover:disabled:cursor-not-allowed"
       >
         Borders
       </button>
@@ -125,7 +125,7 @@ export default function Customization() {
           })
         }
         disabled={isCapturing || capturedImage.length > 0}
-        className="cursor-pointer rounded bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 px-4 py-2 text-white transition-all duration-300 ease-in-out hover:scale-105 hover:bg-gradient-to-br hover:from-amber-400 hover:via-orange-400 hover:to-red-400 disabled:cursor-not-allowed disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+        className="bg-button-secondary-bg-dark text-button-secondary-text hover:bg-button-secondary-hover-bg-darker cursor-pointer rounded px-4 py-2 transition-all duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400 hover:disabled:cursor-not-allowed"
       >
         Stickers
       </button>

@@ -4,9 +4,9 @@ export default function Loading() {
   return (
     <div className="absolute inset-0 flex h-screen items-center justify-center">
       <Mosaic
-        color="#37d7f0"
+        color="#6e82f9"
         size="large"
-        text="Please Wait"
+        text="Please Wait..."
         textColor="#000000"
       />
     </div>

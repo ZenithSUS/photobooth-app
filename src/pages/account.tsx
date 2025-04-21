@@ -55,7 +55,7 @@ export default function Account() {
       />
 
       <h1 className="text-center text-3xl font-bold">Account</h1>
-      <div className="relative flex flex-col gap-2 rounded-md bg-gradient-to-b from-sky-400 via-blue-400 to-indigo-400 p-4 shadow-md shadow-black/50">
+      <div className="bg-neutral-light relative flex flex-col gap-2 rounded-md p-4 shadow-md shadow-black/50">
         <div className="flex flex-col gap-2 overflow-hidden">
           <div className="grid grid-cols-1 place-items-center gap-1.5 text-center">
             <img
@@ -80,15 +80,15 @@ export default function Account() {
               </h2>
             </div>
 
-            <div className="m-2 flex flex-col items-center justify-center gap-2">
+            <div className="m-2 flex flex-col gap-2">
               <button
-                className="cursor-pointer rounded-md bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 text-lg font-semibold duration-300 ease-in-out hover:scale-105 hover:from-amber-500 hover:via-orange-500 hover:to-red-500"
+                className="bg-button-secondary-bg hover:bg-button-secondary-hover-bg cursor-pointer rounded px-4 py-2 font-semibold text-black transition-all duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400 hover:disabled:cursor-not-allowed"
                 onClick={() => openModal("password")}
               >
                 Change Password
               </button>
               <button
-                className="cursor-pointer rounded-md bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 text-lg font-semibold duration-300 ease-in-out hover:scale-105 hover:from-amber-500 hover:via-orange-500 hover:to-red-500"
+                className="bg-button-secondary-bg hover:bg-button-secondary-hover-bg cursor-pointer rounded px-4 py-2 font-semibold text-black transition-all duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400 hover:disabled:cursor-not-allowed"
                 onClick={() => openModal("profile")}
               >
                 Change Image

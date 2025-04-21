@@ -3,7 +3,7 @@ import { useGetAllSavedPhoto } from "../hooks/saved.ts";
 import { useGetAllDownloaded } from "../hooks/downloaded.ts";
 import { useGetAllVotes } from "../hooks/votes.ts";
 import photoIcon from "../assets/ui/save.png";
-import downloadIcon from "../assets/ui/downloading.png";
+import downloadIcon from "../assets/ui/downloading2.png";
 import heartIcon from "../assets/ui/heart.png";
 import sharedPhotoIcon from "../assets/ui/share-photo.png";
 import Loading from "../components/ui/loading.tsx";
@@ -44,25 +44,29 @@ export default function Dashboard() {
       name: "Saved Photos",
       icon: photoIcon,
       value: savedPhotos?.length || 0,
-      bg: "bg-sky-400",
+      bg: "bg-secondary",
+      textColor: "text-black",
     },
     {
       name: "Downloaded Photos",
       icon: downloadIcon,
       value: downloadedPhotos?.length || 0,
-      bg: "bg-rose-400",
+      bg: "bg-tertiary-dark",
+      textColor: "text-white",
     },
     {
       name: "Liked Photos",
       icon: heartIcon,
       value: userVotes || 0,
-      bg: "bg-amber-400",
+      bg: "bg-quaternary-dark",
+      textColor: "text-black",
     },
     {
       name: "Shared Photos",
       icon: sharedPhotoIcon,
       value: userPhotos?.length || 0,
-      bg: "bg-green-400",
+      bg: "bg-tertiary",
+      textColor: "text-white",
     },
   ];
 
@@ -74,7 +78,7 @@ export default function Dashboard() {
         {dashboardData.map((data, index) => (
           <div
             key={index}
-            className={`flex flex-col bg-gradient-to-br p-4 ${data.bg} rounded-2xl shadow-lg shadow-black/50`}
+            className={`flex flex-col bg-gradient-to-br p-4 ${data.bg} ${data.textColor} rounded-2xl shadow-lg shadow-black/50`}
           >
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold">{data.name}</h2>

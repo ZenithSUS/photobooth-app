@@ -1,5 +1,107 @@
 @import "tailwindcss";
 
+@theme {
+  /* Primary (Yellow) */
+  --color-primary: #dddd55;
+  --color-primary-light: #e6e680;
+  --color-primary-lighter: #f0f0aa;
+  --color-primary-dark: #c4c43c;
+  --color-primary-darker: #a8a832;
+
+  /* Secondary (Blue) */
+  --color-secondary: #8c9dfb;
+  --color-secondary-light: #aab8fc;
+  --color-secondary-lighter: #c8d1fd;
+  --color-secondary-dark: #6e82f9;
+  --color-secondary-darker: #4f67f8;
+
+  /* Accent (Gray-Green) */
+  --color-tertiary: #4c5b5c;
+  --color-tertiary-light: #6d7c7d;
+  --color-tertiary-lighter: #8f9c9d;
+  --color-tertiary-dark: #3a4545;
+  --color-tertiary-darker: #292f2f;
+
+  /* Background (Pink) */
+  --color-quaternary: #ffdde2;
+  --color-quaternary-light: #ffe9ec;
+  --color-quaternary-lighter: #fff5f7;
+  --color-quaternary-dark: #ffd0d7;
+  --color-quaternary-darker: #ffc3cc;
+
+  /* Neutrals */
+  --color-neutral-light: #f7f7f7;
+  --color-neutral: #e5e5e5;
+  --color-neutral-dark: #cccccc;
+  --color-neutral-darker: #999999;
+
+  /* States */
+  --color-success: #4caf50;
+  --color-warning: #ff9800;
+  --color-error: #f44336;
+  --color-info: #2196f3;
+
+  /* Primary Button Colors */
+  --color-button-primary-bg: #dddd55;
+  --color-button-primary-text: #292f2f;
+  --color-button-primary-border: #c4c43c;
+  --color-button-primary-hover-bg: #c4c43c;
+  --color-button-primary-hover-text: #1f2323;
+  --color-button-primary-active-bg: #a8a832;
+
+  /* Secondary Button Colors */
+  --color-button-secondary-bg: #8c9dfb;
+  --color-button-secondary-bg-dark: #6e82f9;
+  --color-button-secondary-bg-light: #aab8fc;
+  --color-button-secondary-text: #ffffff;
+  --color-button-secondary-border: #6e82f9;
+  --color-button-secondary-hover-bg: #6e82f9;
+  --color-button-secondary-hover-bg-dark: #4f67f8;
+  --color-button-secondary-hover-bg-darker: #292f2f;
+  --color-button-secondary-hover-bg-light: #aab8fc;
+  --color-button-secondary-hover-text: #ffffff;
+  --color-button-secondary-active-bg: #4f67f8;
+
+  /* Accent Button Colors */
+  --color-button-accent-bg: #4c5b5c;
+  --color-button-accent-text: #ffffff;
+  --color-button-accent-border: #3a4545;
+  --color-button-accent-hover-bg: #3a4545;
+  --color-button-accent-hover-text: #ffffff;
+  --color-button-accent-active-bg: #292f2f;
+
+  /* Outline Button Colors */
+  --color-button-outline-bg: transparent;
+  --color-button-outline-text: #4c5b5c;
+  --color-button-outline-border: #4c5b5c;
+  --color-button-outline-hover-bg: rgba(76, 91, 92, 0.1);
+  --color-button-outline-hover-text: #3a4545;
+  --color-button-outline-active-bg: rgba(76, 91, 92, 0.2);
+
+  /* Ghost Button Colors */
+  --color-button-ghost-bg: transparent;
+  --color-button-ghost-text: #4c5b5c;
+  --color-button-ghost-border: transparent;
+  --color-button-ghost-hover-bg: rgba(76, 91, 92, 0.05);
+  --color-button-ghost-hover-text: #3a4545;
+  --color-button-ghost-active-bg: rgba(76, 91, 92, 0.1);
+
+  /* State Buttons */
+  --color-button-success-bg: #4caf50;
+  --color-button-success-hover-bg: #3d8b40;
+  --color-button-warning-bg: #ff9800;
+  --color-button-warning-hover-bg: #e68900;
+  --color-button-error-bg: #f44336;
+  --color-button-error-hover-bg: #d32f2f;
+  --color-button-info-bg: #2196f3;
+  --color-button-info-hover-bg: #0c7cd5;
+
+  /* Disabled Button */
+  --color-button-disabled-bg: #e5e5e5;
+  --color-button-disabled-text: #999999;
+  --color-button-disabled-border: #cccccc;
+}
+
 @font-face {
   font-family: "photobooth-text";
   src: url("./assets/fonts/LobsterTwo-Regular.ttf") format("opentype");
@@ -77,5 +179,3 @@
   background-size: 200% 200%;
   animation: gradient-x 20s ease infinite;
 }
-
-

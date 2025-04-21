@@ -5,13 +5,14 @@ import { messages } from "../../utils/constants/message.ts";
 import { BlinkBlur } from "react-loading-indicators";
 import { toast } from "react-toastify";
 import { ShareModal } from "./modals.tsx";
+import { FiltersType } from "../../utils/types.ts";
+import Modal from "react-modal";
 import Webcam from "react-webcam";
 import filters from "../../utils/functions/filters.ts";
 import downloadAllImages from "../../utils/functions/download.ts";
 import resetPic from "../../assets/ui/reset.png";
 import backPic from "../../assets/ui/back.svg";
 import getCurrentSticker from "./cam-sticker.tsx";
-import { FiltersType } from "../../utils/types.ts";
 
 export default function Camera({
   photoBoothRef,
@@ -27,6 +28,7 @@ export default function Camera({
   const [webCamReady, setWebCamReady] = useState(false);
   const [timer, setTimer] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenBack, setIsModalOpenBack] = useState(false);
 
   const {
     capturedImage,
@@ -92,12 +94,18 @@ export default function Camera({
     });
   };
 
-  const GoBack = () => {
+  const handleBack = () => {
     if (capturedImage.length > 0) {
-      if (!window.confirm("Are you sure you want to go back?")) return;
+      setIsModalOpenBack(true);
+    } else {
+      resetFilter();
+      navigate("/dashboard");
     }
-    resetFilter();
+  };
 
+  const GoBack = () => {
+    resetFilter();
+    resetImage();
     navigate("/dashboard");
   };
 
@@ -202,13 +210,50 @@ export default function Camera({
           filterValues,
         }}
       />
+      <Modal
+        parentSelector={() => document.querySelector("#root") as HTMLElement}
+        isOpen={isModalOpenBack}
+        onRequestClose={() => setIsModalOpenBack(false)}
+        className={
+          "bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-black/50 p-4 backdrop-blur-sm"
+        }
+        overlayClassName={
+          "fixed inset-0 z-40 bg-black/50 bg-opacity-50 backdrop-blur-sm"
+        }
+      >
+        <div className="bg-primary z-20 flex flex-col items-center gap-4 rounded-xl p-5">
+          <h1 className="text-center text-2xl font-semibold">
+            Are you sure do you want to go back?
+          </h1>
+          <p className="text-error text-md text-center font-semibold">
+            You will lose all your progress and captured images. <br /> All
+            images will be lost
+          </p>
+          <div className="flex gap-4">
+            <button
+              onClick={() => setIsModalOpenBack(false)}
+              type="button"
+              className="bg-button-info-bg hover:bg-button-info-hover-bg text-button-accent-text hover:text-button-accent-hover-text cursor-pointer rounded-xl p-2 transition duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400"
+            >
+              Cancel
+            </button>
+            <button
+              className="bg-button-success-bg hover:bg-button-success-hover-bg text-button-accent-text hover:text-button-accent-hover-text cursor-pointer rounded-xl p-2 transition duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400"
+              onClick={() => GoBack()}
+              type="button"
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
+      </Modal>
       <div
         className={`relative flex flex-1 items-center justify-center ${backgroundColor} border-10 ${borderColor} rounded-2xl p-3.5`}
       >
         {capturedImage.length < 3 ? (
           <>
             {isCapturing && timer !== null && (
-              <div className="absolute inset-0 z-50 grid place-items-center gap-4 bg-black/35 text-3xl font-bold text-white opacity-90">
+              <div className="absolute inset-0 z-25 grid place-items-center gap-4 bg-black/35 text-3xl font-bold text-white opacity-90">
                 <div className="photobooth-text-italic animate-ping text-6xl">
                   {timer}
                 </div>
@@ -258,22 +303,22 @@ export default function Camera({
         )}
       </div>
 
-      <div className={`grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4`}>
+      <div className={`grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4`}>
         {capturedImage.length !== 3 ? (
           <>
             <button
-              className="flex cursor-pointer items-center rounded bg-sky-500 px-4 py-2 text-center text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-sky-300 disabled:bg-gray-500"
+              className="flex cursor-pointer items-center justify-center rounded bg-sky-500 px-4 py-2 text-center text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-sky-300 disabled:bg-gray-500"
               onClick={resetFilter}
               disabled={isCapturing || !webCamReady}
             >
               <img src={resetPic} alt="reset" className="h-7 w-7" />
             </button>
             <button
-              className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-blue-700 disabled:bg-gray-500 lg:col-span-2"
+              className="flex cursor-pointer items-center justify-center rounded bg-blue-500 px-4 py-2 text-lg font-bold text-white transition duration-300 ease-in-out hover:scale-90 hover:bg-blue-700 disabled:bg-gray-500 lg:col-span-2"
               onClick={startTimer}
               disabled={timer !== null || !webCamReady}
             >
-              <p className="text-3xl">📸</p>
+              <p className="my-auto text-center text-3xl">📸</p>
             </button>
           </>
         ) : (
@@ -300,11 +345,11 @@ export default function Camera({
           </>
         )}
         <button
-          className={`${capturedImage.length === 3 ? "col-span-1" : "col-span-2"} cursor-pointer rounded bg-red-500 p-2 text-center text-lg text-white transition duration-300 ease-in-out hover:scale-95 hover:bg-red-600 disabled:bg-gray-500 md:col-span-1`}
+          className={`${capturedImage.length === 3 ? "col-span-1 md:col-span-1" : "col-span-2 md:col-span-2"} cursor-pointer rounded bg-red-500 p-2 text-center text-lg text-white transition duration-300 ease-in-out hover:scale-95 hover:bg-red-600 disabled:bg-gray-500 lg:col-span-1`}
           disabled={isCapturing || !user}
-          onClick={() => GoBack()}
+          onClick={handleBack}
         >
-          <img src={backPic} alt="back" className="mx-auto h-7 w-7" />
+          <img src={backPic} alt="back" className="m-auto h-7 w-7" />
         </button>
       </div>
       <span className="text-center text-lg font-semibold">
