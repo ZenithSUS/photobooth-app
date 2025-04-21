@@ -143,6 +143,7 @@ export default function Register() {
           "joined",
           JSON.stringify(userDataResponse.$createdAt),
         );
+        window.location.reload();
         toast.success("Registered Successfully!");
       });
     } catch (error) {
@@ -196,13 +197,15 @@ export default function Register() {
   }
 
   return (
-    <main className="flex w-screen flex-col items-center justify-center md:h-screen">
+    <main className="flex min-h-screen w-full flex-col items-center justify-center px-4">
       <form
-        className="bg-primary-light flex min-h-[calc(100vh)] min-w-[calc(100vw)] flex-col justify-center gap-5 p-8 md:max-w-4xl lg:w-[800px]"
+        className="bg-primary-light my-1.5 flex w-full max-w-[700px] flex-col justify-center gap-1 rounded-md p-5 ring-2 ring-black"
         onSubmit={form.handleSubmit(register)}
       >
-        <h1 className="text-center text-3xl font-bold">Register</h1>
-        <div className="flex flex-col gap-2 md:grid md:grid-cols-2 md:gap-2 lg:grid-cols-3 lg:gap-5">
+        <h1 className="p-1 text-center text-3xl font-bold">Register</h1>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
+          {/* First Name */}
           <div className="flex flex-col gap-1">
             <label htmlFor="firstName" className="text-xl font-bold">
               First Name
@@ -215,14 +218,12 @@ export default function Register() {
               placeholder="First Name"
               autoComplete="on"
             />
-            {form.formState.errors.firstName ? (
-              <span className="h-10 text-red-500">
-                {form.formState.errors.firstName.message}
-              </span>
-            ) : (
-              <span className="h-10"></span>
-            )}
+            <span className="h-6 text-red-500">
+              {form.formState.errors.firstName?.message}
+            </span>
           </div>
+
+          {/* Middle Initial */}
           <div className="flex flex-col gap-1">
             <label htmlFor="middleInitial" className="text-xl font-bold">
               Middle Initial
@@ -235,14 +236,12 @@ export default function Register() {
               placeholder="Middle Initial"
               autoComplete="on"
             />
-            {form.formState.errors.middleInitial ? (
-              <span className="h-10 text-red-500">
-                {form.formState.errors.middleInitial.message}
-              </span>
-            ) : (
-              <span className="h-10"></span>
-            )}
+            <span className="h-6 text-red-500">
+              {form.formState.errors.middleInitial?.message}
+            </span>
           </div>
+
+          {/* Last Name */}
           <div className="flex flex-col gap-1">
             <label htmlFor="lastName" className="text-xl font-bold">
               Last Name
@@ -255,14 +254,12 @@ export default function Register() {
               placeholder="Last Name"
               autoComplete="on"
             />
-            {form.formState.errors.lastName ? (
-              <span className="h-10 text-red-500">
-                {form.formState.errors.lastName.message}
-              </span>
-            ) : (
-              <span className="h-10"></span>
-            )}
+            <span className="h-6 text-red-500">
+              {form.formState.errors.lastName?.message}
+            </span>
           </div>
+
+          {/* Email */}
           <div className="flex flex-col gap-1">
             <label htmlFor="email" className="text-xl font-bold">
               Email
@@ -275,14 +272,12 @@ export default function Register() {
               placeholder="Email"
               autoComplete="on"
             />
-            {form.formState.errors.email ? (
-              <span className="h-10 text-red-500">
-                {form.formState.errors.email.message}
-              </span>
-            ) : (
-              <span className="h-10"></span>
-            )}
+            <span className="h-6 text-red-500">
+              {form.formState.errors.email?.message}
+            </span>
           </div>
+
+          {/* Password */}
           <div className="flex flex-col gap-1">
             <label htmlFor="password" className="text-xl font-bold">
               Password
@@ -295,14 +290,12 @@ export default function Register() {
               placeholder="Password"
               autoComplete="on"
             />
-            {form.formState.errors.password ? (
-              <span className="h-10 text-red-500">
-                {form.formState.errors.password.message}
-              </span>
-            ) : (
-              <span className="h-10"></span>
-            )}
+            <span className="h-6 text-red-500">
+              {form.formState.errors.password?.message}
+            </span>
           </div>
+
+          {/* Confirm Password */}
           <div className="flex flex-col gap-1">
             <label htmlFor="confirmPassword" className="text-xl font-bold">
               Confirm Password
@@ -315,15 +308,13 @@ export default function Register() {
               placeholder="Confirm Password"
               autoComplete="on"
             />
-            {form.formState.errors.confirmPassword ? (
-              <span className="h-10 text-red-500">
-                {form.formState.errors.confirmPassword.message}
-              </span>
-            ) : (
-              <span className="h-10"></span>
-            )}
+            <span className="h-6 text-red-500">
+              {form.formState.errors.confirmPassword?.message}
+            </span>
           </div>
         </div>
+
+        {/* Profile Image Upload */}
         <div className="flex flex-col items-center justify-center gap-1">
           <label htmlFor="profileImage" className="text-xl font-bold">
             Profile Image
@@ -365,6 +356,8 @@ export default function Register() {
             <span className="h-10"></span>
           )}
         </div>
+
+        {/* Submit Button */}
         <button
           className="bg-secondary-dark hover:bg-secondary-darker/80 cursor-pointer rounded p-2 text-lg font-semibold text-white transition duration-300 ease-in-out hover:scale-95 disabled:bg-gray-400"
           type="submit"
@@ -372,6 +365,8 @@ export default function Register() {
         >
           Submit
         </button>
+
+        {/* Link to Login */}
         <p className="text-center font-medium">
           Already have an account?{" "}
           <span

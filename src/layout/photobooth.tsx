@@ -1,24 +1,49 @@
 import { Outlet } from "react-router-dom";
-import { useEffect } from "react";
-
+import { account } from "../appwrite";
+import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import fetchAuthUser from "../lib/services/getAuth";
+import Loading from "../components/ui/loading";
 
 export default function MainLayout() {
-  let user = JSON.parse(localStorage.getItem("session") || "false") as boolean;
-  const guestMode = !user;
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
 
   useEffect(() => {
-    if (guestMode) return;
-    const getAuth = async () => {
-      user = await fetchAuthUser(user);
+    const checkAuth = async () => {
+      let userSession = JSON.parse(localStorage.getItem("session") || "false");
+      if (userSession) {
+        const authResult = await fetchAuthUser(userSession);
+        setIsAuthenticated(!!authResult);
+      } else {
+        try {
+          const session = await account.getSession("current");
+          if (session && session.current) {
+            userSession = session.current;
+            localStorage.setItem("session", JSON.stringify(userSession));
+            setIsAuthenticated(true);
+          } else {
+            setIsAuthenticated(false);
+          }
+        } catch (error) {
+          console.error("Session error:", error);
+          setIsAuthenticated(false);
+        }
+      }
+      setIsAuthChecking(false);
     };
-    getAuth();
+
+    checkAuth();
   }, []);
 
-  if (!user && !guestMode) {
+  if (isAuthChecking) {
+    return <Loading />;
+  }
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" />;
   }
+
   <Outlet />;
   return (
     <main className="grid min-h-dvh grid-rows-[auto_1fr]">
