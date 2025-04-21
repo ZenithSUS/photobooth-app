@@ -11,7 +11,7 @@ export default function MainLayout() {
   useEffect(() => {
     if (guestMode) return;
     const getAuth = async () => {
-      user = await fetchAuthUser(user);
+      user = await fetchAuthUser(user as boolean);
     };
     getAuth();
   }, []);
