@@ -191,32 +191,32 @@ export default function PhotoUser() {
         }
       >
         <div className="flex min-w-screen flex-col md:min-w-[400px]">
-          <form className="grid grid-cols-1 place-items-center gap-3 rounded-2xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4">
+          <form className="bg-primary grid grid-cols-1 place-items-center gap-3 rounded-2xl p-4">
             <h2 className="text-center text-2xl font-bold">Delete Photo?</h2>
             <div className="flex gap-2">
-              <button
-                type="button"
-                name="delete"
-                disabled={isPending}
-                onClick={() => executeDelete(photo.$id as string)}
-                className="cursor-pointer rounded-xl bg-gradient-to-br from-rose-400 via-pink-400 to-fuchsia-400 p-2 hover:scale-105 hover:bg-gradient-to-br hover:from-fuchsia-400 hover:via-purple-400 hover:to-violet-400 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
-              >
-                Delete Photo
-              </button>
               <button
                 type="button"
                 name="cancel"
                 disabled={isPending}
                 onClick={() => setIsModalOpen(false)}
-                className="cursor-pointer rounded-xl bg-gradient-to-br from-amber-400 via-orange-400 to-red-400 p-2 transition duration-300 ease-in-out hover:from-amber-500 hover:via-orange-500 hover:to-red-500 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+                className="bg-info hover:bg-button-info-hover-bg cursor-pointer rounded-xl p-2 text-white transition duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400"
               >
                 Cancel
+              </button>
+              <button
+                type="button"
+                name="delete"
+                disabled={isPending}
+                onClick={() => executeDelete(photo.$id as string)}
+                className="bg-button-error-bg hover:bg-button-error-hover-bg cursor-pointer rounded-xl p-2 text-white transition duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400"
+              >
+                Delete Photo
               </button>
             </div>
           </form>
         </div>
       </Modal>
-      <h1 className="rounded-2xl bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-2 text-2xl font-bold">
+      <h1 className="bg-neutral-light rounded-md p-2 text-2xl font-bold">
         {photo.title}
       </h1>
       <div className="m1 m-1 grid grid-cols-1 place-items-center gap-5 lg:grid-cols-2">
@@ -344,7 +344,8 @@ export default function PhotoUser() {
       <div className="flex gap-2">
         <button
           onClick={handleBack}
-          className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600"
+          className="bg-warning hover:bg-warning/85 cursor-pointer rounded px-4 py-2 text-white transition duration-300 ease-in-out hover:scale-105 disabled:bg-gray-400"
+          disabled={isPending}
         >
           <img src={BackIcon} alt="Back" className="h-6 w-6" />
         </button>
@@ -355,7 +356,7 @@ export default function PhotoUser() {
               <button
                 onClick={() => handleSave(photo.$id ?? "", photo.userID ?? "")}
                 disabled={isPending}
-                className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+                className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-green-600 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
               >
                 <img src={SaveIcon} alt="Save" className="h-6 w-6" />
               </button>
@@ -363,14 +364,14 @@ export default function PhotoUser() {
                 onClick={() =>
                   handleDownload(photo.$id ?? "", photo.userID ?? "")
                 }
-                className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
+                className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-green-600"
               >
                 <img src={DownloadIcon} alt="Save" className="h-6 w-6" />
               </button>
               <button
                 onClick={handleDelete}
                 disabled={isPending}
-                className="cursor-pointer rounded bg-red-500 px-4 py-2 text-white transition duration-300 hover:bg-red-600 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
+                className="cursor-pointer rounded bg-red-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-red-600 disabled:bg-gradient-to-br disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400"
               >
                 <img src={DeleteIcon} alt="Save" className="h-6 w-6" />
               </button>
