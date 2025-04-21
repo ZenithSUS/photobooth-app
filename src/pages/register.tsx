@@ -367,7 +367,7 @@ export default function Register() {
         </button>
 
         {/* Link to Login */}
-        <p className="text-center font-medium">
+        <p className="text-center">
           Already have an account?{" "}
           <span
             className="cursor-pointer underline hover:text-blue-500"
