@@ -38,7 +38,7 @@ export default function VisitAccount() {
   return (
     <div className="flex flex-col gap-5">
       <h1 className="text-center text-3xl font-bold">Account</h1>
-      <div className="relative flex flex-col gap-2 rounded-md bg-gradient-to-br from-sky-400 via-blue-400 to-indigo-400 p-4 shadow-md shadow-sky-400">
+      <div className="bg-neutral-light relative flex flex-col gap-2 rounded-md p-4 shadow-md shadow-black/50">
         <div className="flex flex-col gap-2 overflow-hidden">
           <div className="grid grid-cols-1 place-items-center gap-1.5 text-center">
             <img
@@ -55,8 +55,12 @@ export default function VisitAccount() {
 
           <div className="grid grid-cols-1 place-items-center gap-1.5">
             <div className="flex flex-col gap-2">
-              <h2 className="text-lg">Email: {email}</h2>
-              <h2 className="text-lg">Joined: {joined}</h2>
+              <h2 className="text-lg font-bold">
+                Email: <span className="font-medium">{email}</span>
+              </h2>
+              <h2 className="text-lg font-bold">
+                Joined: <span className="font-medium">{joined}</span>
+              </h2>
             </div>
           </div>
         </div>
